@@ -1,7 +1,7 @@
 <template>
   <b-navbar toggleable="lg" type="dark" variant="dark">
     <b-container fluid="lg">
-    <b-navbar-brand href="#">
+    <b-navbar-brand to="/">
       <img src="../assets/vscinemas_logo.png" alt="" />
     </b-navbar-brand>
     <b-navbar-toggle target="navbar-toggle-collapse">
@@ -51,7 +51,7 @@
 
 <script>
 export default {
-  name: "HelloWorld",
+  name: "ResponsiveNavigation",
   //傳資料
   props: {
     msg: String,
