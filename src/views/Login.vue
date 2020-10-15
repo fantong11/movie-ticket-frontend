@@ -2,11 +2,11 @@
   <div class="login">
     <ResponsiveNavigation />
     <Breadcrumb />
-    <b-container fluid="sm">
+    <div class="container">
       <b-form @submit="onSubmit" @reset="onReset" v-if="show">
         <b-form-group
           id="email-address"
-          label="Email address:"
+          label="電子郵件:"
           label-for="email-address"
           description="We'll never share your email with anyone else."
         >
@@ -15,25 +15,16 @@
             v-model="form.email"
             type="email"
             required
-            placeholder="Enter email"
+            placeholder="請輸入電子郵件"
           ></b-form-input>
         </b-form-group>
 
-        <b-form-group id="input-group-2" label="Your Name:" label-for="input-2">
-          <b-form-input
-            id="name"
-            v-model="form.name"
-            required
-            placeholder="Enter name"
-          ></b-form-input>
-        </b-form-group>
-
-        <b-form-group id="input-group-3" label="Food:" label-for="input-3">
+        <b-form-group id="input-group-2" label="密碼:" label-for="input-2">
           <b-form-input
             id="password"
             v-model="form.password"
             required
-            placeholder="Enter password"
+            placeholder="請輸入密碼"
           ></b-form-input>
         </b-form-group>
 
@@ -44,10 +35,10 @@
           </b-form-checkbox-group>
         </b-form-group>
 
-        <b-button type="submit" variant="primary">登入</b-button>
-        <b-button type="reset" variant="danger">註冊</b-button>
+        <b-button type="submit" variant="primary" class="m-2">登入</b-button>
+        <b-button type="reset" variant="danger" class="m-2" to="/">註冊</b-button>
       </b-form>
-    </b-container>
+    </div>
   </div>
 </template>
 

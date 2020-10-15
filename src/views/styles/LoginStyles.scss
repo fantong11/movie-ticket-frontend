@@ -1,3 +1,25 @@
-.login {
-    font-size: larger;
+.container {
+    width: 30%;
+    margin-top: 50px;
+    border-radius: 5px;
+    background-color: rgb(154, 241, 241);
+    padding: 30px;
+}
+
+@media (max-width: 1000px) {
+    .container {
+        width: 40%;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 70%;
+    }
+}
+
+@media (max-width: 572px) {
+    .container {
+        width: 80%;
+    }
 }
