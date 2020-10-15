@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import NowPlayingMovie from '../views/NowPlayingMovie.vue'
 import Login from '../views/Login.vue'
+import Registration from '../views/Registration.vue'
 
 Vue.use(VueRouter)
 
@@ -42,6 +43,20 @@ const routes = [
       },
       {
         name: "登入"
+      }]
+    }
+  },
+  {
+    path: '/registration',
+    name: 'Registration',
+    component: Registration,
+    meta: {
+      breadcrumb: [{
+        name: "首頁",
+        link: "/"
+      },
+      {
+        name: "註冊"
       }]
     }
   }

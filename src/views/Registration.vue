@@ -1,9 +1,9 @@
 <template>
-  <div class="login">
+  <div class="registration">
     <ResponsiveNavigation />
     <Breadcrumb />
     <div class="container">
-      <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+      <b-form @submit="onSubmit" @reset="onReset">
         <b-form-group
           id="email-address"
           label="電子郵件:"
@@ -19,24 +19,33 @@
           ></b-form-input>
         </b-form-group>
 
-        <b-form-group id="input-group-2" label="密碼:" label-for="input-2">
+        <b-form-group id="input-pw-1" label="密碼:" label-for="input-pw-1">
           <b-form-input
-            id="password"
+            id="password-1"
             v-model="form.password"
             required
             placeholder="請輸入密碼"
           ></b-form-input>
         </b-form-group>
 
-        <b-form-group id="input-group-4">
-          <b-form-checkbox-group v-model="form.checked" id="checkboxes-4">
-            <b-form-checkbox value="me">記住帳號</b-form-checkbox>
-            <b-form-checkbox value="that">保持登入狀態</b-form-checkbox>
-          </b-form-checkbox-group>
+        <b-form-group id="input-pw-2" label="確認密碼:" label-for="input-pw-2">
+          <b-form-input
+            id="password-2"
+            v-model="form.password"
+            required
+            placeholder="請重複輸入密碼"
+          ></b-form-input>
         </b-form-group>
 
-        <b-button type="submit" variant="primary" class="m-2">登入</b-button>
-        <b-button type="reset" variant="danger" class="m-2" to="/registration">註冊</b-button>
+        <p>*** 點擊「註冊」即代表您已閱讀並瞭解服務條款及隱私權聲明。 ***</p>
+
+        <b-button
+          type="reset"
+          variant="danger"
+          class="m-2"
+          to="/registration"
+          >註冊</b-button
+        >
       </b-form>
     </div>
   </div>
@@ -47,13 +56,13 @@ import ResponsiveNavigation from "@/components/ResponsiveNavigation.vue";
 import Breadcrumb from "@/components/Breadcrumb.vue";
 
 export default {
-  name: "login",
+  name: "registration",
   components: {
     ResponsiveNavigation,
     Breadcrumb,
   },
 
-  data() {
+    data() {
     return {
       form: {
         email: "",
@@ -85,5 +94,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "./styles/LoginStyles";
+@import "./styles/RegistrationStyles";
 </style>

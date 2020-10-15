@@ -5,7 +5,7 @@
       <b-form class="quick-search mt-3">
         <b-form-group id="select-cinema">
           <div class="select-box">
-            <b-icon class="mr-2" font-scale="2" icon="battery-full"></b-icon>
+            <b-icon class="mr-2" font-scale="2" icon="geo-alt"></b-icon>
             <b-form-select
               v-model="cinemas.selected"
               :options="cinemas.options"
