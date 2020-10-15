@@ -4,27 +4,21 @@
     <Carousel />
     <b-container class="content-container" fluid="lg">
       <b-row>
-        <b-col cols="6">
-          <div>
-            <b-form>
-              <b-form-group
-                id="input-group-1"
-                label-for="input-1"
-              >
-                <b-form-input
-                  id="input-1"
-                  type="email"
-                  required
-                  placeholder="Enter email"
-                ></b-form-input>
-              </b-form-group>
-              <b-button type="submit" variant="primary">Submit</b-button>
-              <b-button type="reset" variant="danger">Reset</b-button>
-            </b-form>
+        <b-col md="6">
+          <QuickSearch/>
+        </b-col>
+        <b-col md="6">
+          <div class="news">
+            <h3>最新公告 <b-badge>MORE</b-badge></h3>
+            <p><b-badge>2020/10/13</b-badge>《阿比阿弟尋歌大冒險》片尾公告</p>
+            <p><b-badge>2020/10/05</b-badge>【刑警沒有假期】片尾公告</p>
+            <p><b-badge>2020/07/31</b-badge> 防疫新生活、觀影實聯制</p>
+            <p><b-badge>2020/07/14</b-badge> 振興三倍券、藝FUN券使用提醒</p>
           </div>
         </b-col>
       </b-row>
     </b-container>
+    <Footer/>
   </div>
 </template>
 
@@ -32,17 +26,20 @@
 // @ is an alias to /src
 import ResponsiveNavigation from "@/components/ResponsiveNavigation.vue";
 import Carousel from "@/components/Carousel.vue";
+import QuickSearch from "@/components/QuickSearch.vue"
+import Footer from "@/components/Footer.vue"
 
 export default {
   name: "Home",
   components: {
     ResponsiveNavigation,
     Carousel,
+    QuickSearch,
+    Footer,
   },
-  data() {
-    return {
-      show: true,
-    }
-  }
 };
 </script>
+
+<style scoped lang="scss">
+@import "./styles/HomeStyles";
+</style>
