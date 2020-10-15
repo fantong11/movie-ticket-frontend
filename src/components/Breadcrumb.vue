@@ -1,5 +1,5 @@
 <template>
-    <div class="Breadcrumb">
+    <div class="breadcrumb">
         <b-container class="breadcrumb-container" fluid="lg">
             <ul>
                 <li
@@ -40,28 +40,6 @@
     }
 </script>
 
-<style scoped>
-    .Breadcrumb {
-        margin-bottom: line(3);
-        background-color: #d8d8d8;
-    }
-    ul {
-        display: flex;
-        list-style: none;
-        padding: 0;
-        font-size: font(1);
-    }
-    li {
-        cursor: pointer;
-        color: #4297b9;
-    }
-    li:last-child {
-        cursor: default;
-        color: #5f6568;
-    }
-    li:not(:last-child):after {
-        content: ">";
-        margin: 5px;
-        color: #5f6568;
-    }
+<style scoped lang="scss">
+    @import "./styles/BreadcrumbStyles";
 </style>

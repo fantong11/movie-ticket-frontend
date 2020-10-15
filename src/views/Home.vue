@@ -5,21 +5,23 @@
     <b-container class="content-container" fluid="lg">
       <b-row>
         <b-col cols="6">
-          <div>
-            <b-form>
-              <b-form-group
-                id="input-group-1"
-                label-for="input-1"
-              >
-                <b-form-input
-                  id="input-1"
-                  type="email"
-                  required
-                  placeholder="Enter email"
-                ></b-form-input>
+          <div class="quick-search-box">
+            <h1>快速訂票</h1>
+            <b-form class="quick-search"> 
+              <b-form-group id="select-cinema">
+                <b-form-select v-model="cinemas.selected" :options="cinemas.options"></b-form-select>
               </b-form-group>
-              <b-button type="submit" variant="primary">Submit</b-button>
-              <b-button type="reset" variant="danger">Reset</b-button>
+              <b-form-group id="select-cinema">
+                <b-form-select v-model="cinemas.selected" :options="cinemas.options"></b-form-select>
+              </b-form-group>
+              <b-form-group id="select-cinema">
+                <b-form-select v-model="cinemas.selected" :options="cinemas.options"></b-form-select>
+              </b-form-group>
+              <b-form-group id="select-cinema">
+                <b-form-select v-model="cinemas.selected" :options="cinemas.options"></b-form-select>
+              </b-form-group>
+              <b-button class="m-2" type="submit" variant="primary">Submit</b-button>
+              <b-button class="m-2" type="reset" variant="danger">Reset</b-button>
             </b-form>
           </div>
         </b-col>
@@ -41,8 +43,23 @@ export default {
   },
   data() {
     return {
+      cinemas: {
+        selected: null,
+        options: [
+          { value: null, text: '請選擇影城' },
+          { value: 1, text: '信義威秀' },
+          { value: 2, text: '京站威秀' },
+        ],
+      },
       show: true,
-    }
-  }
+    };
+  },
+  mounted() {
+
+  },
 };
 </script>
+
+<style scoped lang="scss">
+@import "./styles/HomeStyles";
+</style>

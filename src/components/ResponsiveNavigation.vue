@@ -43,6 +43,8 @@
           <b-dropdown-item to="#">合作夥伴</b-dropdown-item>
         </b-nav-item-dropdown>
         <b-nav-item to="#">業務專區</b-nav-item>
+        <b-nav-item to="/login">登入</b-nav-item>
+        <b-nav-item to="#">註冊</b-nav-item>
       </b-navbar-nav>
     </b-collapse>
     </b-container>
