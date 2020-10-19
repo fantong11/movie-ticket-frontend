@@ -4,48 +4,56 @@
     <Breadcrumb />
     <div class="container">
       <b-form @submit="onSubmit" @reset="onReset">
+        <h3 class="mb-3">會員註冊</h3>
         <b-form-group
           id="email-address"
-          label="電子郵件:"
           label-for="email-address"
           description="We'll never share your email with anyone else."
         >
-          <b-form-input
-            id="email"
-            v-model="form.email"
-            type="email"
-            required
-            placeholder="請輸入電子郵件"
-          ></b-form-input>
+          <div class="input-box">
+            <b-icon class="mr-2" font-scale="2" icon="envelope"></b-icon>
+            <b-form-input
+              id="email"
+              v-model="form.email"
+              type="email"
+              required
+              placeholder="請輸入電子郵件"
+            ></b-form-input>
+          </div>
         </b-form-group>
 
-        <b-form-group id="input-pw-1" label="密碼:" label-for="input-pw-1">
-          <b-form-input
-            id="password-1"
-            v-model="form.password"
-            required
-            placeholder="請輸入密碼"
-          ></b-form-input>
+        <b-form-group id="password-input" label-for="password-input">
+          <div class="input-box">
+            <b-icon class="mr-2" font-scale="2" icon="lock"></b-icon>
+            <b-form-input
+              id="password"
+              v-model="form.password"
+              required
+              placeholder="請輸入密碼"
+            ></b-form-input>
+          </div>
         </b-form-group>
 
-        <b-form-group id="input-pw-2" label="確認密碼:" label-for="input-pw-2">
-          <b-form-input
-            id="password-2"
-            v-model="form.password"
-            required
-            placeholder="請重複輸入密碼"
-          ></b-form-input>
+        <b-form-group id="password-reinput" label-for="password-reinput">
+          <div class="input-box">
+            <b-icon class="mr-2" font-scale="2" icon="lock"></b-icon>
+            <b-form-input
+              id="password"
+              v-model="form.password"
+              required
+              placeholder="請重複輸入密碼"
+            ></b-form-input>
+          </div>
         </b-form-group>
 
         <p>*** 點擊「註冊」即代表您已閱讀並瞭解服務條款及隱私權聲明。 ***</p>
 
-        <b-button
-          type="reset"
-          variant="danger"
-          class="m-2"
+        <b-button 
+          type="reset" 
+          variant="danger" 
+          class="m-2" 
           to="/registration"
-          >註冊</b-button
-        >
+          >註冊</b-button>
       </b-form>
     </div>
   </div>
@@ -62,7 +70,7 @@ export default {
     Breadcrumb,
   },
 
-    data() {
+  data() {
     return {
       form: {
         email: "",
