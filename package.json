@@ -4,13 +4,18 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "rm -rf ../public/{js,css,img} && vue-cli-service build --no-clean",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "axios": "^0.20.0",
+    "body-parser": "^1.19.0",
     "bootstrap": "^4.5.2",
     "bootstrap-vue": "^2.17.3",
     "core-js": "^3.6.5",
+    "element-ui": "^2.13.2",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1",
     "vue": "^2.6.12",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0"
