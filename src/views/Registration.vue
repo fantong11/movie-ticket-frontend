@@ -8,7 +8,6 @@
         <b-form-group
           id="email-address"
           label-for="email-address"
-          description="We'll never share your email with anyone else."
         >
           <div class="input-box">
             <b-icon class="mr-2" font-scale="2" icon="envelope"></b-icon>
@@ -16,9 +15,11 @@
               id="email"
               v-model="form.name"
               required
+              autocomplete="off"
               placeholder="請輸入電子郵件"
             ></b-form-input>
           </div>
+          <p>{{this.form.nameInputDesription}}</p>
         </b-form-group>
 
         <b-form-group id="password-input" label-for="password-input">
@@ -56,7 +57,7 @@
           to="/registration"
           >註冊
         </b-button>
-        {{this.form.msg}}
+        {{ this.form.msg }}
       </b-form>
     </div>
   </div>
@@ -80,6 +81,7 @@ export default {
         password: "",
         reTypePassword: "",
         msg: "",
+        nameInputDesription: "",
       },
       show: true,
     };
@@ -94,7 +96,7 @@ export default {
       // 不一樣的話就清空輸入
       this.form.password = "";
       this.form.reTypePassword = "";
-      this.form.msg = "密碼輸入不同，請重新輸入密碼"
+      this.form.msg = "密碼輸入不同，請重新輸入密碼";
       this.show = false;
       this.$nextTick(() => {
         this.show = true;
@@ -106,17 +108,30 @@ export default {
       console.log(name);
       console.log(password);
       this.$http
-        .post(
-          "/api/user/addUser",
-          {
-            username: name,
-            password: password,
-          },
-          {}
-        )
+        .post("/api/user/addUser", {
+          username: name,
+          password: password,
+        })
         .then((response) => {
           // 印出成功回傳的結果
           console.log(response);
+          if (response.data == "-1") {
+            this.form.msg = "使用者名稱已存在";
+          }
+        });
+    },
+  },
+  watch: {
+    // 輸入的時候向後端請求判斷名稱是否存在
+    "form.name": function () {
+      this.$http
+        .post("/api/user/checkUsername", { username: this.form.name })
+        .then((response) => {
+          if (response.data === 1) {
+            this.form.nameInputDesription = "名稱可以使用";
+          } else if (response.data === -1) {
+            this.form.nameInputDesription = "名稱已存在";
+          }
         });
     },
   },

@@ -14,16 +14,16 @@ conn.connect((err) => {
     console.log("MySQL connected ~");
 });
 
-var jsonWrite = function(res, ret) {
-    if(typeof ret === 'undefined') {
-        res.json({
-            code: '1',
-            msg: '操作失敗'
-        });
-    } else {
-        res.json(ret);
-    }
-};
+// var jsonWrite = function(res, ret) {
+//     if(typeof ret === 'undefined') {
+//         res.json({
+//             code: '1',
+//             msg: '操作失敗'
+//         });
+//     } else {
+//         res.json(ret);
+//     }
+// };
 
 // 增加使用者介面
 router.post('/addUser', (req, res) => {
@@ -31,14 +31,41 @@ router.post('/addUser', (req, res) => {
     var sql = $sql.user.add;
     var params = req.body;
     console.log(params);
-    conn.query(sql, [params.username, params.password], function(err, result) {
+
+
+    conn.query(sql, [params.username, params.password], function (err, result) {
+        if (err) {
+            //console.log(err);
+            // 用error code來判斷是否重複
+            if (err.code === "ER_DUP_ENTRY") {
+                console.log("重複");
+                res.send("-1");
+            }
+        }
+        if (result) {
+            console.log(result);
+        }
+    });
+});
+
+// 確認username有沒有重複
+router.post('/checkUsername', (req, res) => {
+    var sql_name = $sql.user.select_name;
+    var params = req.body;
+    console.log(params);
+    sql_name += "where name = '" + params.username + "'";
+    conn.query(sql_name, params.username, (err, result) => {
         if (err) {
             console.log(err);
         }
-        if (result) {
-            jsonWrite(res, result);
+        // 查詢結果有重複回傳-1，讓前端顯示錯誤
+        if (result[0] === undefined) {
+            res.send("1");
         }
-    })
+        else {
+            res.send("-1");
+        }
+    });
 });
 
 // 查詢使用者是否存在 回傳1, 0
