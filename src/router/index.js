@@ -4,7 +4,6 @@ import Home from '../views/Home.vue'
 import NowPlayingMovie from '../views/NowPlayingMovie.vue'
 import Login from '../views/Login.vue'
 import Registration from '../views/Registration.vue'
-import Test from '../views/Test.vue'
 
 Vue.use(VueRouter)
 
@@ -61,20 +60,6 @@ const routes = [
       }]
     }
   },
-  {
-    path: '/test',
-    name: 'Test',
-    component: Test,
-    meta: {
-      breadcrumb: [{
-        name: "首頁",
-        link: "/"
-      },
-      {
-        name: "test"
-      }]
-    }
-  }
 ]
 
 const router = new VueRouter({

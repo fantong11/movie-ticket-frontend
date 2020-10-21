@@ -3,7 +3,7 @@
     <ResponsiveNavigation />
     <Breadcrumb />
     <div class="container">
-      <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+      <b-form v-if="show">
         <h3 class="mb-3">會員登入</h3>
         <b-form-group
           id="email-address"
@@ -14,8 +14,7 @@
             <b-icon class="mr-2" font-scale="2" icon="envelope"></b-icon>
             <b-form-input
               id="email"
-              v-model="form.email"
-              type="email"
+              v-model="form.name"
               required
               placeholder="請輸入電子郵件"
             ></b-form-input>
@@ -41,10 +40,11 @@
           </b-form-checkbox-group>
         </b-form-group>
 
-        <b-button type="submit" variant="primary" class="m-2">登入</b-button>
-        <b-button type="reset" variant="danger" class="m-2" to="/registration"
+        <b-button @click="login" variant="primary" class="m-2">登入</b-button>
+        <b-button variant="danger" class="m-2" to="/registration"
           >註冊</b-button
         >
+        {{form.msg}}
       </b-form>
     </div>
   </div>
@@ -64,27 +64,29 @@ export default {
   data() {
     return {
       form: {
-        email: "",
+        name: "",
         password: "",
         checked: [],
+        msg: "",
       },
       show: true,
     };
   },
   methods: {
-    onSubmit() {
-
-    },
-    onReset(evt) {
-      evt.preventDefault();
-      // Reset our form values
-      this.form.email = "";
-      this.form.password = "null";
-      this.form.checked = [];
-      // Trick to reset/clear native browser form validation state
-      this.show = false;
-      this.$nextTick(() => {
-        this.show = true;
+    login() {
+      var name = this.form.name;
+      var password = this.form.password;
+      console.log(name);
+      console.log(password);
+      this.$http.post("/api/user/login", {
+        username: name,
+        password: password,
+      }, {}).then((response) => {
+        console.log(response);
+        console.log(response.data);
+        if (response.data == -1) {
+          this.form.msg = "使用者名稱不存在";
+        }
       });
     },
   },

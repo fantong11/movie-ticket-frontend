@@ -2,7 +2,8 @@
 var sqlMap = {
     // 使用者
     user: {
-        add: 'insert into user(id, name, age) values (0, ?, ?)'
+        add: "insert into user(name, password) values (?, ?)",
+        select_name: "select * from user "
     }
 }
 

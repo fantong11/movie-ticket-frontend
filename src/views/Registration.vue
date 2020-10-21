@@ -3,7 +3,7 @@
     <ResponsiveNavigation />
     <Breadcrumb />
     <div class="container">
-      <b-form @submit="onSubmit" @reset="onReset">
+      <b-form v-if="show">
         <h3 class="mb-3">會員註冊</h3>
         <b-form-group
           id="email-address"
@@ -14,8 +14,7 @@
             <b-icon class="mr-2" font-scale="2" icon="envelope"></b-icon>
             <b-form-input
               id="email"
-              v-model="form.email"
-              type="email"
+              v-model="form.name"
               required
               placeholder="請輸入電子郵件"
             ></b-form-input>
@@ -29,6 +28,7 @@
               id="password"
               v-model="form.password"
               required
+              type="password"
               placeholder="請輸入密碼"
             ></b-form-input>
           </div>
@@ -38,9 +38,10 @@
           <div class="input-box">
             <b-icon class="mr-2" font-scale="2" icon="lock"></b-icon>
             <b-form-input
-              id="password"
-              v-model="form.password"
+              id="retype-password"
+              v-model="form.reTypePassword"
               required
+              type="password"
               placeholder="請重複輸入密碼"
             ></b-form-input>
           </div>
@@ -48,12 +49,14 @@
 
         <p>*** 點擊「註冊」即代表您已閱讀並瞭解服務條款及隱私權聲明。 ***</p>
 
-        <b-button 
-          type="reset" 
-          variant="danger" 
-          class="m-2" 
+        <b-button
+          @click="checkPassword"
+          variant="danger"
+          class="m-2"
           to="/registration"
-          >註冊</b-button>
+          >註冊
+        </b-button>
+        {{this.form.msg}}
       </b-form>
     </div>
   </div>
@@ -64,7 +67,7 @@ import ResponsiveNavigation from "@/components/ResponsiveNavigation.vue";
 import Breadcrumb from "@/components/Breadcrumb.vue";
 
 export default {
-  name: "registration",
+  name: "Registration",
   components: {
     ResponsiveNavigation,
     Breadcrumb,
@@ -73,29 +76,48 @@ export default {
   data() {
     return {
       form: {
-        email: "",
+        name: "",
         password: "",
-        checked: [],
+        reTypePassword: "",
+        msg: "",
       },
       show: true,
     };
   },
   methods: {
-    onSubmit(evt) {
-      evt.preventDefault();
-      alert(JSON.stringify(this.form));
-    },
-    onReset(evt) {
-      evt.preventDefault();
-      // Reset our form values
-      this.form.email = "";
-      this.form.password = "null";
-      this.form.checked = [];
-      // Trick to reset/clear native browser form validation state
+    checkPassword() {
+      // 密碼一樣才能給註冊
+      if (this.form.password === this.form.reTypePassword) {
+        this.signUp();
+        return;
+      }
+      // 不一樣的話就清空輸入
+      this.form.password = "";
+      this.form.reTypePassword = "";
+      this.form.msg = "密碼輸入不同，請重新輸入密碼"
       this.show = false;
       this.$nextTick(() => {
         this.show = true;
       });
+    },
+    signUp() {
+      var name = this.form.name;
+      var password = this.form.password;
+      console.log(name);
+      console.log(password);
+      this.$http
+        .post(
+          "/api/user/addUser",
+          {
+            username: name,
+            password: password,
+          },
+          {}
+        )
+        .then((response) => {
+          // 印出成功回傳的結果
+          console.log(response);
+        });
     },
   },
 };
