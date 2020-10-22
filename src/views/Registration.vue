@@ -108,14 +108,14 @@ export default {
       console.log(name);
       console.log(password);
       this.$http
-        .post("/api/user/addUser", {
+        .post("/api/signup", {
           username: name,
           password: password,
         })
         .then((response) => {
           // 印出成功回傳的結果
           console.log(response);
-          if (response.data == "-1") {
+          if (response.data.message == -1) {
             this.form.msg = "使用者名稱已存在";
           }
         });
@@ -125,11 +125,12 @@ export default {
     // 輸入的時候向後端請求判斷名稱是否存在
     "form.name": function () {
       this.$http
-        .post("/api/user/checkUsername", { username: this.form.name })
+        .post("/api/checkusername", { username: this.form.name })
         .then((response) => {
-          if (response.data === 1) {
+          console.log(response);
+          if (response.data.message === -1) {
             this.form.nameInputDesription = "名稱可以使用";
-          } else if (response.data === -1) {
+          } else {
             this.form.nameInputDesription = "名稱已存在";
           }
         });

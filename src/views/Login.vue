@@ -78,10 +78,10 @@ export default {
       var password = this.form.password;
       console.log(name);
       console.log(password);
-      this.$http.post("/api/user/login", {
+      this.$http.post("/api/signin", {
         username: name,
         password: password,
-      }, {}).then((response) => {
+      }).then((response) => {
         console.log(response);
         console.log(response.data);
         if (response.data == -1) {
