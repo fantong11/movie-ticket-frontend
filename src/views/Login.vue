@@ -16,6 +16,7 @@
               id="email"
               v-model="form.name"
               required
+              autocomplete="off"
               placeholder="請輸入電子郵件"
             ></b-form-input>
           </div>
@@ -28,6 +29,7 @@
               id="password"
               v-model="form.password"
               required
+              type="password"
               placeholder="請輸入密碼"
             ></b-form-input>
           </div>
@@ -84,8 +86,8 @@ export default {
       }).then((response) => {
         console.log(response);
         console.log(response.data);
-        if (response.data == -1) {
-          this.form.msg = "使用者名稱不存在";
+        if (response) {
+          this.form.msg = response.data.message;
         }
       });
     },
