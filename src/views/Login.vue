@@ -91,13 +91,9 @@ export default {
         password: password,
       }).then(() => {
         console.log(this.responseMsg);
-        if (this.responseMsg === -1) {
-          this.form.msg = "登入失敗";
-        } else if (this.responseMsg === 1) {
-          this.$router.push("/");
-        } else if (this.responseMsg === 0) {
-          this.form.msg = "使用者或密碼錯誤";
-        }
+        this.$router.push("/");
+      }).catch(() => {
+        this.form.msg = "使用者或密碼錯誤";
       });
     },
   },

@@ -5,11 +5,29 @@ import {
 } from '../../api/api';
 
 const data = {
+    user : {},
+    token: localStorage.getItem('user-token') || '',
+    status: '',
     wait: false, // to perform overlay while running api call promise
     responseMsg: '',
 };
 
 const mutations = {
+    auth_request(state){
+        state.status = 'loading';
+    },
+    auth_success(state, token, user){
+        state.status = 'success';
+        state.token = token;
+        state.user = user;
+    },
+    auth_error(state){
+        state.status = 'error';
+    },
+    logout(state){
+        state.status = '';
+        state.token = '';
+    },
     setResponseMsg(state, payload) {
         state.responseMsg = payload.responseMsg;
     },
@@ -54,10 +72,15 @@ const actions = {
                 password: payload.password,
             }).then(response => {
                 console.log(response);
-                commit("setResponseMsg", {responseMsg: response.data.message});
-                resolve();
+                const token = response.data.token;
+                const user = response.data.user;
+                localStorage.setItem('token', token);
+                commit('auth_success', token, user);
+                resolve(response);
             }).catch(error => {
                 console.log(error);
+                commit('auth_error')
+                localStorage.removeItem('token')
                 reject(new Error("error"));
             });
         });
