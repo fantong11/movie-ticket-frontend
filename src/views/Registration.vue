@@ -49,7 +49,7 @@
         </b-form-group>
 
         <p>*** 點擊「註冊」即代表您已閱讀並瞭解服務條款及隱私權聲明。 ***</p>
-
+        {{ this.form.msg }} <br>
         <b-button
           @click="checkPassword"
           variant="danger"
@@ -57,13 +57,14 @@
           to="/registration"
           >註冊
         </b-button>
-        {{ this.form.msg }}
       </b-form>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+import _ from 'lodash';
 import ResponsiveNavigation from "@/components/ResponsiveNavigation.vue";
 import Breadcrumb from "@/components/Breadcrumb.vue";
 
@@ -86,6 +87,18 @@ export default {
       show: true,
     };
   },
+  computed: {
+    ...mapState({
+      wait: (state) => state.user.wait,
+      responseMsg: (state) => state.user.responseMsg,
+    }),
+  },
+  watch: {
+    // 輸入的時候向後端請求判斷名稱是否存在
+    "form.name": function () {
+      this.checkUsernameWhileTyping();
+    },
+  },
   methods: {
     checkPassword() {
       // 密碼一樣才能給註冊
@@ -107,34 +120,29 @@ export default {
       var password = this.form.password;
       console.log(name);
       console.log(password);
-      this.$http
-        .post("/api/signup", {
-          username: name,
-          password: password,
-        })
-        .then((response) => {
-          // 印出成功回傳的結果
-          console.log(response);
-          if (response.data.message == -1) {
-            this.form.msg = "使用者名稱已存在";
-          }
-        });
+      this.$store.dispatch("user/sendSignUpInfo", {
+        username: name,
+        password: password,
+      }).then(() => {
+        console.log(this.responseMsg);
+        if (this.responseMsg === -1) {
+          this.form.msg = "名稱已存在";
+        }
+      });
     },
-  },
-  watch: {
-    // 輸入的時候向後端請求判斷名稱是否存在
-    "form.name": function () {
-      this.$http
-        .post("/api/checkusername", { username: this.form.name })
-        .then((response) => {
-          console.log(response);
-          if (response.data.message === -1) {
-            this.form.nameInputDesription = "名稱可以使用";
-          } else {
-            this.form.nameInputDesription = "名稱已存在";
-          }
-        });
-    },
+    // lodash裡的套件, debounce可以delay在watcher裡的function, 打完字後500ms才請求後端
+    checkUsernameWhileTyping: _.debounce(function() {
+      this.$store.dispatch("user/sendUsernameInfo", {
+        username: this.form.name,
+      }).then(() => {
+        console.log(this.responseMsg);
+        if (this.responseMsg === -1) {
+          this.form.nameInputDesription = "名稱可以使用";
+        } else if (this.responseMsg === 1){
+          this.form.nameInputDesription = "名稱已存在";
+        }
+      });
+    }, 500),
   },
 };
 </script>

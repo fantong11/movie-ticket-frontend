@@ -41,18 +41,18 @@
             <b-form-checkbox value="that">保持登入狀態</b-form-checkbox>
           </b-form-checkbox-group>
         </b-form-group>
-
+        {{form.msg}} <br>
         <b-button @click="login" variant="primary" class="m-2">登入</b-button>
         <b-button variant="danger" class="m-2" to="/registration"
           >註冊</b-button
         >
-        {{form.msg}}
       </b-form>
     </div>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import ResponsiveNavigation from "@/components/ResponsiveNavigation.vue";
 import Breadcrumb from "@/components/Breadcrumb.vue";
 
@@ -74,20 +74,29 @@ export default {
       show: true,
     };
   },
+  computed: {
+    ...mapState({
+      wait: (state) => state.user.wait,
+      responseMsg: (state) => state.user.responseMsg,
+    }),
+  },
   methods: {
     login() {
       var name = this.form.name;
       var password = this.form.password;
       console.log(name);
       console.log(password);
-      this.$http.post("/api/signin", {
+      this.$store.dispatch("user/sendLoginInfo", {
         username: name,
         password: password,
-      }).then((response) => {
-        console.log(response);
-        console.log(response.data);
-        if (response) {
-          this.form.msg = response.data.message;
+      }).then(() => {
+        console.log(this.responseMsg);
+        if (this.responseMsg === -1) {
+          this.form.msg = "登入失敗";
+        } else if (this.responseMsg === 1) {
+          this.$router.push("/");
+        } else if (this.responseMsg === 0) {
+          this.form.msg = "使用者或密碼錯誤";
         }
       });
     },
