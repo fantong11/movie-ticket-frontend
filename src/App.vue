@@ -4,6 +4,26 @@
   </div>
 </template>
 
+<script>
+export default {
+  name: "app",
+  created(){
+    //判斷是否有本地儲存中是否有isLogin，並更新vuex倉庫
+    if(localStorage.getItem('status') == null){
+      localStorage.setItem('status','');
+    }
+    if(localStorage.getItem('user') == null){
+      localStorage.setItem('user','');
+    }
+
+    this.$store.state.status = localStorage.getItem('status');
+    console.log(this.$store.state.status);
+    this.$store.state.name = localStorage.getItem('user');
+    console.log(this.$store.state.name);
+  }
+}
+</script>
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

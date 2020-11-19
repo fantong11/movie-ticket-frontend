@@ -86,11 +86,11 @@ export default {
       var password = this.form.password;
       console.log(name);
       console.log(password);
+      // 向後端請求比對帳號密碼
       this.$store.dispatch("user/sendLoginInfo", {
         username: name,
         password: password,
       }).then(() => {
-        console.log(this.responseMsg);
         this.$router.push("/");
       }).catch(() => {
         this.form.msg = "使用者或密碼錯誤";

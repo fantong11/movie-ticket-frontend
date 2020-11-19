@@ -120,6 +120,7 @@ export default {
       var password = this.form.password;
       console.log(name);
       console.log(password);
+      // 向後端請求建立帳號
       this.$store.dispatch("user/sendSignUpInfo", {
         username: name,
         password: password,

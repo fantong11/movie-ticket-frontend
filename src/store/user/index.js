@@ -5,28 +5,20 @@ import {
 } from '../../api/api';
 
 const data = {
-    user : {},
-    token: localStorage.getItem('user-token') || '',
-    status: '',
+    name: localStorage.getItem('user') || '',
+    status: localStorage.getItem('status') || '',
     wait: false, // to perform overlay while running api call promise
     responseMsg: '',
 };
 
 const mutations = {
-    auth_request(state){
-        state.status = 'loading';
+    login(state, payload) {
+        state.name = payload.name;
+        state.status = payload.status;
     },
-    auth_success(state, token, user){
-        state.status = 'success';
-        state.token = token;
-        state.user = user;
-    },
-    auth_error(state){
-        state.status = 'error';
-    },
-    logout(state){
-        state.status = '';
-        state.token = '';
+    logout(state) {
+        state.name = "";
+        state.status = "";
     },
     setResponseMsg(state, payload) {
         state.responseMsg = payload.responseMsg;
@@ -65,6 +57,7 @@ const actions = {
             });
         }); 
     },
+    // 向後端請求比對帳號密碼，成功後加入localStorage
     sendLoginInfo({ commit }, payload) {
         return new Promise((resolve, reject) => {
             apiUserLogin({
@@ -72,19 +65,28 @@ const actions = {
                 password: payload.password,
             }).then(response => {
                 console.log(response);
-                const token = response.data.token;
-                const user = response.data.user;
-                localStorage.setItem('token', token);
-                commit('auth_success', token, user);
+                const username = payload.username;
+                localStorage.setItem('user', username);
+                localStorage.setItem('status', "login");
+                commit("login", { name: username, status: "login"});
                 resolve(response);
             }).catch(error => {
                 console.log(error);
-                commit('auth_error')
-                localStorage.removeItem('token')
+                localStorage.removeItem('user');
+                localStorage.removeItem('status');
                 reject(new Error("error"));
             });
         });
     },
+    // 登出後移除localStorage
+    logout({ commit }) {
+        return new Promise((resolve) => {
+            commit("logout");
+            localStorage.removeItem('user');
+            localStorage.removeItem('status');
+            resolve();
+        });
+    }
 };
 
 export default {
