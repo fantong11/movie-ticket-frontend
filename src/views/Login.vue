@@ -90,9 +90,13 @@ export default {
       this.$store.dispatch("user/sendLoginInfo", {
         username: name,
         password: password,
-      }).then(() => {
+      })
+      // 驗證成功後前往首頁
+      .then(() => {
         this.$router.push("/");
-      }).catch(() => {
+      })
+      // 驗證失敗顯示錯誤訊息
+      .catch(() => {
         this.form.msg = "使用者或密碼錯誤";
       });
     },

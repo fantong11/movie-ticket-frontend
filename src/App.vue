@@ -7,19 +7,28 @@
 <script>
 export default {
   name: "app",
-  created(){
-    //判斷是否有本地儲存中是否有isLogin，並更新vuex倉庫
-    if(localStorage.getItem('status') == null){
-      localStorage.setItem('status','');
-    }
+  mounted(){
+    //判斷是否有本地儲存中是否有token，並更新vuex倉庫
+    
     if(localStorage.getItem('user') == null){
       localStorage.setItem('user','');
     }
-
-    this.$store.state.status = localStorage.getItem('status');
-    console.log(this.$store.state.status);
-    this.$store.state.name = localStorage.getItem('user');
+    if(localStorage.getItem('token') == null){
+      localStorage.setItem('token','');
+    }
+    const username = localStorage.getItem('user');
+    const token = localStorage.getItem('token');
+    this.$store.state.name = username
     console.log(this.$store.state.name);
+    this.$store.state.token = token
+    console.log(this.$store.state.token);
+
+    // 每次刷新頁面都要向後端請求token是否合法，不合法就登出
+    this.$store.dispatch("user/userAuth", { token: this.$store.state.token }).then((res) => {
+      console.log(res);
+    }).catch((err) => {
+      console.log(err);
+    });
   }
 }
 </script>

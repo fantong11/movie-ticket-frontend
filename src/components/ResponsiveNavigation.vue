@@ -43,11 +43,11 @@
           <b-dropdown-item to="#">合作夥伴</b-dropdown-item>
         </b-nav-item-dropdown>
         <b-nav-item to="#">業務專區</b-nav-item>
-        <div class="login d-flex" v-if="status === 'login'">
+        <div class="login d-flex" v-if="status">
           <b-nav-item to="/user">{{name}}</b-nav-item>
           <b-nav-item to="/" @click="logout">登出</b-nav-item>
         </div>
-        <div class="not-login d-flex" v-if="status != 'login'">
+        <div class="not-login d-flex" v-if="!status">
           <b-nav-item to="/login">登入</b-nav-item>
           <b-nav-item to="/registration">註冊</b-nav-item>
         </div>
@@ -63,28 +63,16 @@ import { mapState } from 'vuex';
 
 export default {
   name: "ResponsiveNavigation",
-  //傳資料
-  props: {
-    msg: String,
-  },
   computed: {
     ...mapState({
       name: (state) => state.user.name,
       status: (state) => state.user.status,
     }),
   },
-  mounteds: {
-
-  },
   methods: {
     logout() {
       this.$store.dispatch("user/logout");
-
     }
   }
 };
 </script>
-
-<style scoped lang="scss">
-// @import "./styles/ResponsiveNavigation";
-</style>
