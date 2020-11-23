@@ -94,22 +94,22 @@ const actions = {
             apiUserAuthenticate({
                 token: payload.token,
             })
-            // token驗證成功
-            .then((response) => {
-                //console.log(response);
-                commit("login", {
-                    name: localStorage.getItem("user"),
-                    status: true,
-                    token: localStorage.getItem("token")
+                // token驗證成功
+                .then((response) => {
+                    //console.log(response);
+                    commit("login", {
+                        name: localStorage.getItem("user"),
+                        status: true,
+                        token: localStorage.getItem("token")
+                    });
+                    resolve(response);
+                })
+                // token驗證錯誤就登出
+                .catch((error) => {
+                    //console.log(error);
+                    dispatch("logout");
+                    reject(error);
                 });
-                resolve(response);
-            })
-            // token驗證錯誤就登出
-            .catch((error) => {
-                //console.log(error);
-                dispatch("logout");
-                reject(error);
-            });
         });
     },
     // 登出後移除localStorage

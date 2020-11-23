@@ -5,10 +5,7 @@
     <div class="container">
       <b-form v-if="show">
         <h3 class="mb-3">會員註冊</h3>
-        <b-form-group
-          id="email-address"
-          label-for="email-address"
-        >
+        <b-form-group id="email-address" label-for="email-address">
           <div class="input-box">
             <b-icon class="mr-2" font-scale="2" icon="envelope"></b-icon>
             <b-form-input
@@ -19,7 +16,7 @@
               placeholder="請輸入電子郵件"
             ></b-form-input>
           </div>
-          <p>{{this.form.nameInputDesription}}</p>
+          <p>{{ this.form.nameInputDesription }}</p>
         </b-form-group>
 
         <b-form-group id="password-input" label-for="password-input">
@@ -49,7 +46,7 @@
         </b-form-group>
 
         <p>*** 點擊「註冊」即代表您已閱讀並瞭解服務條款及隱私權聲明。 ***</p>
-        {{ this.form.msg }} <br>
+        {{ this.form.msg }} <br />
         <b-button
           @click="checkPassword"
           variant="danger"
@@ -59,20 +56,23 @@
         </b-button>
       </b-form>
     </div>
+    <Footer />
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import _ from 'lodash';
+import { mapState } from "vuex";
+import _ from "lodash";
 import ResponsiveNavigation from "@/components/ResponsiveNavigation.vue";
 import Breadcrumb from "@/components/Breadcrumb.vue";
+import Footer from "@/components/Footer.vue";
 
 export default {
   name: "Registration",
   components: {
     ResponsiveNavigation,
     Breadcrumb,
+    Footer,
   },
 
   data() {
@@ -121,28 +121,32 @@ export default {
       console.log(name);
       console.log(password);
       // 向後端請求建立帳號
-      this.$store.dispatch("user/sendSignUpInfo", {
-        username: name,
-        password: password,
-      }).then(() => {
-        console.log(this.responseMsg);
-        if (this.responseMsg === -1) {
-          this.form.msg = "名稱已存在";
-        }
-      });
+      this.$store
+        .dispatch("user/sendSignUpInfo", {
+          username: name,
+          password: password,
+        })
+        .then(() => {
+          console.log(this.responseMsg);
+          if (this.responseMsg === -1) {
+            this.form.msg = "名稱已存在";
+          }
+        });
     },
     // lodash裡的套件, debounce可以delay在watcher裡的function, 打完字後500ms才請求後端
-    checkUsernameWhileTyping: _.debounce(function() {
-      this.$store.dispatch("user/sendUsernameInfo", {
-        username: this.form.name,
-      }).then(() => {
-        console.log(this.responseMsg);
-        if (this.responseMsg === -1) {
-          this.form.nameInputDesription = "名稱可以使用";
-        } else if (this.responseMsg === 1){
-          this.form.nameInputDesription = "名稱已存在";
-        }
-      });
+    checkUsernameWhileTyping: _.debounce(function () {
+      this.$store
+        .dispatch("user/sendUsernameInfo", {
+          username: this.form.name,
+        })
+        .then(() => {
+          console.log(this.responseMsg);
+          if (this.responseMsg === -1) {
+            this.form.nameInputDesription = "名稱可以使用";
+          } else if (this.responseMsg === 1) {
+            this.form.nameInputDesription = "名稱已存在";
+          }
+        });
     }, 500),
   },
 };

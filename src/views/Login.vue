@@ -41,26 +41,29 @@
             <b-form-checkbox value="that">保持登入狀態</b-form-checkbox>
           </b-form-checkbox-group>
         </b-form-group>
-        {{form.msg}} <br>
+        {{ form.msg }} <br />
         <b-button @click="login" variant="primary" class="m-2">登入</b-button>
         <b-button variant="danger" class="m-2" to="/registration"
           >註冊</b-button
         >
       </b-form>
     </div>
+    <Footer />
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 import ResponsiveNavigation from "@/components/ResponsiveNavigation.vue";
 import Breadcrumb from "@/components/Breadcrumb.vue";
+import Footer from "@/components/Footer.vue";
 
 export default {
   name: "login",
   components: {
     ResponsiveNavigation,
     Breadcrumb,
+    Footer,
   },
 
   data() {
@@ -87,18 +90,19 @@ export default {
       console.log(name);
       console.log(password);
       // 向後端請求比對帳號密碼
-      this.$store.dispatch("user/sendLoginInfo", {
-        username: name,
-        password: password,
-      })
-      // 驗證成功後前往首頁
-      .then(() => {
-        this.$router.push("/");
-      })
-      // 驗證失敗顯示錯誤訊息
-      .catch(() => {
-        this.form.msg = "使用者或密碼錯誤";
-      });
+      this.$store
+        .dispatch("user/sendLoginInfo", {
+          username: name,
+          password: password,
+        })
+        // 驗證成功後前往首頁
+        .then(() => {
+          this.$router.push("/");
+        })
+        // 驗證失敗顯示錯誤訊息
+        .catch(() => {
+          this.form.msg = "使用者或密碼錯誤";
+        });
     },
   },
 };

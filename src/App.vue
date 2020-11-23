@@ -1,36 +1,39 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <script>
 export default {
   name: "app",
-  mounted(){
+  mounted() {
     //判斷是否有本地儲存中是否有token，並更新vuex倉庫
-    
-    if(localStorage.getItem('user') == null){
-      localStorage.setItem('user','');
+
+    if (localStorage.getItem("user") == null) {
+      localStorage.setItem("user", "");
     }
-    if(localStorage.getItem('token') == null){
-      localStorage.setItem('token','');
+    if (localStorage.getItem("token") == null) {
+      localStorage.setItem("token", "");
     }
-    const username = localStorage.getItem('user');
-    const token = localStorage.getItem('token');
-    this.$store.state.name = username
+    const username = localStorage.getItem("user");
+    const token = localStorage.getItem("token");
+    this.$store.state.name = username;
     console.log(this.$store.state.name);
-    this.$store.state.token = token
+    this.$store.state.token = token;
     console.log(this.$store.state.token);
 
     // 每次刷新頁面都要向後端請求token是否合法，不合法就登出
-    this.$store.dispatch("user/userAuth", { token: this.$store.state.token }).then((res) => {
-      console.log(res);
-    }).catch((err) => {
-      console.log(err);
-    });
-  }
-}
+    this.$store
+      .dispatch("user/userAuth", { token: this.$store.state.token })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+};
 </script>
 
 <style>
