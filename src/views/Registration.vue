@@ -52,7 +52,8 @@
           variant="danger"
           class="m-2"
           to="/registration"
-          >註冊
+        >
+          註冊
         </b-button>
       </b-form>
     </div>

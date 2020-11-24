@@ -8,7 +8,11 @@
       </div>
       <div>
         <b-row>
-          <b-col v-for="(movie, idx) in movieList" :key="idx" md="3">
+          <b-col 
+            v-for="(movie, idx) in movieList" 
+            :key="idx" 
+            md="3"
+          >
             <b-card
               class="text-left mt-5"
               :title="movie.title"
@@ -29,6 +33,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import ResponsiveNavigation from "@/components/ResponsiveNavigation.vue";
 import Breadcrumb from "@/components/Breadcrumb.vue";
 import Footer from "@/components/Footer.vue";
@@ -94,6 +99,19 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    ...mapState({
+      movieList: (state) => state.movie.movieList,
+    }),
+  },
+  mounted() {
+    // 每次進頁面時都要向後端請求電影資料
+    this.$store.dispatch("movie/fetchMovie").then(res => {
+      console.log(res);
+    }).catch(err => {
+      console.log(err);
+    });
   },
 };
 </script>

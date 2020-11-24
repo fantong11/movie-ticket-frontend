@@ -11,7 +11,9 @@ const searchRequest = axios.create({
 });
 
 // 電影相關...
-
+const movieRequest = axios.create({
+    baseURL: '/api/movie/'
+});
 
 
 // user相關api
@@ -23,3 +25,6 @@ export const apiUserAuthenticate = data => userRequest.post("/authenticate", dat
 
 // 收尋相關api
 export const apiSearch = data => searchRequest.get(`/Search?searchdata=${data}`);
+
+// 電影相關api
+export const apiFetchMovie = movieRequest.get("/movieList");

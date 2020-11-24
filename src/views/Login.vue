@@ -43,9 +43,9 @@
         </b-form-group>
         {{ form.msg }} <br />
         <b-button @click="login" variant="primary" class="m-2">登入</b-button>
-        <b-button variant="danger" class="m-2" to="/registration"
-          >註冊</b-button
-        >
+        <b-button variant="danger" class="m-2" to="/registration">
+          註冊
+        </b-button>
       </b-form>
     </div>
     <Footer />

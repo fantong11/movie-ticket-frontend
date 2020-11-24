@@ -11,7 +11,7 @@ const data = {
     status: false,
     wait: false, // to perform overlay while running api call promise
     responseMsg: '',
-};
+}
 
 const mutations = {
     login(state, payload) {
