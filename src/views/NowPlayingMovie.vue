@@ -6,25 +6,32 @@
       <div class="text-left">
         <h2 class="m-0 mt-4">熱售中</h2>
       </div>
-      <div>
+      <div :v-show="wait">
         <b-row>
-          <b-col 
-            v-for="(movie, idx) in movieList" 
-            :key="idx" 
-            md="3"
-          >
+          <!-- 印出電影的迴圈 -->
+          <b-col v-for="(movie, idx) in paginatedItems" :key="idx" md="3">
             <b-card
               class="text-left mt-5"
-              :title="movie.title"
-              :img-src="require('../assets/film1.jpg')"
+              :title="movie.name"
+              :img-src="require(`../assets/${movie.picPath}`)"
             >
               <b-card-text>
-                {{ movie.titleEN }}
+                {{ movie.nameEN }}
                 <br />
                 {{ movie.date }}
               </b-card-text>
             </b-card>
           </b-col>
+        </b-row>
+        <b-row>
+          <b-pagination
+            class="mt-5"
+            @change="onPageChanged"
+            @click.native="scrollToTop"
+            :total-rows="totalRows"
+            :per-page="perPage"
+            v-model="currentPage"
+          />
         </b-row>
       </div>
     </b-container>
@@ -38,6 +45,39 @@ import ResponsiveNavigation from "@/components/ResponsiveNavigation.vue";
 import Breadcrumb from "@/components/Breadcrumb.vue";
 import Footer from "@/components/Footer.vue";
 
+// const movieList = [
+//   {
+//     name: "1",
+//     nameEN: "qwer",
+//     picPath: "film1.jpg",
+//     date: "2020",
+//   },
+//   {
+//     name: "2",
+//     nameEN: "qwer",
+//     picPath: "film1.jpg",
+//     date: "2020",
+//   },
+//   {
+//     name: "3",
+//     nameEN: "qwer",
+//     picPath: "film1.jpg",
+//     date: "2020",
+//   },
+//   {
+//     name: "4",
+//     nameEN: "qwer",
+//     picPath: "film1.jpg",
+//     data: "2020",
+//   },
+//   {
+//     name: "5",
+//     nameEN: "qwer",
+//     picPath: "film1.jpg",
+//     data: "2020",
+//   },
+// ];
+
 export default {
   name: "nowplayingmovie",
   components: {
@@ -47,71 +87,56 @@ export default {
   },
   data() {
     return {
-      movieList: [
-        {
-          title: "電影1",
-          titleEN: "one",
-          img: "film1.jpg",
-          text: "87",
-          date: "2000/10/1",
-        },
-        {
-          title: "電影2",
-          titleEN: "one2",
-          img: "https://picsum.photos/600/300/?image=25",
-          date: "2000/10/2",
-        },
-        {
-          title: "電影3",
-          titleEN: "one3",
-          img: "https://picsum.photos/600/300/?image=25",
-          date: "2000/10/3",
-        },
-        {
-          title: "電影4",
-          titleEN: "one4",
-          img: "https://picsum.photos/600/300/?image=25",
-          date: "2000/10/4",
-        },
-        {
-          title: "電影5",
-          titleEN: "one5",
-          img: "https://picsum.photos/600/300/?image=25",
-          date: "2000/10/5",
-        },
-        {
-          title: "電影6",
-          titleEN: "one6",
-          img: "https://picsum.photos/600/300/?image=25",
-          date: "2000/10/6",
-        },
-        {
-          title: "電影6",
-          titleEN: "one6",
-          img: "https://picsum.photos/600/300/?image=25",
-          date: "2000/10/6",
-        },
-        {
-          title: "電影6",
-          titleEN: "one6",
-          img: "https://picsum.photos/600/300/?image=25",
-          date: "2000/10/6",
-        },
-      ],
+      items: [],
+      paginatedItems: [],
+      perPage: 1,
+      totalRows: 0,
+      currentPage: 1,
     };
   },
   computed: {
     ...mapState({
       movieList: (state) => state.movie.movieList,
+      wait: (state) => state.movie.wait,
     }),
+    pageCount() {
+      return Math.floor(this.totalRows / this.perPage);
+    },
   },
   mounted() {
     // 每次進頁面時都要向後端請求電影資料
-    this.$store.dispatch("movie/fetchMovie").then(res => {
-      console.log(res);
-    }).catch(err => {
-      console.log(err);
-    });
+    this.$store
+      .dispatch("movie/fetchMovie")
+      .then(() => {
+        this.initPaginatedItems();
+        this.paginate(this.perPage, 0);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+  methods: {
+    // 初始化變數
+    initPaginatedItems() {
+      this.items = this.movieList;
+      this.paginatedItems = this.movieList;
+      this.totalRows = this.movieList.length;
+    },
+    // 分頁
+    paginate(page_size, page_number) {
+      let itemsToParse = this.items;
+      this.paginatedItems = itemsToParse.slice(
+        page_number * page_size,
+        (page_number + 1) * page_size
+      );
+    },
+    onPageChanged(page) {
+      this.paginate(this.perPage, page - 1);
+    },
+    // 回到頁面最上方
+    scrollToTop() {
+      window.scrollTo(0, 0);
+    },
   },
 };
 </script>

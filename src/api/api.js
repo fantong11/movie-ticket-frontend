@@ -27,4 +27,4 @@ export const apiUserAuthenticate = data => userRequest.post("/authenticate", dat
 export const apiSearch = data => searchRequest.get(`/Search?searchdata=${data}`);
 
 // 電影相關api
-export const apiFetchMovie = movieRequest.get("/movieList");
+export const apiFetchMovie = () => movieRequest.get("/movieList");
