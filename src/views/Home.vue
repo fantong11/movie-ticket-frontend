@@ -5,7 +5,7 @@
     <b-container class="content-container" fluid="lg">
       <b-row>
         <b-col md="6">
-          <QuickSearch/>
+          <QuickSearch />
         </b-col>
         <b-col md="6">
           <div class="news">
@@ -18,7 +18,7 @@
         </b-col>
       </b-row>
     </b-container>
-    <Footer/>
+    <Footer />
   </div>
 </template>
 
@@ -26,8 +26,8 @@
 // @ is an alias to /src
 import ResponsiveNavigation from "@/components/ResponsiveNavigation.vue";
 import Carousel from "@/components/Carousel.vue";
-import QuickSearch from "@/components/QuickSearch.vue"
-import Footer from "@/components/Footer.vue"
+import QuickSearch from "@/components/QuickSearch.vue";
+import Footer from "@/components/Footer.vue";
 
 export default {
   name: "Home",
