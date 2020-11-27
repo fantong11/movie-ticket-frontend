@@ -11,15 +11,21 @@
           <!-- 印出電影的迴圈 -->
           <b-col v-for="(movie, idx) in paginatedItems" :key="idx" md="3">
             <b-card
-              class="text-left mt-5"
+              no-body
+              class="text-left mt-5 card"
               :title="movie.name"
               :img-src="require(`../assets/${movie.picPath}`)"
             >
-              <b-card-text>
-                {{ movie.nameEN }}
-                <br />
-                {{ movie.date }}
-              </b-card-text>
+              <b-card-body>
+                <b-link class="movie-link" :to="{ name: 'Movie', params: { movieId: movie.id, movieName: transferName(movie.nameEN) }}">
+                  <h5>{{ movie.name }}</h5>
+                </b-link>
+                <b-card-text>
+                  {{ movie.nameEN }}
+                  <br />
+                  {{ movie.date }}
+                </b-card-text>
+              </b-card-body>
             </b-card>
           </b-col>
         </b-row>
@@ -45,39 +51,6 @@ import ResponsiveNavigation from "@/components/ResponsiveNavigation.vue";
 import Breadcrumb from "@/components/Breadcrumb.vue";
 import Footer from "@/components/Footer.vue";
 
-// const movieList = [
-//   {
-//     name: "1",
-//     nameEN: "qwer",
-//     picPath: "film1.jpg",
-//     date: "2020",
-//   },
-//   {
-//     name: "2",
-//     nameEN: "qwer",
-//     picPath: "film1.jpg",
-//     date: "2020",
-//   },
-//   {
-//     name: "3",
-//     nameEN: "qwer",
-//     picPath: "film1.jpg",
-//     date: "2020",
-//   },
-//   {
-//     name: "4",
-//     nameEN: "qwer",
-//     picPath: "film1.jpg",
-//     data: "2020",
-//   },
-//   {
-//     name: "5",
-//     nameEN: "qwer",
-//     picPath: "film1.jpg",
-//     data: "2020",
-//   },
-// ];
-
 export default {
   name: "nowplayingmovie",
   components: {
@@ -89,7 +62,7 @@ export default {
     return {
       items: [],
       paginatedItems: [],
-      perPage: 1,
+      perPage: 8,
       totalRows: 0,
       currentPage: 1,
     };
@@ -106,7 +79,7 @@ export default {
   mounted() {
     // 每次進頁面時都要向後端請求電影資料
     this.$store
-      .dispatch("movie/fetchMovie")
+      .dispatch("movie/fetchAllMovie")
       .then(() => {
         this.initPaginatedItems();
         this.paginate(this.perPage, 0);
@@ -136,6 +109,10 @@ export default {
     // 回到頁面最上方
     scrollToTop() {
       window.scrollTo(0, 0);
+    },
+    // 轉換電影名字 ex. Demon Slayer ---> demon-slayer
+    transferName(movieName) {
+      return movieName.toLowerCase().replaceAll(" ", "-");
     },
   },
 };

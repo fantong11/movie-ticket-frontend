@@ -18,7 +18,7 @@ const movieRequest = axios.create({
 
 // user相關api
 export const apiUserLogin = data => userRequest.post("/signIn", data);
-export const apiUserLogout = data => userRequest.post("/signOut", data);
+// export const apiUserLogout = data => userRequest.post("/signOut", data);
 export const apiUserSignUp = data => userRequest.post("/signUp", data);
 export const apiUsernameCheck = data => userRequest.post("/usernameCheck", data);
 export const apiUserAuthenticate = data => userRequest.post("/authenticate", data);
@@ -27,4 +27,5 @@ export const apiUserAuthenticate = data => userRequest.post("/authenticate", dat
 export const apiSearch = data => searchRequest.get(`/Search?searchdata=${data}`);
 
 // 電影相關api
-export const apiFetchMovie = () => movieRequest.get("/movieList");
+export const apiFetchAllMovie = () => movieRequest.get("/movieList");
+export const apiFetchOneMovie = data => movieRequest.get(`/movie?movieid=${data}`);

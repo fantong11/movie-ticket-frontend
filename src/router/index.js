@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import NowPlayingMovie from '../views/NowPlayingMovie.vue'
 import Login from '../views/Login.vue'
 import Registration from '../views/Registration.vue'
+import Movie from '../views/Movie.vue'
 
 Vue.use(VueRouter)
 
@@ -30,7 +31,7 @@ const routes = [
       {
         name: "熱映中"
       }]
-    }
+    },
   },
   {
     path: '/login',
@@ -60,6 +61,24 @@ const routes = [
       }]
     }
   },
+  {
+    path: '/nowplayingmovie/:movieId/:movieName',
+    name: 'Movie',
+    component: Movie,
+    meta: {
+      breadcrumb: [{
+        name: "首頁",
+        link: "/"
+      },
+      {
+        name: "熱映中",
+        link: "/nowplayingmovie"
+      },
+      {
+        name: "",
+      }]
+    },
+  }
 ]
 
 const router = new VueRouter({
