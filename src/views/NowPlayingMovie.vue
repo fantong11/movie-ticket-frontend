@@ -14,7 +14,7 @@
           <h2 class="m-0 mt-4">熱映中</h2>
         </div>
       </b-container>
-      <MovieList :movie-list="movieList.slice(0, 6)" />
+      <MovieList :movie-list="movieList" />
       <Footer />
     </b-overlay>
   </div>

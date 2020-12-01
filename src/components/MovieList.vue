@@ -11,7 +11,7 @@
             class="text-left mt-5 card"
             :title="movie.name"
           >
-            <!-- <b-link
+            <b-link
               :to="{
                 name: 'Movie',
                 params: {
@@ -25,7 +25,7 @@
                 :src="require(`../assets/${movie.picPath}`)"
                 alt=""
               />
-            </b-link> -->
+            </b-link>
             <b-card-body>
               <b-link
                 class="movie-link"
