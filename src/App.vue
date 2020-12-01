@@ -16,12 +16,20 @@ export default {
     if (localStorage.getItem("token") == null) {
       localStorage.setItem("token", "");
     }
+    if (localStorage.getItem("role") == null) {
+      localStorage.setItem("role", "");
+    }
+
     const username = localStorage.getItem("user");
     const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role");
+
     this.$store.state.name = username;
     console.log(this.$store.state.name);
     this.$store.state.token = token;
     console.log(this.$store.state.token);
+    this.$store.state.role = role;
+    console.log(this.$store.state.role);
 
     // 每次刷新頁面都要向後端請求token是否合法，不合法就登出
     this.$store

@@ -128,7 +128,6 @@ export default {
           password: password,
         })
         .then(() => {
-          console.log(this.responseMsg);
           if (this.responseMsg === -1) {
             this.form.msg = "名稱已存在";
           }
@@ -141,12 +140,10 @@ export default {
           username: this.form.name,
         })
         .then(() => {
-          console.log(this.responseMsg);
-          if (this.responseMsg === -1) {
-            this.form.nameInputDesription = "名稱可以使用";
-          } else if (this.responseMsg === 1) {
-            this.form.nameInputDesription = "名稱已存在";
-          }
+          this.form.nameInputDesription = "名稱已存在";
+        })
+        .catch(() => {
+          this.form.nameInputDesription = "名稱可以使用";
         });
     }, 500),
   },
