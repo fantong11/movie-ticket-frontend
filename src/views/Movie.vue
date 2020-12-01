@@ -5,7 +5,11 @@
     <b-container fluid="lg" class="text-left">
       <b-row>
         <b-col md="3">
-          <img class="movie-img" :src="require(`../assets/${movie.picPath}`)" alt="">
+          <img
+            class="movie-img"
+            :src="require(`../assets/${movie.picPath}`)"
+            alt=""
+          />
         </b-col>
         <b-col md="3">
           <h2>{{ movie.name }}</h2>
@@ -15,11 +19,11 @@
           <p>導演：{{ movie.director }}</p>
           <p>演員：{{ movie.actors }}</p>
           <p>類型：{{ movie.movie_type }}</p>
-          <p>片長：{{ movie.running_time }}</p>
+          <p>片長：{{ convertTime(movie.running_time) }}</p>
         </b-col>
       </b-row>
       <b-row>
-        <p>{{ "movie.description" }}</p>
+        <p>{{ movie.description }}</p>
       </b-row>
     </b-container>
     <Footer />
@@ -42,6 +46,7 @@ export default {
   computed: {
     ...mapState({
       movie: (state) => state.movie.movie,
+      wait: (state) => state.movie.wait,
     }),
   },
   created() {
@@ -55,6 +60,16 @@ export default {
         console.log(err);
       });
   },
+  beforeDestroy() {
+    this.$store.state.movie.movie = null;
+  },
+  methods: {
+    convertTime(totalMinutes) {
+      let hours = totalMinutes / 60;
+      let minutes = totalMinutes % 60;
+      return Math.floor(hours) + " 時 " + minutes + " 分";
+    },
+  }
 };
 </script>
 

@@ -40,13 +40,16 @@ const actions = {
     });
   },
   fetchOneMovie({ commit }, payload) {
+    commit("setWait", { flag: true });
     return new Promise((resolve, reject) => {
       apiFetchOneMovie(payload.movieId).then(response => {
         console.log(response.data);
         commit("setMovie", { movie: response.data });
+        commit("setWait", { flag: false });
         resolve();
       }).catch(error => {
         console.log(error);
+        commit("setWait", { flag: false });
         reject(new Error("error"));
       });
     });

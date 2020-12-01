@@ -12,7 +12,8 @@
       <b-carousel-slide 
         v-for="(banner, index) in banners" :key="index"
         :img-src="require(`../assets/${banner}`)"
-        :img-alt="`${banner}`">
+        :img-alt="`${banner}`"
+      >
       </b-carousel-slide>
     </b-carousel>
   </div>

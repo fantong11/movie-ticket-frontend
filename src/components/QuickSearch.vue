@@ -39,12 +39,20 @@
             ></b-form-select>
           </div>
         </b-form-group>
-        <b-button class="m-2" type="submit" variant="secondary "
-          >前往訂票</b-button
+        <b-button 
+          class="m-2" 
+          type="submit" 
+          variant="secondary"
         >
-        <b-button class="m-2" type="reset" variant="secondary "
-          >查看座位</b-button
+          前往訂票
+        </b-button>
+        <b-button
+          class="m-2"
+          type="reset"
+          variant="secondary"
         >
+          查看座位
+        </b-button>
       </b-form>
     </div>
   </div>

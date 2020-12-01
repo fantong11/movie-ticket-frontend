@@ -1,14 +1,22 @@
 <template>
   <div class="nowplayingmovie">
-    <ResponsiveNavigation />
-    <Breadcrumb />
-    <b-container>
-      <div class="text-left">
-        <h2 class="m-0 mt-4">熱映中</h2>
-      </div>
-    </b-container>
-    <MovieList :movie-list="movieList.slice(0,6)" />
-    <Footer />
+    <b-overlay
+      :show="wait"
+      spinner-variant="primary"
+      spinner-type="grow"
+      rounded="sm"
+      :opacity="1"
+    >
+      <ResponsiveNavigation />
+      <Breadcrumb />
+      <b-container>
+        <div class="text-left">
+          <h2 class="m-0 mt-4">熱映中</h2>
+        </div>
+      </b-container>
+      <MovieList :movie-list="movieList.slice(0, 6)" />
+      <Footer />
+    </b-overlay>
   </div>
 </template>
 
