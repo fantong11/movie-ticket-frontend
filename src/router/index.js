@@ -5,6 +5,7 @@ import NowPlayingMovie from '../views/NowPlayingMovie.vue'
 import Login from '../views/Login.vue'
 import Registration from '../views/Registration.vue'
 import Movie from '../views/Movie.vue'
+import ComingMovie from '../views/ComingMovie.vue'
 
 Vue.use(VueRouter)
 
@@ -78,6 +79,11 @@ const routes = [
         name: "",
       }]
     },
+  },
+  {
+   path: '/comingmovie',
+   name: 'ComingMovie',
+   component: ComingMovie,   
   }
 ]
 

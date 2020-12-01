@@ -22,7 +22,7 @@
           </b-nav-item-dropdown>
           <b-nav-item-dropdown text="電影介紹">
             <b-dropdown-item to="/nowplayingmovie">熱售中</b-dropdown-item>
-            <b-dropdown-item to="#">即將上映</b-dropdown-item>
+            <b-dropdown-item to="/comingmovie">即將上映</b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown text="映演品牌">
             <b-dropdown-item to="#">TITAN</b-dropdown-item>

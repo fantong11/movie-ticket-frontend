@@ -26,8 +26,8 @@
 // @ is an alias to /src
 import ResponsiveNavigation from "@/components/ResponsiveNavigation.vue";
 import Carousel from "@/components/Carousel.vue";
-import QuickSearch from "@/components/QuickSearch.vue"
-import Footer from "@/components/Footer.vue"
+import QuickSearch from "@/components/QuickSearch.vue";
+import Footer from "@/components/Footer.vue";
 
 export default {
   name: "Home",
