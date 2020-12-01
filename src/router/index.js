@@ -81,10 +81,20 @@ const routes = [
     },
   },
   {
-   path: '/comingmovie',
-   name: 'ComingMovie',
-   component: ComingMovie,   
-  }
+    path: '/comingmovie',
+    name: 'ComingMovie',
+    component: ComingMovie,
+    meta: {
+      breadcrumb: [{
+        name: "首頁",
+        link: "/"
+      },
+      {
+        name: "即將上映",
+        link: "/comingmovie"
+      }]
+    }
+  },
 ]
 
 const router = new VueRouter({

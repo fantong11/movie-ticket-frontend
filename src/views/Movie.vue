@@ -10,7 +10,7 @@
         <b-col md="3">
           <h2>{{ movie.name }}</h2>
           <h3>{{ movie.nameEN }}</h3>
-          <p>上映日期：{{ movie.date }}</p>
+          <p>上映日期：{{ movie.release_date }}</p>
           <h2>MOVIE INFO</h2>
           <p>導演：{{ movie.director }}</p>
           <p>演員：{{ movie.actors }}</p>
