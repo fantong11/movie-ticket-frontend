@@ -1,39 +1,33 @@
 <template>
   <div class="nowplayingmovie">
-    <ResponsiveNavigation />
-    <Breadcrumb />
-    <b-container>
-      <div class="text-left">
-        <h2 class="m-0 mt-4">熱售中</h2>
-      </div>
-      <!-- <div :v-show="wait"> -->
-      <b-row>
-        <!-- 印出電影的迴圈 -->
-        <b-col v-for="(movie, idx) in paginatedItems" :key="idx" md="3">
-          <b-card
-            no-body
-            img-top
-            class="text-left mt-5 card"
-            :title="movie.name"
+    <b-overlay
+      :show="wait"
+      spinner-variant="primary"
+      spinner-type="grow"
+      rounded="sm"
+      :opacity="1"
+    >
+      <ResponsiveNavigation />
+      <Breadcrumb />
+      <b-container>
+        <div class="text-left">
+          <h2 class="m-0 mt-4">熱售中</h2>
+        </div>
+        <b-row>
+          <!-- 印出電影的迴圈 -->
+          <b-col
+            v-for="(movie, idx) in paginatedItems"
+            :key="idx"
+            md="3"
+            sm="6"
           >
-            <b-link
-              :to="{
-                name: 'Movie',
-                params: {
-                  movieId: movie.id,
-                  movieName: transferName(movie.nameEN),
-                },
-              }"
+            <b-card
+              no-body
+              img-top
+              class="text-left mt-5 card"
+              :title="movie.name"
             >
-              <img
-                class="movie-img"
-                :src="require(`../assets/${movie.picPath}`)"
-                alt=""
-              />
-            </b-link>
-            <b-card-body>
               <b-link
-                class="movie-link"
                 :to="{
                   name: 'Movie',
                   params: {
@@ -42,30 +36,47 @@
                   },
                 }"
               >
-                <h5>{{ movie.name }}</h5>
+                <img
+                  class="movie-img"
+                  :src="require(`../assets/${movie.picPath}`)"
+                  alt=""
+                />
               </b-link>
-              <b-card-text>
-                {{ movie.nameEN }}
-                <br />
-                {{ movie.date }}
-              </b-card-text>
-            </b-card-body>
-          </b-card>
-        </b-col>
-      </b-row>
-      <b-row>
-        <b-pagination
-          class="mt-5"
-          @change="onPageChanged"
-          @click.native="scrollToTop"
-          :total-rows="totalRows"
-          :per-page="perPage"
-          v-model="currentPage"
-        />
-      </b-row>
-      <!-- </div> -->
-    </b-container>
-    <Footer />
+              <b-card-body>
+                <b-link
+                  class="movie-link"
+                  :to="{
+                    name: 'Movie',
+                    params: {
+                      movieId: movie.id,
+                      movieName: transferName(movie.nameEN),
+                    },
+                  }"
+                >
+                  <h5>{{ movie.name }}</h5>
+                </b-link>
+                <b-card-text>
+                  {{ movie.nameEN }}
+                  <br />
+                  {{ movie.date }}
+                </b-card-text>
+              </b-card-body>
+            </b-card>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-pagination
+            class="mt-5"
+            @change="onPageChanged"
+            @click.native="scrollToTop"
+            :total-rows="totalRows"
+            :per-page="perPage"
+            v-model="currentPage"
+          />
+        </b-row>
+      </b-container>
+      <Footer />
+    </b-overlay>
   </div>
 </template>
 
