@@ -42,7 +42,7 @@
               <b-card-text>
                 {{ movie.nameEN }}
                 <br />
-                {{ movie.date }}
+                {{ movie.release_date }}
               </b-card-text>
             </b-card-body>
           </b-card>
@@ -68,6 +68,7 @@ export default {
   name: "MovieList",
   props: {
     movieList: Array,
+    release: String,
   },
   data() {
     return {
@@ -81,7 +82,7 @@ export default {
   mounted() {
     // 每次進頁面時都要向後端請求電影資料
     this.$store
-      .dispatch("movie/fetchAllMovie")
+      .dispatch("movie/fetchAllMovie", { release: this.release })
       .then(() => {
         this.initPaginatedItems();
         this.paginate(this.perPage, 0);

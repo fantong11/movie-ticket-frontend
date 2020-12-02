@@ -5,7 +5,8 @@
       spinner-variant="primary"
       spinner-type="grow"
       rounded="sm"
-      :opacity="1"
+      variant="white"
+      opacity="1"
     >
       <ResponsiveNavigation />
       <Breadcrumb />
@@ -14,7 +15,7 @@
           <h2 class="m-0 mt-4">熱映中</h2>
         </div>
       </b-container>
-      <MovieList :movie-list="movieList" />
+      <MovieList :movie-list="movieList" release="now" />
       <Footer />
     </b-overlay>
   </div>

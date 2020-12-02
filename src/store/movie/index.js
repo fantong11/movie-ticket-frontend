@@ -24,10 +24,10 @@ const mutations = {
 
 const actions = {
   // 向後端請求全部的電影清單
-  fetchAllMovie({ commit }) {
+  fetchAllMovie({ commit }, payload) {
+    commit("setWait", { flag: true });
     return new Promise((resolve, reject) => {
-      commit("setWait", { flag: true });
-      apiFetchAllMovie().then(response => {
+      apiFetchAllMovie(payload.release).then(response => {
         console.log(response.data);
         commit("setMovieList", { movieList: response.data });
         commit("setWait", { flag: false });
