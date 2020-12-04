@@ -21,7 +21,7 @@
           </b-col>
           <b-col md="4">
             <h2>{{ movie.name }}</h2>
-            <h3>{{ movie.name_en }}</h3> 
+            <h3>{{ movie.name_en }}</h3>
             <p>上映日期：{{ movie.release_date }}</p>
             <h2>MOVIE INFO</h2>
             <p>導演：{{ movie.director }}</p>

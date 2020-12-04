@@ -34,3 +34,4 @@ export const apiFetchOneMovie = data => movieRequest.get(`/movie?movieid=${data}
 
 // 影城相關api
 export const apiFetchAllTheater = () => theaterRequest.get('/theaterList');
+export const apiFetchTheaterByMovieId = data => theaterRequest.get(`/theater?movieid=${data}`);
