@@ -16,13 +16,13 @@
                 name: 'Movie',
                 params: {
                   movieId: movie.id,
-                  movieName: transferName(movie.nameEN),
+                  movieName: transferName(movie.name_en),
                 },
               }"
             >
               <img
                 class="movie-img"
-                :src="require(`../assets/${movie.picPath}`)"
+                :src="require(`../assets/${movie.pic_path}`)"
                 alt=""
               />
             </b-link>
@@ -33,14 +33,14 @@
                   name: 'Movie',
                   params: {
                     movieId: movie.id,
-                    movieName: transferName(movie.nameEN),
+                    movieName: transferName(movie.name_en),
                   },
                 }"
               >
                 <h5>{{ movie.name }}</h5>
               </b-link>
               <b-card-text>
-                {{ movie.nameEN }}
+                {{ movie.name_en }}
                 <br />
                 {{ movie.release_date }}
               </b-card-text>
@@ -64,10 +64,11 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "MovieList",
   props: {
-    movieList: Array,
     release: String,
   },
   data() {
@@ -92,6 +93,9 @@ export default {
       });
   },
   computed: {
+    ...mapState({
+      movieList: (state) => state.movie.movieList,
+    }),
     pageCount() {
       return Math.floor(this.totalRows / this.perPage);
     },

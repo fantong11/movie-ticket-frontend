@@ -6,6 +6,7 @@ import Login from '../views/Login.vue'
 import Registration from '../views/Registration.vue'
 import Movie from '../views/Movie.vue'
 import ComingMovie from '../views/ComingMovie.vue'
+import Admin from '../views/Admin.vue'
 
 Vue.use(VueRouter)
 
@@ -94,6 +95,11 @@ const routes = [
         link: "/comingmovie"
       }]
     }
+  },
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: Admin,
   },
 ]
 
