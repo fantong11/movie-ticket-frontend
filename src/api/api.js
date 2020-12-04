@@ -15,7 +15,9 @@ const movieRequest = axios.create({
     baseURL: '/api/movie/'
 });
 
-
+const theaterRequest = axios.create({
+    baseURL: '/api/theater/'
+});
 // user相關api
 export const apiUserLogin = data => userRequest.post("/signIn", data);
 // export const apiUserLogout = data => userRequest.post("/signOut", data);
@@ -29,3 +31,6 @@ export const apiSearch = data => searchRequest.get(`/Search?searchdata=${data}`)
 // 電影相關api
 export const apiFetchAllMovie = data => movieRequest.get(`/movieList?release=${data}`);
 export const apiFetchOneMovie = data => movieRequest.get(`/movie?movieid=${data}`);
+
+// 影城相關api
+export const apiFetchAllTheater = () => theaterRequest.get('/theaterList');
