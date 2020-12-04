@@ -7,8 +7,8 @@
           <div class="select-box">
             <b-icon class="mr-2" font-scale="2" icon="geo-alt"></b-icon>
             <b-form-select
-              v-model="cinemas.selected"
-              :options="cinemas.options"
+              v-model="theaterList.selected"
+              :options="theaterList.options"
             ></b-form-select>
           </div>
         </b-form-group>
@@ -39,18 +39,10 @@
             ></b-form-select>
           </div>
         </b-form-group>
-        <b-button 
-          class="m-2" 
-          type="submit" 
-          variant="secondary"
-        >
+        <b-button class="m-2" type="submit" variant="secondary">
           前往訂票
         </b-button>
-        <b-button
-          class="m-2"
-          type="reset"
-          variant="secondary"
-        >
+        <b-button class="m-2" type="reset" variant="secondary">
           查看座位
         </b-button>
       </b-form>
@@ -59,19 +51,13 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
   name: "QuickSearch",
   data() {
     return {
       // 日前為假資料
-      cinemas: {
-        selected: null,
-        options: [
-          { value: null, text: "請選擇影城" },
-          { value: 1, text: "信義威秀" },
-          { value: 2, text: "京站威秀" },
-        ],
-      },
+      
       movies: {
         selected: null,
         options: [
@@ -99,6 +85,21 @@ export default {
       },
     };
   },
+  computed:
+  {
+    ...mapState({
+      theaterList : (state)=> state.theater.theaterList
+    })
+  },
+  mounted() {
+    this.$store
+      .dispatch("theater/fetchAllTheater")
+      .then(() => {
+        console.log(this.theaterList)
+      })
+      .catch(() => {});
+  },
+
 };
 </script>
 

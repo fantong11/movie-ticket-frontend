@@ -15,9 +15,10 @@ const data = {
 
 const mutations = { //state
     setTheaterList(state, payload) {
-        for (let theater in payload) {
-            state.theaterList.options.push({ value: theater.id, text: theater.name })
-        }
+        payload.theaterList.forEach((theater) => {
+            console.log(theater)
+            state.theaterList.options.push({ value: theater.id, text: theater.name });
+        })
     },
     theaterListFindByMovieId(state, payload) {
         state.theaterListFindByMovieId = payload.theaterList;
