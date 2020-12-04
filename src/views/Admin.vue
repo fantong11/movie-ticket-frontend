@@ -16,5 +16,9 @@
 <script>
 export default {
   name: "admin",
+  mounted() {
+    this.$store.dispatch("user/adminBoard", {token: localStorage.getItem("token")})
+  },
+  
 };
 </script>

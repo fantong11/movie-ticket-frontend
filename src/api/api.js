@@ -24,6 +24,8 @@ export const apiUserLogin = data => userRequest.post("/signIn", data);
 export const apiUserSignUp = data => userRequest.post("/signUp", data);
 export const apiUsernameCheck = data => userRequest.post("/usernameCheck", data);
 export const apiUserAuthenticate = data => userRequest.post("/authenticate", data);
+export const apiAdminBoard = data => userRequest.post("/adminBoard", data);
+
 
 // 收尋相關api
 export const apiSearch = data => searchRequest.get(`/Search?searchdata=${data}`);

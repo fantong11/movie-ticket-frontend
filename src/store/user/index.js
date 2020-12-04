@@ -3,6 +3,7 @@ import {
   apiUserSignUp,
   apiUsernameCheck,
   apiUserAuthenticate,
+  apiAdminBoard,
 } from '../../api/api';
 
 const data = {
@@ -126,6 +127,23 @@ const actions = {
       localStorage.removeItem('role');
       resolve();
     });
+  },
+  adminBoard({ commit },payload ){
+    return new Promise((resolve,reject) =>{
+      apiAdminBoard({
+        token: payload.token,
+      })
+      .then(response => {
+        commit("setResponseMsg",response.data);
+        resolve();
+      }).catch((error) => {
+        console.log(error);
+        reject(new Error("error"));        
+      })
+      
+    });
+
+
   }
 };
 
