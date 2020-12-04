@@ -19,17 +19,18 @@
               alt=""
             />
           </b-col>
-          <b-col md="3">
+          <b-col md="4">
             <h2>{{ movie.name }}</h2>
-            <h3>{{ movie.nameEN }}</h3> 
+            <h4>{{ movie.nameEN }}</h4> 
             <p>上映日期：{{ movie.release_date }}</p>
-            <h2>MOVIE INFO</h2>
+            <h5>MOVIE INFO</h5>
             <p>導演：{{ movie.director }}</p>
             <p>演員：{{ movie.actors }}</p>
             <p>類型：{{ movie.movie_type }}</p>
             <p>片長：{{ convertTime(movie.running_time) }}</p>
           </b-col>
         </b-row>
+        
         <b-row>
           <p>{{ movie.description }}</p>
         </b-row>
