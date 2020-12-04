@@ -15,19 +15,22 @@
           <b-col md="3">
             <img
               class="movie-img"
-              :src="require(`../assets/${movie.picPath}`)"
+              :src="require(`../assets/${movie.pic_path}`)"
               alt=""
             />
           </b-col>
-          <b-col md="3">
+          <b-col md="4">
             <h2>{{ movie.name }}</h2>
-            <h3>{{ movie.nameEN }}</h3> 
+            <h3>{{ movie.name_en }}</h3> 
             <p>上映日期：{{ movie.release_date }}</p>
             <h2>MOVIE INFO</h2>
             <p>導演：{{ movie.director }}</p>
             <p>演員：{{ movie.actors }}</p>
             <p>類型：{{ movie.movie_type }}</p>
             <p>片長：{{ convertTime(movie.running_time) }}</p>
+          </b-col>
+          <b-col md="5">
+            <TheaterList />
           </b-col>
         </b-row>
         <b-row>
@@ -43,6 +46,7 @@
 import { mapState } from "vuex";
 import ResponsiveNavigation from "@/components/ResponsiveNavigation.vue";
 import Breadcrumb from "@/components/Breadcrumb.vue";
+import TheaterList from "@/components/TheaterList.vue";
 import Footer from "@/components/Footer.vue";
 
 export default {
@@ -50,6 +54,7 @@ export default {
   components: {
     ResponsiveNavigation,
     Breadcrumb,
+    TheaterList,
     Footer,
   },
   computed: {
@@ -59,7 +64,6 @@ export default {
     }),
   },
   mounted() {
-    // this.$store.state.movie.movie = null;
     this.$store
       .dispatch("movie/fetchOneMovie", { movieId: this.$route.params.movieId })
       .then(() => {

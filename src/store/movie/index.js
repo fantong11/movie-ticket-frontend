@@ -5,7 +5,7 @@ import {
 
 const data = {
   wait: false,
-  movie: {},
+  movie: { pic_path: "not_found.jpg" },
   movieList: [],
 }
 
