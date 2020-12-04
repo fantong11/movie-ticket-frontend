@@ -15,7 +15,7 @@
           <h2 class="m-0 mt-4">熱映中</h2>
         </div>
       </b-container>
-      <MovieList :movie-list="movieList" release="now" />
+      <MovieList release="now" />
       <Footer />
     </b-overlay>
   </div>
@@ -38,7 +38,6 @@ export default {
   },
   computed: {
     ...mapState({
-      movieList: (state) => state.movie.movieList,
       wait: (state) => state.movie.wait,
     }),
   },
