@@ -48,7 +48,7 @@
           </b-nav-item-dropdown>
           <b-nav-item to="#">業務專區</b-nav-item>
           <div class="login d-flex" v-if="status">
-            <b-nav-item to="/user">{{ name }}</b-nav-item>
+            <b-nav-item @click="toUserBoard">{{ name }}</b-nav-item>
             <b-nav-item to="/" @click="logout">登出</b-nav-item>
           </div>
           <div class="not-login d-flex" v-if="!status">
@@ -77,6 +77,15 @@ export default {
     logout() {
       this.$store.dispatch("user/logout");
     },
+    toUserBoard() {
+      if (localStorage.getItem("role") === "admin"){
+        this.$router.push("/admin");
+      }
+      else if(localStorage.getItem("role") === "member"){
+        this.$router.push("/member");
+      }
+    },
   },
+
 };
 </script>
