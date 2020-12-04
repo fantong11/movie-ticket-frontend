@@ -64,10 +64,11 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "MovieList",
   props: {
-    movieList: Array,
     release: String,
   },
   data() {
@@ -92,6 +93,9 @@ export default {
       });
   },
   computed: {
+    ...mapState({
+      movieList: (state) => state.movie.movieList,
+    }),
     pageCount() {
       return Math.floor(this.totalRows / this.perPage);
     },
