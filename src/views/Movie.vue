@@ -15,13 +15,13 @@
           <b-col md="3">
             <img
               class="movie-img"
-              :src="require(`../assets/${movie.picPath}`)"
+              :src="require(`../assets/${movie.pic_path}`)"
               alt=""
             />
           </b-col>
           <b-col md="3">
             <h2>{{ movie.name }}</h2>
-            <h3>{{ movie.nameEN }}</h3> 
+            <h3>{{ movie.name_en }}</h3> 
             <p>上映日期：{{ movie.release_date }}</p>
             <h2>MOVIE INFO</h2>
             <p>導演：{{ movie.director }}</p>
