@@ -6,7 +6,8 @@ import Login from '../views/Login.vue'
 import Registration from '../views/Registration.vue'
 import Movie from '../views/Movie.vue'
 import ComingMovie from '../views/ComingMovie.vue'
-import Admin from '../views/Admin.vue'
+import AddMovie from '../views/AddMovie.vue'
+import AddShowing from '../views/AddShowing.vue'
 
 Vue.use(VueRouter)
 
@@ -97,10 +98,15 @@ const routes = [
     }
   },
   {
-    path: '/admin',
-    name: 'Admin',
-    component: Admin,
+    path: '/admin/addmovie',
+    name: 'AddMovie',
+    component: AddMovie,
   },
+  {
+    path: '/admin/addshowing',
+    name: 'AddShowing',
+    component: AddShowing,
+  }
 ]
 
 const router = new VueRouter({

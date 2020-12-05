@@ -79,7 +79,7 @@ export default {
     },
     toUserBoard() {
       if (localStorage.getItem("role") === "admin"){
-        this.$router.push("/admin");
+        this.$router.push("/admin/addmovie");
       }
       else if(localStorage.getItem("role") === "member"){
         this.$router.push("/member");
