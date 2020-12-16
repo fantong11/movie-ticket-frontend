@@ -19,7 +19,7 @@
               alt=""
             />
           </b-col>
-          <b-col md="4">
+          <b-col md="5">
             <h2>{{ movie.name }}</h2>
             <h3>{{ movie.name_en }}</h3>
             <p>上映日期：{{ movie.release_date }}</p>
@@ -29,7 +29,7 @@
             <p>類型：{{ movie.movie_type }}</p>
             <p>片長：{{ convertTime(movie.running_time) }}</p>
           </b-col>
-          <b-col md="5">
+          <b-col md="4">
             <TheaterList />
           </b-col>
         </b-row>
