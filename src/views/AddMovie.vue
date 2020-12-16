@@ -7,10 +7,7 @@
         </b-col>
         <b-col>
           <b-container class="border border-info text-left">
-            <b-form-group
-              id="input-movie-name"
-              label-for="input-movie-name"
-            >  
+            <b-form-group id="input-movie-name" label-for="input-movie-name">
               <h4>Movie name</h4>
               <div class="input-box">
                 <b-form-input
@@ -48,7 +45,7 @@
               id="input-movie-description"
               label-for="input-movie-description"
             >
-              <br>
+              <br />
               <h4>Movie Description</h4>
               <div class="input-box">
                 <b-form-input
@@ -105,10 +102,7 @@
               </div>
             </b-form-group>
 
-            <b-form-group
-              id="input-movie-type"
-              label-for="input-movie-type"
-            >
+            <b-form-group id="input-movie-type" label-for="input-movie-type">
               <h4>Movie Type</h4>
               <div class="input-box">
                 <b-form-input
@@ -135,10 +129,7 @@
               </div>
             </b-form-group>
 
-            <b-form-group
-              id="input-movie-date"
-              label-for="input-movie-date"
-            >
+            <b-form-group id="input-movie-date" label-for="input-movie-date">
               <h4>Movie Date</h4>
               <div class="input-box">
                 <b-form-input
@@ -150,7 +141,13 @@
               </div>
             </b-form-group>
             <div class="text-center">
-              <b-button class="mt-4 mb-3 btn btn-default" variant="primary" to="">Add</b-button>
+              <b-button
+                class="mt-4 mb-3 btn btn-default"
+                variant="primary"
+                to=""
+              >
+                Add
+              </b-button>
             </div>
           </b-container>
         </b-col>

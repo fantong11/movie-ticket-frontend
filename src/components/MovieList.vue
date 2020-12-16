@@ -1,10 +1,9 @@
 <template>
   <div class="movielist">
     <b-container>
-      <!-- <div :v-show="wait"> -->
       <b-row>
         <!-- 印出電影的迴圈 -->
-        <b-col v-for="(movie, idx) in paginatedItems" :key="idx" md="3 4">
+        <b-col v-for="(movie, idx) in paginatedItems" :key="idx" md="3">
           <b-card
             no-body
             img-top
@@ -58,7 +57,6 @@
           v-model="currentPage"
         />
       </b-row>
-      <!-- </div> -->
     </b-container>
   </div>
 </template>

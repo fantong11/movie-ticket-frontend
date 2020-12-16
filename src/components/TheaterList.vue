@@ -5,6 +5,7 @@
         button
         v-for="(theater, idx) in theaterList"
         :key="idx"
+        @click="routeTo(theater.id)"
       >
         {{ theater.name }}
       </b-list-group-item>
@@ -34,6 +35,17 @@ export default {
       .catch((err) => {
         console.log(err);
       });
+  },
+  methods: {
+    routeTo(theaterId) {
+      this.$router.push({
+        name: "SelectTime",
+        query: {
+          movieid: this.$route.params.movieId,
+          theaterid: theaterId,
+        }
+      });
+    },
   },
 };
 </script>
