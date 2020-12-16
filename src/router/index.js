@@ -1,11 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import NowPlayingMovie from '../views/NowPlayingMovie.vue'
-import Login from '../views/Login.vue'
-import Registration from '../views/Registration.vue'
-import Movie from '../views/Movie.vue'
-import ComingMovie from '../views/ComingMovie.vue'
 
 Vue.use(VueRouter)
 
@@ -13,7 +7,7 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home,
+    component: () => import('@/views/Home'),
     meta: {
       breadcrumb: [{
         name: "首頁"
@@ -23,7 +17,7 @@ const routes = [
   {
     path: '/nowplayingmovie',
     name: 'NowPlayingMovie',
-    component: NowPlayingMovie,
+    component: () => import('@/views/NowPlayingMovie'),
     meta: {
       breadcrumb: [{
         name: "首頁",
@@ -37,7 +31,7 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: Login,
+    component: () => import('@/views/Login'),
     meta: {
       breadcrumb: [{
         name: "首頁",
@@ -51,7 +45,7 @@ const routes = [
   {
     path: '/registration',
     name: 'Registration',
-    component: Registration,
+    component: () => import('@/views/Registration'),
     meta: {
       breadcrumb: [{
         name: "首頁",
@@ -65,7 +59,7 @@ const routes = [
   {
     path: '/nowplayingmovie/:movieId/:movieName',
     name: 'Movie',
-    component: Movie,
+    component: () => import('@/views/Movie'),
     meta: {
       breadcrumb: [{
         name: "首頁",
@@ -83,7 +77,7 @@ const routes = [
   {
     path: '/comingmovie',
     name: 'ComingMovie',
-    component: ComingMovie,
+    component: () => import('@/views/ComingMovie'),
     meta: {
       breadcrumb: [{
         name: "首頁",
@@ -95,6 +89,11 @@ const routes = [
       }]
     }
   },
+  {
+    path: '/selecttime',
+    name: 'SelectTime',
+    component: () => import('@/views/SelectTime') ,
+  }
 ]
 
 const router = new VueRouter({
