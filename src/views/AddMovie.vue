@@ -39,7 +39,6 @@
 
             <h4>Picture</h4>
             <b-form-file
-              v-model="pic"
               accept=".jpg, .png"
               placeholder="Choose a picture"
             >
