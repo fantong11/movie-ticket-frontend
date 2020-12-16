@@ -40,7 +40,7 @@
             <b-form-datepicker id="datepicker" v-model="form.showing_date"></b-form-datepicker>
             <br>
             <h4>Select Time</h4>
-            <b-form-timepicker v-model="form.showing_time" show-seconds hour12="false"></b-form-timepicker>
+            <b-form-timepicker v-model="form.showing_time" show-seconds :hour12="false"></b-form-timepicker>
             <br>
             <div class="text-center">
               <b-button class="mt-4 mb-3 btn btn-default" variant="primary" to="">Add</b-button>
