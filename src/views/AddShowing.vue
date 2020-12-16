@@ -6,14 +6,13 @@
           <AdminSideBar />
         </b-col>
         <b-col>
-          <b-container class="border border-info">
+          <b-container class="border border-info text-left">
             <b-form-group
               id="input-showing-movie"
               label-for="input-showing-movie"
-              description="Showing movie"
             >
-              <div class="input-box mx-5">
-                <b-icon class="mr-2" font-scale="2"></b-icon>
+              <h4>Showing Movie</h4>
+              <div class="input-box">
                 <b-form-input
                   id="showing-movie"
                   v-model="form.movie"
@@ -26,10 +25,9 @@
             <b-form-group
               id="input-showing-theater"
               label-for="input-showing-theater"
-              description="Showing theater"
             >
-              <div class="input-box mx-5">
-                <b-icon class="mr-2" font-scale="2"></b-icon>
+              <h4>Showing Theater</h4>
+              <div class="input-box">
                 <b-form-input
                   id="showing-theater"
                   v-model="form.theater"
@@ -38,10 +36,15 @@
                 ></b-form-input>
               </div>
             </b-form-group>
-
-            <b-form-datepicker id="datepicker" v-model="form.showing_date" class="mb-2 mt-5"></b-form-datepicker>
-
-            <b-form-timepicker v-model="form.showing_time" show-seconds class="mb-2 mt-5" hour12="false"></b-form-timepicker>
+            <h4>Select Date</h4>
+            <b-form-datepicker id="datepicker" v-model="form.showing_date"></b-form-datepicker>
+            <br>
+            <h4>Select Time</h4>
+            <b-form-timepicker v-model="form.showing_time" show-seconds hour12="false"></b-form-timepicker>
+            <br>
+            <div class="text-center">
+              <b-button class="mt-4 mb-3 btn btn-default" variant="primary" to="">Add</b-button>
+            </div>
           </b-container>
         </b-col>
       </b-row>
