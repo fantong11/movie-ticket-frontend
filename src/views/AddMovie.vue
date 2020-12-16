@@ -20,14 +20,14 @@
             </b-form-group>
 
             <b-form-group
-              id="input-movie-enname"
-              label-for="input-movie-enname"
+              id="input-movie-nameEn"
+              label-for="input-movie-nameEn"
             >
               <h4>Movie English Name</h4>
               <div class="input-box">
                 <b-form-input
-                  id="movie-enname"
-                  v-model="form.enname"
+                  id="movie-nameEn"
+                  v-model="form.nameEn"
                   required
                   autocomplete="off"
                 ></b-form-input>
@@ -35,10 +35,7 @@
             </b-form-group>
 
             <h4>Picture</h4>
-            <b-form-file
-              accept=".jpg, .png"
-              placeholder="Choose a picture"
-            >
+            <b-form-file accept=".jpg, .png" placeholder="Choose a picture">
             </b-form-file>
 
             <b-form-group
@@ -131,17 +128,11 @@
 
             <b-form-group id="input-movie-date" label-for="input-movie-date">
               <h4>Movie Date</h4>
-              <div class="input-box">
-                <b-form-input
-                  id="movie-date"
-                  v-model="form.date"
-                  required
-                  autocomplete="off"
-                ></b-form-input>
-              </div>
+              <b-form-datepicker id="datepicker" v-model="form.date"></b-form-datepicker>
             </b-form-group>
             <div class="text-center">
               <b-button
+                @click="add"
                 class="mt-4 mb-3 btn btn-default"
                 variant="primary"
                 to=""
@@ -168,6 +159,7 @@ export default {
     return {
       form: {
         name: "",
+        nameEn: "",
         pic: null,
         description: "",
         runningtime: "",
@@ -184,6 +176,26 @@ export default {
     this.$store.dispatch("user/adminBoard", {
       token: localStorage.getItem("token"),
     });
+  },
+  methods: {
+    addMovie() {
+      this.$store
+        .dispatch("movie/addMovie", {
+          token: localStorage.getItem("token"),
+          name: this.form.name,
+          nameEn: this.form.nameEn,
+          pic: this.form.pic,
+          description: this.form.description,
+          runningtime: this.form.runningtime,
+          directo: this.form.director,
+          actors: this.form.actors,
+          type: this.form.type,
+          classification: this.form.classification,
+          date: this.form.date,
+        })
+        .then(() => {})
+        .catch(() => {});
+    },
   },
 };
 </script>
