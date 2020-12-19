@@ -28,6 +28,7 @@
 
 <script>
 import ResponsiveNavigation from "@/components/ResponsiveNavigation.vue";
+import { mapState } from 'vuex';
 
 export default {
   name: "SelectTime",
@@ -38,35 +39,12 @@ export default {
     return {
       movieName: "鬼滅之刃",
       theater: "XX影城",
-      movieDates: [
-        {
-          date: "2020 年 12 月 16 日 星期三",
-          showings: [
-            {
-              id: 1,
-              time: "12:30",
-            },
-            {
-              id: 2,
-              time: "13:30",
-            },
-          ],
-        },
-        {
-          date: "2020 年 12 月 17 日 星期三",
-          showings: [
-            {
-              id: 5,
-              time: "12:30",
-            },
-            {
-              id: 7,
-              time: "13:30",
-            },
-          ],
-        },
-      ],
     };
+  },
+  computed: {
+    ...mapState({
+      movieDates: (state) => state.showing.movieDateTimes,
+    }),
   },
   mounted() {
     this.$store.dispatch("showing/fetchShowing", {
