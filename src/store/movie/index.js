@@ -61,15 +61,15 @@ const actions = {
       apiAddMovie({
         token: payload.token,
         name: payload.name,
-        nameEn: payload.nameEn,
-        pic: payload.pid,
+        name_en: payload.name_en,
+        pic_path: payload.pic_path,
         description: payload.description,
-        runningtime: payload.runningtime,
+        running_time: payload.running_time,
         director: payload.director,
         actors: payload.actors,
-        type: payload.type,
+        movie_type: payload.movie_type,
         classification: payload.classification,
-        date: payload.date,
+        release_date: payload.release_date,
       }).then(res => {
         console.log(res.data);
         commit("setWait", { flag: false });

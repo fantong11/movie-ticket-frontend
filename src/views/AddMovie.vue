@@ -34,9 +34,22 @@
               </div>
             </b-form-group>
 
-            <h4>Picture</h4>
+            <!-- <h4>Picture</h4>
             <b-form-file accept=".jpg, .png" placeholder="Choose a picture">
-            </b-form-file>
+            </b-form-file> -->
+
+            <b-form-group
+              id="input-movie-pic"
+              label-for="input-movie-pic"
+            >
+              <h4>Movie Image/Picture</h4>
+              <b-form-input
+                id="movie-pic"
+                v-model="form.pic"
+                required
+                autocomplete="off"
+              ></b-form-input>
+            </b-form-group>
 
             <b-form-group
               id="input-movie-description"
@@ -132,7 +145,7 @@
             </b-form-group>
             <div class="text-center">
               <b-button
-                @click="add"
+                @click="addMovie"
                 class="mt-4 mb-3 btn btn-default"
                 variant="primary"
                 to=""
@@ -160,7 +173,7 @@ export default {
       form: {
         name: "",
         nameEn: "",
-        pic: null,
+        pic: "",
         description: "",
         runningtime: "",
         director: "",
@@ -183,15 +196,15 @@ export default {
         .dispatch("movie/addMovie", {
           token: localStorage.getItem("token"),
           name: this.form.name,
-          nameEn: this.form.nameEn,
-          pic: this.form.pic,
+          name_en: this.form.nameEn,
+          pic_path: this.form.pic,
           description: this.form.description,
-          runningtime: this.form.runningtime,
-          directo: this.form.director,
+          running_time: this.form.runningtime,
+          director: this.form.director,
           actors: this.form.actors,
-          type: this.form.type,
+          movie_type: this.form.type,
           classification: this.form.classification,
-          date: this.form.date,
+          release_date: this.form.date,
         })
         .then(() => {})
         .catch(() => {});
