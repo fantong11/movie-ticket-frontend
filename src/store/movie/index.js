@@ -56,7 +56,6 @@ const actions = {
   },
 }
 
-
 export default {
   state: data,
   mutations,
