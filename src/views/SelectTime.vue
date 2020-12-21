@@ -2,7 +2,7 @@
   <div class="selecttime">
     <ResponsiveNavigation />
     <b-container>
-      <h3 class="text-left mt-3">電影場次 Ｍove Time</h3>
+      <h3 class="text-left mt-3">電影場次 Move Time</h3>
       <h4 class="text-left">{{ movieName }} <br> {{ theaterName }}</h4>
       <div
         class="movie-date mt-4"
@@ -16,7 +16,7 @@
         </b-row>
         <b-row>
           <b-col v-for="(showing, idx) in movieDate.showings" :key="idx" md="2">
-            <b-button block class="mt-2" variant="outline-secondary">
+            <b-button @click="timeSelected(showing.id)" block class="mt-2" variant="outline-secondary">
               {{ showing.time }}
             </b-button>
           </b-col>
@@ -47,6 +47,16 @@ export default {
       movieId: this.$route.query.movieid,
       theaterId: this.$route.query.theaterid,
     });
+  },
+  methods: {
+    timeSelected(showingId) {
+      this.$router.push({
+        name: "SelectTicket",
+        query: {
+          showingid: showingId,
+        }
+      });
+    }
   },
 };
 </script>

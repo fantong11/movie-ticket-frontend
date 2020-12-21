@@ -27,14 +27,15 @@
             <p>導演：{{ movie.director }}</p>
             <p>演員：{{ movie.actors }}</p>
             <p>類型：{{ movie.movie_type }}</p>
-            <p>片長：{{ convertTime(movie.running_time) }}</p>
+            <p>片長：{{ movie.running_time + "分" }}</p>
           </b-col>
           <b-col md="4">
             <TheaterList />
           </b-col>
         </b-row>
 
-        <b-row>
+        <b-row class="mt-5">
+          <h1>劇情簡介</h1>
           <p>{{ movie.description }}</p>
         </b-row>
       </b-container>
@@ -74,13 +75,6 @@ export default {
       .catch((err) => {
         console.log(err);
       });
-  },
-  methods: {
-    convertTime(totalMinutes) {
-      let hours = totalMinutes / 60;
-      let minutes = totalMinutes % 60;
-      return Math.floor(hours) + " 時 " + minutes + " 分";
-    },
   },
 };
 </script>

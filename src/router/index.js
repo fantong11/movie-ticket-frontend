@@ -104,6 +104,11 @@ const routes = [
     name: 'SelectTime',
     component: () => import('@/views/SelectTime') ,
   },
+  {
+    path: '/nowplayingmovie/selectticket',
+    name: 'SelectTicket',
+    component: () => import('@/views/SelectTicket')
+  }
 ]
 
 const router = new VueRouter({

@@ -41,7 +41,7 @@
               <b-card-text>
                 {{ movie.name_en }}
                 <br />
-                {{ movie.release_date }}
+                {{ getMovieTime(movie) }}
               </b-card-text>
             </b-card-body>
           </b-card>
@@ -123,6 +123,11 @@ export default {
     // 轉換電影名字 ex. Demon Slayer ---> demon-slayer
     transferName(movieName) {
       return movieName.toLowerCase().replaceAll(" ", "-");
+    },
+    // 拿電影日期
+    getMovieTime(movie) {
+      let date = new Date(movie.release_date);
+      return date.getFullYear() + " - " + date.getMonth() + " - " + date.getDate();
     },
   },
 };
