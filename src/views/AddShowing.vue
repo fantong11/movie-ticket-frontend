@@ -54,7 +54,7 @@ export default {
       token: localStorage.getItem("token"),
     });
     this.$store
-      .dispatch("movie/fetchAllMovie", { release: this.release })
+      .dispatch("movie/fetchMovieByRelease", { release: this.release })
       .then(() => {
       })
       .catch((err) => {

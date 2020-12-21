@@ -9,9 +9,7 @@
           <div>
             <b-table striped hover :items="items" :fields="fields">
               <template #cell(select)="row">
-                <b-form-checkbox v-model="row.detailsShowing">
-                  Delete
-                </b-form-checkbox>
+                <b-form-checkbox v-model="row.detailsShowing"></b-form-checkbox>
               </template>
             </b-table>
           </div>
@@ -38,31 +36,35 @@ export default {
       fields: [
         "select",
         {
-          key: "last_name",
+          key: "id",
           sortable: true,
         },
         {
-          key: "first_name",
+          key: "moviename",
           sortable: false,
         },
         {
-          key: "age",
+          key: "type",
           label: "Person age",
           sortable: true,
         },
       ],
-      items: [
-        {
-          isActive: true,
-          age: 40,
-          first_name: "Dickerson",
-          last_name: "Macdonald",
-        },
-        { isActive: false, age: 21, first_name: "Larsen", last_name: "Shaw" },
-        { isActive: false, age: 89, first_name: "Geneva", last_name: "Wilson" },
-        { isActive: true, age: 38, first_name: "Jami", last_name: "Carney" },
-      ],
+      items: [],
     };
+  },
+  mounted() {
+    this.$store.dispatch("user/adminBoard", {
+      token: localStorage.getItem("token"),
+    });
+    // 每次進頁面時都要向後端請求電影資料
+    this.$store
+      .dispatch("movie/fetchAllMovie", {})
+      .then(() => {
+        this.items=this.movieList;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
 };
 </script>

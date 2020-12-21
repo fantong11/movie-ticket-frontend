@@ -1,6 +1,7 @@
 import {
-  apiFetchAllMovie,
+  apiFetchMovieByRelease,
   apiFetchOneMovie,
+  apiFetchAllMovie,
   apiAddMovie
 } from '../../api/api';
 
@@ -25,10 +26,10 @@ const mutations = {
 
 const actions = {
   // 向後端請求全部的電影清單
-  fetchAllMovie({ commit }, payload) {
+  fetchMovieByRelease({ commit }, payload) {
     commit("setWait", { flag: true });
     return new Promise((resolve, reject) => {
-      apiFetchAllMovie(payload.release).then(response => {
+      apiFetchMovieByRelease(payload.release).then(response => {
         console.log(response.data);
         commit("setMovieList", { movieList: response.data });
         commit("setWait", { flag: false });
@@ -46,6 +47,21 @@ const actions = {
       apiFetchOneMovie(payload.movieId).then(response => {
         console.log(response.data);
         commit("setMovie", { movie: response.data });
+        commit("setWait", { flag: false });
+        resolve();
+      }).catch(error => {
+        console.log(error);
+        commit("setWait", { flag: false });
+        reject(new Error("error"));
+      });
+    });
+  },
+  fetchAllMovie({ commit }) {
+    commit("setWait", { flag: true });
+    return new Promise((resolve, reject) => {
+      apiFetchAllMovie().then(response => {
+        console.log(response.data);
+        commit("setMovieList", { movieList: response.data });
         commit("setWait", { flag: false });
         resolve();
       }).catch(error => {
