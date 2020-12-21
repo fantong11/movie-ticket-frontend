@@ -5,11 +5,19 @@ import {
 const data = {
     wait: false,
     movieDateTimes: [],
+    movieName: "",
+    theaterName: "",
 }
 
 const mutations = {
     resetShowing(state) {
         state.movieDateTimes = [];
+    },
+    setMovieName(state, payload) {
+        state.movieName = payload.movieName;
+    },
+    setTheaterName(state, payload) {
+        state.theaterName = payload.theaterName;
     },
     setShowing(state, payload) {
         payload.showings.forEach(showing => {
@@ -47,6 +55,8 @@ const actions = {
             }).then(res => {
                 console.log(res.data);
                 commit("setShowing", { showings: res.data });
+                commit("setTheaterName", { theaterName: res.data[0].theaterName});
+                commit("setMovieName", { movieName: res.data[0].movieName});
                 resolve();
             }).catch(err => {
                 console.log(err);

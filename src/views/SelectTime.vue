@@ -3,7 +3,7 @@
     <ResponsiveNavigation />
     <b-container>
       <h3 class="text-left mt-3">電影場次 Ｍove Time</h3>
-      <h4 class="text-left">{{ theater }} {{ movieName }}</h4>
+      <h4 class="text-left">{{ movieName }} <br> {{ theaterName }}</h4>
       <div
         class="movie-date mt-4"
         v-for="(movieDate, idx) in movieDates"
@@ -35,15 +35,11 @@ export default {
   components: {
     ResponsiveNavigation,
   },
-  data() {
-    return {
-      movieName: "鬼滅之刃",
-      theater: "XX影城",
-    };
-  },
   computed: {
     ...mapState({
       movieDates: (state) => state.showing.movieDateTimes,
+      movieName: (state) => state.showing.movieName,
+      theaterName: (state) => state.showing.theaterName,
     }),
   },
   mounted() {
