@@ -7,7 +7,10 @@
       <b-col>
         <b-container class="border border-info text-left">
           <div>
-            <b-table striped hover :items="items" :fields="fields">
+            <b-table striped hover :items="movieList" :fields="fields"
+            :select-mode="selectMode"
+            selectable
+           @row-selected="onRowSelected">
               <template #cell(select)="row">
                 <b-form-checkbox v-model="row.detailsShowing"></b-form-checkbox>
               </template>
@@ -24,6 +27,7 @@
   </b-container>
 </template>
 <script>
+import { mapState } from "vuex";
 import AdminSideBar from "@/components/AdminSideBar.vue";
 export default {
   name: "DeleteMovie",
@@ -40,17 +44,22 @@ export default {
           sortable: true,
         },
         {
-          key: "moviename",
+          key: "name",
+          label: "moviename",
           sortable: false,
         },
         {
-          key: "type",
-          label: "Person age",
+          key: "movie_type",
           sortable: true,
         },
       ],
-      items: [],
+      checkedArray: [],
     };
+  },
+  computed: {
+    ...mapState({
+      movieList: (state) => state.movie.movieList,
+    }),
   },
   mounted() {
     this.$store.dispatch("user/adminBoard", {
@@ -60,11 +69,23 @@ export default {
     this.$store
       .dispatch("movie/fetchAllMovie", {})
       .then(() => {
-        this.items=this.movieList;
+        this.items = this.movieList;
+        this.initCheckboxArray();
+        console.log(this.checkedArray);
       })
       .catch((err) => {
         console.log(err);
       });
+  },
+  methods: {
+    initCheckboxArray() {
+      for (let i = 0; i < this.movieList.length; i++) {
+        this.checkedArray.push({ checked: false });
+      }
+    },
+    onRowSelected(items){
+      console.log(items);
+    }
   },
 };
 </script>
