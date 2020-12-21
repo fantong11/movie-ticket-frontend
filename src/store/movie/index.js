@@ -1,6 +1,7 @@
 import {
   apiFetchAllMovie,
-  apiFetchOneMovie
+  apiFetchOneMovie,
+  apiAddMovie
 } from '../../api/api';
 
 const data = {
@@ -54,8 +55,33 @@ const actions = {
       });
     });
   },
+  addMovie({ commit }, payload) {
+    commit("setWait", { flag: true });
+    return new Promise((resolve, reject) => {
+      apiAddMovie({
+        token: payload.token,
+        name: payload.name,
+        name_en: payload.name_en,
+        pic_path: payload.pic_path,
+        description: payload.description,
+        running_time: payload.running_time,
+        director: payload.director,
+        actors: payload.actors,
+        movie_type: payload.movie_type,
+        classification: payload.classification,
+        release_date: payload.release_date,
+      }).then(res => {
+        console.log(res.data);
+        commit("setWait", { flag: false });
+        resolve();
+      }).catch(error => {
+        console.log(error);
+        commit("setWait", { flag: false });
+        reject(new Error("error"));
+      })
+    });
+  }
 }
-
 
 export default {
   state: data,

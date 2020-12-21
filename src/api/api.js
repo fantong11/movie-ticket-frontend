@@ -38,10 +38,12 @@ export const apiSearch = data => searchRequest.get(`/Search?searchdata=${data}`)
 // 電影相關api
 export const apiFetchAllMovie = data => movieRequest.get(`/movieList?release=${data}`);
 export const apiFetchOneMovie = data => movieRequest.get(`/movie?movieid=${data}`);
+export const apiAddMovie = data => movieRequest.post("/addMovie", data);
 
 // 影城相關api
 export const apiFetchAllTheater = () => theaterRequest.get('/theaterList');
 export const apiFetchTheaterByMovieId = data => theaterRequest.get(`/theater?movieid=${data}`);
 
 // 場次相關api
-export const apiFetchShowing = data =>  showingRequest.get(`/movietime?movieid=${data.movieId}&theaterid=${data.theaterId}`);
+export const apiFetchShowing = data => showingRequest.get(`/movietime?movieid=${data.movieId}&theaterid=${data.theaterId}`);
+export const apiAddShowing = data => showingRequest.post("/addShowing", data);
