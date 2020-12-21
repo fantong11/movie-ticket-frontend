@@ -15,7 +15,6 @@ const mutations = {
   },
   setMovie(state, payload) {
     state.movie = payload.movie;
-    console.log(state.movie);
   },
   setMovieList(state, payload) {
     state.movieList = payload.movieList;
@@ -55,7 +54,6 @@ const actions = {
     });
   },
 }
-
 
 export default {
   state: data,

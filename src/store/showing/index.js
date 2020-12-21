@@ -19,12 +19,18 @@ const mutations = {
             console.log(dateStr);
             state.movieDateTimes.forEach(movieDate => {
                 if (movieDate.date === dateStr) {
-                    movieDate.showings.push({ id: showing.id, time: date.getHours() + " : " + date.getMinutes() });
+                    movieDate.showings.push({ 
+                        id: showing.id, 
+                        time: date.getHours() + " : " + date.getMinutes() 
+                    });
                     dateExist = true;
                 }
             });
             if (!dateExist) {
-                state.movieDateTimes.push({ date: dateStr, showings: [{ id: showing.id, time: date.getHours() + " : " + date.getMinutes() }] });
+                state.movieDateTimes.push({ 
+                    date: dateStr, 
+                    showings: [{ id: showing.id, time: date.getHours() + " : " + date.getMinutes() }],
+                });
             }
         });
         console.log(state.movieDateTimes)

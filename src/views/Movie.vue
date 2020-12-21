@@ -33,7 +33,7 @@
             <TheaterList />
           </b-col>
         </b-row>
-        
+
         <b-row>
           <p>{{ movie.description }}</p>
         </b-row>
