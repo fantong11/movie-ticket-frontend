@@ -5,9 +5,9 @@ import {
 } from '../../api/api';
 
 const data = {
-  wait: false,
-  movie: { pic_path: "not_found.jpg" },
-  movieList: [],
+  wait: false, // 呼叫api過程是否等待
+  movie: { pic_path: "not_found.jpg" }, // 預設給存在的圖片，不然會報錯
+  movieList: [], // 存下呼叫api拿到的電影資料
 }
 
 const mutations = {
@@ -23,7 +23,7 @@ const mutations = {
 }
 
 const actions = {
-  // 向後端請求全部的電影清單
+  // 向後端請求電影清單，有分正在上映、即將上映和全部電影
   fetchMovieByRelease({ commit }, payload) {
     commit("setWait", { flag: true });
     return new Promise((resolve, reject) => {
@@ -39,6 +39,7 @@ const actions = {
       });
     });
   },
+  // 用id來拿查詢電影
   fetchOneMovie({ commit }, payload) {
     commit("setWait", { flag: true });
     return new Promise((resolve, reject) => {
@@ -54,6 +55,7 @@ const actions = {
       });
     });
   },
+  // 增加電影資料
   addMovie({ commit }, payload) {
     commit("setWait", { flag: true });
     return new Promise((resolve, reject) => {

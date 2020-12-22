@@ -66,15 +66,22 @@ export default {
     }),
   },
   mounted() {
-    this.$store
-      .dispatch("movie/fetchOneMovie", { movieId: this.$route.params.movieId })
-      .then(() => {
-        this.$route.meta.breadcrumb[2].name = this.movie.name;
-        console.log(this.$route.meta.breadcrumb[2].name);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.initMovie();
+  },
+  methods: {
+    initMovie() {
+      this.$store
+        .dispatch("movie/fetchOneMovie", {
+          movieId: this.$route.params.movieId,
+        })
+        .then(() => {
+          this.$route.meta.breadcrumb[2].name = this.movie.name;
+          console.log(this.$route.meta.breadcrumb[2].name);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
 };
 </script>

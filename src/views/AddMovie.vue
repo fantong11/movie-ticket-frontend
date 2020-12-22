@@ -38,10 +38,7 @@
             <b-form-file accept=".jpg, .png" placeholder="Choose a picture">
             </b-form-file> -->
 
-            <b-form-group
-              id="input-movie-pic"
-              label-for="input-movie-pic"
-            >
+            <b-form-group id="input-movie-pic" label-for="input-movie-pic">
               <h4>Movie Image/Picture</h4>
               <b-form-input
                 id="movie-pic"
@@ -141,7 +138,10 @@
 
             <b-form-group id="input-movie-date" label-for="input-movie-date">
               <h4>Movie Date</h4>
-              <b-form-datepicker id="datepicker" v-model="form.date"></b-form-datepicker>
+              <b-form-datepicker
+                id="datepicker"
+                v-model="form.date"
+              ></b-form-datepicker>
             </b-form-group>
             <div class="text-center">
               <b-button
@@ -186,11 +186,14 @@ export default {
     };
   },
   mounted() {
-    this.$store.dispatch("user/adminBoard", {
-      token: localStorage.getItem("token"),
-    });
+    this.adminCheck();
   },
   methods: {
+    adminCheck() {
+      this.$store.dispatch("user/adminBoard", {
+        token: localStorage.getItem("token"),
+      });
+    },
     addMovie() {
       this.$store
         .dispatch("movie/addMovie", {

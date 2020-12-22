@@ -32,6 +32,7 @@ export default {
     },
   },
   methods: {
+    // 連接到breadcrumb的link
     routeTo(pRouteTo) {
       if (this.breadcrumbList[pRouteTo].link)
         this.$router.push(this.breadcrumbList[pRouteTo].link);
