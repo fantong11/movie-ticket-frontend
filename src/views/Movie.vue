@@ -22,7 +22,7 @@
           <b-col md="5">
             <h2>{{ movie.name }}</h2>
             <h3>{{ movie.name_en }}</h3>
-            <p>上映日期：{{ movie.release_date }}</p>
+            <p>上映日期：{{ getMovieTime(movie) }}</p>
             <h5>MOVIE INFO</h5>
             <p>導演：{{ movie.director }}</p>
             <p>演員：{{ movie.actors }}</p>
@@ -81,6 +81,10 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+    getMovieTime(movie) {
+      let date = new Date(movie.release_date);
+      return date.getFullYear() + " - " + date.getMonth() + " - " + date.getDate();
     },
   },
 };
