@@ -28,7 +28,6 @@ const actions = {
     commit("setWait", { flag: true });
     return new Promise((resolve, reject) => {
       apiFetchMovieByRelease(payload.release).then(response => {
-        console.log(response.data);
         commit("setMovieList", { movieList: response.data });
         commit("setWait", { flag: false });
         resolve();
