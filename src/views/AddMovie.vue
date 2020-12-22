@@ -20,26 +20,36 @@
             </b-form-group>
 
             <b-form-group
-              id="input-movie-enname"
-              label-for="input-movie-enname"
+              id="input-movie-nameEn"
+              label-for="input-movie-nameEn"
             >
               <h4>Movie English Name</h4>
               <div class="input-box">
                 <b-form-input
-                  id="movie-enname"
-                  v-model="form.enname"
+                  id="movie-nameEn"
+                  v-model="form.nameEn"
                   required
                   autocomplete="off"
                 ></b-form-input>
               </div>
             </b-form-group>
 
-            <h4>Picture</h4>
-            <b-form-file
-              accept=".jpg, .png"
-              placeholder="Choose a picture"
+            <!-- <h4>Picture</h4>
+            <b-form-file accept=".jpg, .png" placeholder="Choose a picture">
+            </b-form-file> -->
+
+            <b-form-group
+              id="input-movie-pic"
+              label-for="input-movie-pic"
             >
-            </b-form-file>
+              <h4>Movie Image/Picture</h4>
+              <b-form-input
+                id="movie-pic"
+                v-model="form.pic"
+                required
+                autocomplete="off"
+              ></b-form-input>
+            </b-form-group>
 
             <b-form-group
               id="input-movie-description"
@@ -131,17 +141,11 @@
 
             <b-form-group id="input-movie-date" label-for="input-movie-date">
               <h4>Movie Date</h4>
-              <div class="input-box">
-                <b-form-input
-                  id="movie-date"
-                  v-model="form.date"
-                  required
-                  autocomplete="off"
-                ></b-form-input>
-              </div>
+              <b-form-datepicker id="datepicker" v-model="form.date"></b-form-datepicker>
             </b-form-group>
             <div class="text-center">
               <b-button
+                @click="addMovie"
                 class="mt-4 mb-3 btn btn-default"
                 variant="primary"
                 to=""
@@ -168,7 +172,8 @@ export default {
     return {
       form: {
         name: "",
-        pic: null,
+        nameEn: "",
+        pic: "",
         description: "",
         runningtime: "",
         director: "",
@@ -184,6 +189,26 @@ export default {
     this.$store.dispatch("user/adminBoard", {
       token: localStorage.getItem("token"),
     });
+  },
+  methods: {
+    addMovie() {
+      this.$store
+        .dispatch("movie/addMovie", {
+          token: localStorage.getItem("token"),
+          name: this.form.name,
+          name_en: this.form.nameEn,
+          pic_path: this.form.pic,
+          description: this.form.description,
+          running_time: this.form.runningtime,
+          director: this.form.director,
+          actors: this.form.actors,
+          movie_type: this.form.type,
+          classification: this.form.classification,
+          release_date: this.form.date,
+        })
+        .then(() => {})
+        .catch(() => {});
+    },
   },
 };
 </script>

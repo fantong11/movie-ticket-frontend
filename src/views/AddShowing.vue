@@ -7,35 +7,18 @@
         </b-col>
         <b-col>
           <b-container class="border border-info text-left">
-            <b-form-group
-              id="input-showing-movie"
-              label-for="input-showing-movie"
-            >
-              <h4>Showing Movie</h4>
-              <div class="input-box">
-                <b-form-input
-                  id="showing-movie"
-                  v-model="form.movie"
-                  required
-                  autocomplete="off"
-                ></b-form-input>
-              </div>
-            </b-form-group>
+            <b-form-select
+              v-model="selected_movie"
+              :options="movieList"
+              class="mt-4"
+            ></b-form-select>
 
-            <b-form-group
-              id="input-showing-theater"
-              label-for="input-showing-theater"
-            >
-              <h4>Showing Theater</h4>
-              <div class="input-box">
-                <b-form-input
-                  id="showing-theater"
-                  v-model="form.theater"
-                  required
-                  autocomplete="off"
-                ></b-form-input>
-              </div>
-            </b-form-group>
+            <b-form-select
+              v-model="selected_theater"
+              :options="theaterList"
+              class="mt-5 mb-5"
+            ></b-form-select>
+
             <h4>Select Date</h4>
             <b-form-datepicker
               id="datepicker"
@@ -67,6 +50,7 @@
 
 <script>
 import AdminSideBar from "@/components/AdminSideBar.vue";
+import { mapState } from "vuex";
 
 export default {
   name: "AddShowing",
@@ -76,8 +60,8 @@ export default {
   data() {
     return {
       form: {
-        movie: "",
-        theater: "",
+        selected_movie: null,
+        selected_theater: null,
         showing_date: "",
         showing_time: "",
       },
@@ -88,6 +72,38 @@ export default {
     this.$store.dispatch("user/adminBoard", {
       token: localStorage.getItem("token"),
     });
+    this.$store
+      .dispatch("movie/fetchMovieByRelease", { release: this.release })
+      .then(() => {})
+      .catch((err) => {
+        console.log(err);
+      });
+    this.$store
+      .dispatch("theater/fetchAllTheater", { release: this.release })
+      .then(() => {})
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+  computed: {
+    ...mapState({
+      movieList: (state) => state.movie.movieList,
+      theaterList: (state) => state.theater.theaterList,
+    }),
+  },
+  methods: {
+    addShowing() {
+      this.$store
+        .dispatch("showing/addShowing", {
+          token: localStorage.getItem("token"),
+          movie: this.form.selected_movie,
+          theater: this.form.selected_theater,
+          showing_date: this.form.showing_date,
+          showing_time: this.form.showing_time,
+        })
+        .then(() => {})
+        .catch(() => {});
+    },
   },
 };
 </script>

@@ -81,7 +81,7 @@ export default {
   mounted() {
     // 每次進頁面時都要向後端請求電影資料
     this.$store
-      .dispatch("movie/fetchAllMovie", { release: this.release })
+      .dispatch("movie/fetchMovieByRelease", { release: this.release })
       .then(() => {
         this.initPaginatedItems();
         this.paginate(this.perPage, 0);
