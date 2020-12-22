@@ -72,7 +72,7 @@ export default {
     });
     // 每次進頁面時都要向後端請求電影資料
     this.$store
-      .dispatch("movie/fetchAllMovie", {})
+      .dispatch("movie/fetchMovieByRelease", { release: "all" })
       .then(() => {
         this.items = this.movieList;
         this.initCheckboxArray();

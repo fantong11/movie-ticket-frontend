@@ -31,14 +31,12 @@ export const apiUsernameCheck = data => userRequest.post("/usernameCheck", data)
 export const apiUserAuthenticate = data => userRequest.post("/authenticate", data);
 export const apiAdminBoard = data => userRequest.post("/adminBoard", data);
 
-
 // 收尋相關api
 export const apiSearch = data => searchRequest.get(`/Search?searchdata=${data}`);
 
 // 電影相關api
-export const apiFetchMovieByRelease = data => movieRequest.get(`/movieListFake?release=${data}`);
+export const apiFetchMovieByRelease = data => movieRequest.get(`/movieList?release=${data}`);
 export const apiFetchOneMovie = data => movieRequest.get(`/movie?movieid=${data}`);
-export const apiFetchAllMovie = () => movieRequest.get(`/movieList`);
 export const apiAddMovie = data => movieRequest.post("/addMovie", data);
 
 // 影城相關api
