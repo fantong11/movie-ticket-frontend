@@ -7,17 +7,13 @@
       <b-col>
         <b-container class="border border-info text-left">
           <div>
-            <b-table
-              striped
-              hover
-              :items="movieList"
-              :fields="fields"
-              :select-mode="selectMode"
-              selectable
-              @row-selected="onRowSelected"
-            >
+            <b-table striped hover :items="movieList" :fields="fields">
               <template #cell(select)="row">
-                <b-form-checkbox v-model="row.detailsShowing"></b-form-checkbox>
+                <b-form-checkbox
+                  v-model="row.item.check"
+                  @change="check($event, row.index, row.item)"
+                >
+                </b-form-checkbox>
               </template>
             </b-table>
           </div>
@@ -58,7 +54,7 @@ export default {
           sortable: true,
         },
       ],
-      checkedArray: [],
+      IdArray: [],
     };
   },
   computed: {
@@ -75,21 +71,19 @@ export default {
       .dispatch("movie/fetchMovieByRelease", { release: "all" })
       .then(() => {
         this.items = this.movieList;
-        this.initCheckboxArray();
-        console.log(this.checkedArray);
       })
       .catch((err) => {
         console.log(err);
       });
   },
   methods: {
-    initCheckboxArray() {
-      for (let i = 0; i < this.movieList.length; i++) {
-        this.checkedArray.push({ checked: false });
+    check(value, index, item) {
+      if (value == true) {
+        this.IdArray.push(item.id);
+      } else{
+        this.IdArray.pop(item.id);
       }
-    },
-    onRowSelected(items) {
-      console.log(items);
+      console.log(this.IdArray);
     },
   },
 };
