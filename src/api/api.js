@@ -38,6 +38,7 @@ export const apiSearch = data => searchRequest.get(`/Search?searchdata=${data}`)
 export const apiFetchMovieByRelease = data => movieRequest.get(`/movieList?release=${data}`);
 export const apiFetchOneMovie = data => movieRequest.get(`/movie?movieid=${data}`);
 export const apiAddMovie = data => movieRequest.post("/addMovie", data);
+export const apiDeleteMovie = data => movieRequest.post(`/deleteMovie`,data);
 
 // 影城相關api
 export const apiFetchAllTheater = () => theaterRequest.get('/theaterList');

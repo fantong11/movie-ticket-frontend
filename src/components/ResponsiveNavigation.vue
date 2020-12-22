@@ -5,12 +5,7 @@
         <img src="../assets/vscinemas_logo.png" alt="" />
       </b-navbar-brand>
       <b-navbar-toggle target="navbar-toggle-collapse">
-        <!-- <template v-slot:default="{ expanded }">
-        <b-icon v-if="expanded" icon="chevron-bar-up"></b-icon>
-        <b-icon v-else icon="chevron-bar-down"></b-icon>
-      </template> -->
       </b-navbar-toggle>
-
       <b-collapse
         id="navbar-toggle-collapse"
         class="justify-content-around"
@@ -77,6 +72,7 @@ export default {
     logout() {
       this.$store.dispatch("user/logout");
     },
+    // 根據是會員還是管理員來決定前往哪個頁面
     toUserBoard() {
       if (localStorage.getItem("role") === "admin"){
         this.$router.push("/admin/addmovie");
@@ -86,6 +82,5 @@ export default {
       }
     },
   },
-
 };
 </script>

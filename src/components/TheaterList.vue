@@ -24,26 +24,29 @@ export default {
     }),
   },
   mounted() {
-    this.$store.state.theater.theaterListFindByMovieId = null;
-    this.$store
-      .dispatch("theater/fetchTheaterByMovieId", {
-        movieId: this.$route.params.movieId,
-      })
-      .then(() => {
-        console.log(this.theaterList);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.initTheater();
   },
   methods: {
+    initTheater() {
+      this.$store.state.theater.theaterListFindByMovieId = null;
+      this.$store
+        .dispatch("theater/fetchTheaterByMovieId", {
+          movieId: this.$route.params.movieId,
+        })
+        .then(() => {
+          console.log(this.theaterList);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     routeTo(theaterId) {
       this.$router.push({
         name: "SelectTime",
         query: {
           movieid: this.$route.params.movieId,
           theaterid: theaterId,
-        }
+        },
       });
     },
   },

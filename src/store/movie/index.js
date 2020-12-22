@@ -1,13 +1,14 @@
 import {
   apiFetchMovieByRelease,
   apiFetchOneMovie,
+  apiDeleteMovie,
   apiAddMovie
 } from '../../api/api';
 
 const data = {
-  wait: false,
-  movie: { pic_path: "not_found.jpg" },
-  movieList: [],
+  wait: false, // 呼叫api過程是否等待
+  movie: { pic_path: "not_found.jpg" }, // 預設給存在的圖片，不然會報錯
+  movieList: [], // 存下呼叫api拿到的電影資料
 }
 
 const mutations = {
@@ -23,12 +24,11 @@ const mutations = {
 }
 
 const actions = {
-  // 向後端請求全部的電影清單
+  // 向後端請求電影清單，有分正在上映、即將上映和全部電影
   fetchMovieByRelease({ commit }, payload) {
     commit("setWait", { flag: true });
     return new Promise((resolve, reject) => {
       apiFetchMovieByRelease(payload.release).then(response => {
-        console.log(response.data);
         commit("setMovieList", { movieList: response.data });
         commit("setWait", { flag: false });
         resolve();
@@ -39,6 +39,7 @@ const actions = {
       });
     });
   },
+  // 用id來拿查詢電影
   fetchOneMovie({ commit }, payload) {
     commit("setWait", { flag: true });
     return new Promise((resolve, reject) => {
@@ -54,6 +55,22 @@ const actions = {
       });
     });
   },
+  // 用id來拿查詢電影
+  deleteMovie({ commit }, payload) {
+    commit("setWait", { flag: true });
+    return new Promise((resolve, reject) => {
+      apiDeleteMovie({deleteId: payload.deleteId}).then(response => {
+        console.log(response.data);
+        commit("setWait", { flag: false });
+        resolve();
+      }).catch(error => {
+        console.log(error);
+        commit("setWait", { flag: false });
+        reject(new Error("error"));
+      });
+    });
+  },
+  // 增加電影資料
   addMovie({ commit }, payload) {
     commit("setWait", { flag: true });
     return new Promise((resolve, reject) => {

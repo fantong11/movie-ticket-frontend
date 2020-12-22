@@ -26,6 +26,7 @@ const mutations = { //state
 }
 
 const actions = {
+  // 拿到全部的電影院
   fetchAllTheater({ commit }) {
     return new Promise((resolve, reject) => {
       apiFetchAllTheater().then(response => {
@@ -38,6 +39,7 @@ const actions = {
       });
     });
   },
+  // 用id查詢電影院
   fetchTheaterByMovieId({ commit }, payload) {
     return new Promise((resolve, reject) => {
       apiFetchTheaterByMovieId(payload.movieId).then(res => {

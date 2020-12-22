@@ -3,7 +3,10 @@
     <ResponsiveNavigation />
     <b-container>
       <h3 class="text-left mt-3">電影場次 Move Time</h3>
-      <h4 class="text-left">{{ movieName }} <br> {{ theaterName }}</h4>
+      <h4 class="text-left">
+        {{ movieName }} <br />
+        {{ theaterName }}
+      </h4>
       <div
         class="movie-date mt-4"
         v-for="(movieDate, idx) in movieDates"
@@ -16,7 +19,12 @@
         </b-row>
         <b-row>
           <b-col v-for="(showing, idx) in movieDate.showings" :key="idx" md="2">
-            <b-button @click="timeSelected(showing.id)" block class="mt-2" variant="outline-secondary">
+            <b-button
+              @click="timeSelected(showing.id)"
+              block
+              class="mt-2"
+              variant="outline-secondary"
+            >
               {{ showing.time }}
             </b-button>
           </b-col>
@@ -28,7 +36,7 @@
 
 <script>
 import ResponsiveNavigation from "@/components/ResponsiveNavigation.vue";
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 
 export default {
   name: "SelectTime",
@@ -43,20 +51,23 @@ export default {
     }),
   },
   mounted() {
-    this.$store.dispatch("showing/fetchShowing", {
-      movieId: this.$route.query.movieid,
-      theaterId: this.$route.query.theaterid,
-    });
+    this.initShowing();
   },
   methods: {
+    initShowing() {
+      this.$store.dispatch("showing/fetchShowing", {
+        movieId: this.$route.query.movieid,
+        theaterId: this.$route.query.theaterid,
+      });
+    },
     timeSelected(showingId) {
       this.$router.push({
         name: "SelectTicket",
         query: {
           showingid: showingId,
-        }
+        },
       });
-    }
+    },
   },
 };
 </script>
