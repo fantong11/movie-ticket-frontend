@@ -31,12 +31,11 @@ export const apiUsernameCheck = data => userRequest.post("/usernameCheck", data)
 export const apiUserAuthenticate = data => userRequest.post("/authenticate", data);
 export const apiAdminBoard = data => userRequest.post("/adminBoard", data);
 
-
 // 收尋相關api
 export const apiSearch = data => searchRequest.get(`/Search?searchdata=${data}`);
 
 // 電影相關api
-export const apiFetchAllMovie = data => movieRequest.get(`/movieList?release=${data}`);
+export const apiFetchMovieByRelease = data => movieRequest.get(`/movieList?release=${data}`);
 export const apiFetchOneMovie = data => movieRequest.get(`/movie?movieid=${data}`);
 export const apiAddMovie = data => movieRequest.post("/addMovie", data);
 
@@ -46,3 +45,4 @@ export const apiFetchTheaterByMovieId = data => theaterRequest.get(`/theater?mov
 
 // 場次相關api
 export const apiFetchShowing = data => showingRequest.get(`/movietime?movieid=${data.movieId}&theaterid=${data.theaterId}`);
+export const apiAddShowing = data => showingRequest.post("/addShowing", data);
