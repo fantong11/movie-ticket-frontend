@@ -13,7 +13,7 @@
           </b-form-group>
         </template>
         <template v-slot:cell(subtotal)="row">
-          {{ calTotal(row.item.cost, row.item.qty.selected) }}
+          {{ calTotal(row.item) }}
         </template>
       </b-table>
     </b-card>
@@ -63,8 +63,9 @@ export default {
         ],
       };
     },
-    calTotal(cost, qty) {
-      return cost * qty;
+    calTotal(item) {
+      item.subtotal = item.cost * item.qty.selected;
+      return item.subtotal;
     },
   },
 }

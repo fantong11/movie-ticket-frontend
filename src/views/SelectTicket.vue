@@ -18,28 +18,45 @@
       </b-row>
       <b-row>
         <b-col>
-          <Ticket />
+          <Ticket @change.native="buttonEnable" ref="ticket" />
         </b-col>
       </b-row>
       <b-row class="mt-5">
         <b-col>
-          <Drink />
+          <Drink ref="drink" />
         </b-col>
       </b-row>
       <b-row class="mt-5">
         <b-col md="11"></b-col>
         <b-col md="1">
-          <b-button disabled size="lg">Next</b-button>
+          <b-button
+            v-b-modal.modal-center
+            @click="showInfo"
+            :disabled="buttonDisable"
+            size="lg"
+          >
+            Next
+          </b-button>
         </b-col>
       </b-row>
     </b-container>
     <Footer />
+    <b-modal id="modal-center" centered title="購物清單">
+      <p class="my-4" v-show="adultTicket">全票 X {{ adultTicket }}</p>
+      <p class="my-4" v-show="concesstionTicket">
+        優待票 X {{ concesstionTicket }}
+      </p>
+      <p class="my-4" v-show="largeCola">大可樂 X {{ largeCola }}</p>
+      <p class="my-4" v-show="mediumCola">中可樂 X {{ mediumCola }}</p>
+      <p class="my-4" v-show="smallCola">小可樂 X {{ smallCola }}</p>
+      <p class="my-4" v-show="totalCost">合計：{{ totalCost }}</p>
+    </b-modal>
   </div>
 </template>
 
 <script>
 import ResponsiveNavigation from "@/components/ResponsiveNavigation.vue";
-import Ticket from "@/components/Ticket.vue"
+import Ticket from "@/components/Ticket.vue";
 import Drink from "@/components/Drink.vue";
 import Footer from "@/components/Footer.vue";
 import { mapState } from "vuex";
@@ -52,11 +69,50 @@ export default {
     Drink,
     Footer,
   },
+  data() {
+    return {
+      buttonDisable: true,
+      showModal: false,
+      adultTicket: 0,
+      concesstionTicket: 0,
+      largeCola: 0,
+      mediumCola: 0,
+      smallCola: 0,
+      totalCost: 0,
+    };
+  },
   computed: {
     ...mapState({
       movieName: (state) => state.showing.movieName,
       theaterName: (state) => state.showing.theaterName,
     }),
+  },
+  methods: {
+    showInfo() {
+      let largeColaCost = this.$refs["drink"].drink.largeCola.cost;
+      let mediumColaCost = this.$refs["drink"].drink.mediumCola.cost;
+      let smallColaCost = this.$refs["drink"].drink.smallCola.cost;
+
+      this.largeCola = this.$refs["drink"].selected.large;
+      this.mediumCola = this.$refs["drink"].selected.medium;
+      this.smallCola = this.$refs["drink"].selected.small;
+
+      this.totalCost =
+        this.largeCola * largeColaCost +
+        this.mediumCola * mediumColaCost +
+        this.smallCola * smallColaCost + 
+        this.$refs["ticket"].items[0].subtotal + 
+        this.$refs["ticket"].items[1].subtotal;
+
+      console.log(this.totalCost);
+    },
+    buttonEnable() {
+      this.adultTicket = this.$refs["ticket"].items[0].qty.selected;
+      this.concesstionTicket = this.$refs["ticket"].items[1].qty.selected;
+
+      if (this.adultTicket !== 0 || this.concesstionTicket !== 0)
+        this.buttonDisable = false;
+    },
   },
 };
 </script>
