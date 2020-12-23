@@ -4,13 +4,13 @@
     <b-container class="text-left mt-5">
       <b-row>
         <b-col md="6">
-          <h3>XX電影</h3>
-          <h5>XX Movie</h5>
+          <h3>{{ movieName }}</h3>
+          <h5>{{ movieNameEn }}</h5>
         </b-col>
         <b-col md="6">
-          <p>2020-03-25</p>
-          <p>XX影城</p>
-          <p>XX聽</p>
+          <p>時間：{{ getDatetime(showTime) }}</p>
+          <p>影城：{{ theaterName }}</p>
+          <p>影廳：{{ theaterAudio }}廳</p>
         </b-col>
       </b-row>
       <b-row>
@@ -84,10 +84,21 @@ export default {
   computed: {
     ...mapState({
       movieName: (state) => state.showing.movieName,
+      movieNameEn: (state) => state.showing.movieNameEn,
       theaterName: (state) => state.showing.theaterName,
+      showTime: (state) => state.showing.showTime,
+      theaterAudio: (state) => state.showing.theaterAudio,
     }),
   },
+  mounted() {
+    this.initDetail();
+  },
   methods: {
+    initDetail() {
+      this.$store.dispatch("showing/fetchDetailByShowingId", {
+        showingId: this.$route.query.showingid,
+      });
+    },
     showInfo() {
       let largeColaCost = this.$refs["drink"].drink.largeCola.cost;
       let mediumColaCost = this.$refs["drink"].drink.mediumCola.cost;
@@ -100,8 +111,8 @@ export default {
       this.totalCost =
         this.largeCola * largeColaCost +
         this.mediumCola * mediumColaCost +
-        this.smallCola * smallColaCost + 
-        this.$refs["ticket"].items[0].subtotal + 
+        this.smallCola * smallColaCost +
+        this.$refs["ticket"].items[0].subtotal +
         this.$refs["ticket"].items[1].subtotal;
 
       console.log(this.totalCost);
@@ -109,9 +120,24 @@ export default {
     buttonEnable() {
       this.adultTicket = this.$refs["ticket"].items[0].qty.selected;
       this.concesstionTicket = this.$refs["ticket"].items[1].qty.selected;
-
+      console.log(this.adultTicket);
+      console.log(this.concesstionTicket);
       if (this.adultTicket !== 0 || this.concesstionTicket !== 0)
         this.buttonDisable = false;
+    },
+    getDatetime(datetime) {
+      let date = new Date(datetime);
+      return (
+        date.getFullYear() +
+        "/" +
+        date.getMonth() +
+        "/" +
+        date.getDate() +
+        " " +
+        date.getHours() +
+        ":" +
+        date.getMinutes()
+      );
     },
   },
 };
