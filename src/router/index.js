@@ -114,6 +114,11 @@ const routes = [
     name: 'DeleteMovie',
     component: () => import('@/views/DeleteMovie'),
   },
+  {
+    path: '/member',
+    name: 'member',
+    component: () => import('@/views/member'),
+  },
 ]
 
 const router = new VueRouter({
