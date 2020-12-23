@@ -18,89 +18,39 @@
       </b-row>
       <b-row>
         <b-col>
-          <b-card header="一般票種" header-tag="header">
-            <b-table striped hover :items="items" :fields="fields">
-              <template v-slot:cell(options)="row">
-                <b-form-group>
-                  <b-select-option :options="row.options" /> { row }
-                </b-form-group>
-              </template>
-            </b-table>
-          </b-card>
+          <Ticket />
+        </b-col>
+      </b-row>
+      <b-row class="mt-5">
+        <b-col>
+          <Drink />
+        </b-col>
+      </b-row>
+      <b-row class="mt-5">
+        <b-col md="11"></b-col>
+        <b-col md="1">
+          <b-button disabled size="lg">Next</b-button>
         </b-col>
       </b-row>
     </b-container>
+    <Footer />
   </div>
 </template>
 
 <script>
 import ResponsiveNavigation from "@/components/ResponsiveNavigation.vue";
+import Ticket from "@/components/Ticket.vue"
+import Drink from "@/components/Drink.vue";
+import Footer from "@/components/Footer.vue";
 import { mapState } from "vuex";
 
 export default {
   name: "SelectTicket",
   components: {
     ResponsiveNavigation,
-  },
-  data() {
-    return {
-      fields: [
-        {
-          key: "ticket_type",
-          label: "票種",
-        },
-        {
-          key: "cost",
-          label: "價格",
-        },
-        {
-          key: "qty",
-          label: "數量",
-        },
-        {
-          key: "subtotal",
-          label: "合計",
-        },
-      ],
-      items: [
-        { ticket_type: "全票", cost: 300, qty: this.options, subtotal: 0 },
-        { ticket_type: "優待票", cost: 270, qty: this.options, subtotal: 0 },
-      ],
-      options: [
-        {
-          value: 0,
-          text: "0",
-        },
-        {
-          value: 1,
-          text: "1",
-        },
-        {
-          value: 2,
-          text: "2",
-        },
-        {
-          value: 3,
-          text: "3",
-        },
-        {
-          value: 4,
-          text: "4",
-        },
-        {
-          value: 5,
-          text: "5",
-        },
-        {
-          value: 6,
-          text: "6",
-        },
-        {
-          value: 7,
-          text: "7",
-        },
-      ],
-    };
+    Ticket,
+    Drink,
+    Footer,
   },
   computed: {
     ...mapState({
