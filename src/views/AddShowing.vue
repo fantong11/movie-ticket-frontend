@@ -17,6 +17,20 @@
               :options="theaterOptions"
               class="mt-5 mb-5"
             ></b-form-select>
+            <b-form-group
+              id="input-showing-audio"
+              label-for="input-showing-audio"
+            >
+              <h4>Audio</h4>
+              <div class="input-box">
+                <b-form-input
+                  id="showing-audio"
+                  v-model="form.audio"
+                  required
+                  autocomplete="off"
+                ></b-form-input>
+              </div>
+            </b-form-group>
             <h4>Select Date</h4>
             <b-form-datepicker
               id="datepicker"
