@@ -17,21 +17,28 @@
               :options="theaterOptions"
               class="mt-5 mb-5"
             ></b-form-select>
-            <h4>Select Date</h4>
+            <b-form-select
+              v-model="form.selected_audio"
+              :options="audioOptions"
+              class="mb-4"
+            ></b-form-select>
+            <h4 class="pt-3">Select Date</h4>
             <b-form-datepicker
               id="datepicker"
               v-model="form.showing_date"
             ></b-form-datepicker>
             <br />
-            <h4>Select Time</h4>
+            <h4 class="pt-3">Select Time</h4>
             <b-form-timepicker
               v-model="form.showing_time"
               show-seconds
               :hour12="false"
             ></b-form-timepicker>
             <br />
+            <div class="mt-3">Selected: <strong>{{ form.showing_date + " " + form.showing_time }}</strong></div>
             <div class="text-center">
               <b-button
+                @click="addShowing"
                 class="mt-4 mb-3 btn btn-default"
                 variant="primary"
                 to=""
@@ -60,11 +67,18 @@ export default {
       form: {
         selected_movie: null,
         selected_theater: null,
+        selected_audio: null,
         showing_date: "",
         showing_time: "",
       },
       theaterOptions: [{ value: null, text: "請選擇影城" }],
       movieOptions: [{ value: null, text: "請選擇電影" }],
+      audioOptions: [
+        { value: null, text: "請選擇分院" },
+        { value: 1, text: "1" },
+        { value: 2, text: "2" },
+        { value: 3, text: "3" }
+      ],
       show: true,
     };
   },
