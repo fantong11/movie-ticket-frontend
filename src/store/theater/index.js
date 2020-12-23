@@ -5,20 +5,13 @@ import {
 
 const data = {
   wait: false,
-  theater: {},
-  theaterList: {
-    selected: null,
-    options: [{ value: null, text: "請選擇影城" }]
-  },
+  theaterList: [],
   theaterListFindByMovieId: [],
 }
 
 const mutations = { //state
   setTheaterList(state, payload) {
-    payload.theaterList.forEach((theater) => {
-      console.log(theater)
-      state.theaterList.options.push({ value: theater.id, text: theater.name });
-    })
+    state.theaterList = payload.theaterList;
   },
   theaterListFindByMovieId(state, payload) {
     state.theaterListFindByMovieId = payload.theaterList;

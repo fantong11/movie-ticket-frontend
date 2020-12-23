@@ -8,17 +8,15 @@
         <b-col>
           <b-container class="border border-info text-left">
             <b-form-select
-              v-model="selected_movie"
-              :options="movieList"
+              v-model="form.selected_movie"
+              :options="movieOptions"
               class="mt-4"
             ></b-form-select>
-
             <b-form-select
-              v-model="selected_theater"
-              :options="theaterList"
+              v-model="form.selected_theater"
+              :options="theaterOptions"
               class="mt-5 mb-5"
             ></b-form-select>
-
             <h4>Select Date</h4>
             <b-form-datepicker
               id="datepicker"
@@ -65,25 +63,15 @@ export default {
         showing_date: "",
         showing_time: "",
       },
+      theaterOptions: [{ value: null, text: "請選擇影城" }],
+      movieOptions: [{ value: null, text: "請選擇電影" }],
       show: true,
     };
   },
   mounted() {
-    this.$store.dispatch("user/adminBoard", {
-      token: localStorage.getItem("token"),
-    });
-    this.$store
-      .dispatch("movie/fetchMovieByRelease", { release: this.release })
-      .then(() => {})
-      .catch((err) => {
-        console.log(err);
-      });
-    this.$store
-      .dispatch("theater/fetchAllTheater", { release: this.release })
-      .then(() => {})
-      .catch((err) => {
-        console.log(err);
-      });
+    this.adminCheck();
+    this.initMovie();
+    this.initTheater();
   },
   computed: {
     ...mapState({
@@ -92,6 +80,48 @@ export default {
     }),
   },
   methods: {
+    // 管理員檢查
+    adminCheck() {
+      this.$store.dispatch("user/adminBoard", {
+        token: localStorage.getItem("token"),
+      });
+    },
+    // 初始化電影
+    initMovie() {
+      this.$store
+        .dispatch("movie/fetchMovieByRelease", { release: "all" })
+        .then(() => {
+          this.initMovieOptions();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    // 初始化電影選單
+    initMovieOptions() {
+      this.movieList.forEach((movie) => {
+        this.movieOptions.push({ value: movie.id, text: movie.name });
+      });
+      console.log(this.movieOptions);
+    },
+    // 呼叫影城api
+    initTheater() {
+      this.$store
+        .dispatch("theater/fetchAllTheater")
+        .then(() => {
+          this.initTheaterOptions();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    // 初始化影城選單
+    initTheaterOptions() {
+      this.theaterList.forEach((theater) => {
+        this.theaterOptions.push({ value: theater.id, text: theater.name });
+      });
+      console.log(this.theaterOptions);
+    },
     addShowing() {
       this.$store
         .dispatch("showing/addShowing", {

@@ -1,7 +1,7 @@
 import {
   apiFetchMovieByRelease,
   apiFetchOneMovie,
-  apiAddMovie
+  apiAddMovie,
 } from '../../api/api';
 
 const data = {
@@ -19,6 +19,10 @@ const mutations = {
   },
   setMovieList(state, payload) {
     state.movieList = payload.movieList;
+  },
+  setMovieName(state, payload) {
+    state.movieName = payload.movieName;
+    console.log(state.movieName);
   }
 }
 
