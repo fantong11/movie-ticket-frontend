@@ -36,6 +36,7 @@ export const apiSearch = data => searchRequest.get(`/Search?searchdata=${data}`)
 
 // 電影相關api
 export const apiFetchMovieByRelease = data => movieRequest.get(`/movieList?release=${data}`);
+export const apiFetchMovieName = () => movieRequest.get('/movieName');
 export const apiFetchOneMovie = data => movieRequest.get(`/movie?movieid=${data}`);
 export const apiAddMovie = data => movieRequest.post("/addMovie", data);
 
