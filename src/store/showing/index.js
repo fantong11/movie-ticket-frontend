@@ -70,10 +70,8 @@ const actions = {
     return new Promise((resolve, reject) => {
       apiAddShowing({
         token: payload.token,
-        movie: payload.movie,
-        theater: payload.theater,
-        showing_date: payload.showing_date,
-        showing_time: payload.showing_time,
+        showingDatetime: payload.showingDatetime,
+        showingAudio: payload.showingAudio,
       }).then(res => {
         console.log(res.data);
         commit("setWait", { flag: false });

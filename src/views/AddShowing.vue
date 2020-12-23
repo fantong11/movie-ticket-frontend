@@ -8,34 +8,34 @@
         <b-col>
           <b-container class="border border-info text-left">
             <b-form-select
-              v-model="form.selected_movie"
+              v-model="form.selectedMovie"
               :options="movieOptions"
               class="mt-4"
             ></b-form-select>
             <b-form-select
-              v-model="form.selected_theater"
+              v-model="form.selectedTheater"
               :options="theaterOptions"
               class="mt-5 mb-5"
             ></b-form-select>
             <b-form-select
-              v-model="form.selected_audio"
+              v-model="form.selectedAudio"
               :options="audioOptions"
               class="mb-4"
             ></b-form-select>
             <h4 class="pt-3">Select Date</h4>
             <b-form-datepicker
               id="datepicker"
-              v-model="form.showing_date"
+              v-model="form.showingDate"
             ></b-form-datepicker>
             <br />
             <h4 class="pt-3">Select Time</h4>
             <b-form-timepicker
-              v-model="form.showing_time"
+              v-model="form.showingTime"
               show-seconds
               :hour12="false"
             ></b-form-timepicker>
             <br />
-            <div class="mt-3">Selected: <strong>{{ form.showing_date + " " + form.showing_time }}</strong></div>
+            <div class="mt-3">Selected: <strong>{{ form.showingDate + " " + form.showingTime }}</strong></div>
             <div class="text-center">
               <b-button
                 @click="addShowing"
@@ -46,6 +46,7 @@
                 Add
               </b-button>
             </div>
+            <div>Selected: <strong>{{ form.selectedAudio }}</strong></div>
           </b-container>
         </b-col>
       </b-row>
@@ -65,11 +66,11 @@ export default {
   data() {
     return {
       form: {
-        selected_movie: null,
-        selected_theater: null,
-        selected_audio: null,
-        showing_date: "",
-        showing_time: "",
+        selectedMovie: null,
+        selectedTheater: null,
+        selectedAudio: null,
+        showingDate: "",
+        showingTime: "",
       },
       theaterOptions: [{ value: null, text: "請選擇影城" }],
       movieOptions: [{ value: null, text: "請選擇電影" }],
@@ -140,10 +141,8 @@ export default {
       this.$store
         .dispatch("showing/addShowing", {
           token: localStorage.getItem("token"),
-          movie: this.form.selected_movie,
-          theater: this.form.selected_theater,
-          showing_date: this.form.showing_date,
-          showing_time: this.form.showing_time,
+          showingDatetime: this.form.showingDate + ' ' +  this.form.showingTime,
+          showingAudio: this.form.selectedAudio,
         })
         .then(() => {})
         .catch(() => {});
