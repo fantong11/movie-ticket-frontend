@@ -35,7 +35,10 @@
               :hour12="false"
             ></b-form-timepicker>
             <br />
-            <div class="mt-3">Selected: <strong>{{ form.showingDate + " " + form.showingTime }}</strong></div>
+            <div class="mt-3">
+              Selected:
+              <strong>{{ form.showingDate + " " + form.showingTime }}</strong>
+            </div>
             <div class="text-center">
               <b-button
                 @click="addShowing"
@@ -46,7 +49,9 @@
                 Add
               </b-button>
             </div>
-            <div>Selected: <strong>{{ form.selectedAudio }}</strong></div>
+            <div>
+              Selected: <strong>{{ form.selectedAudio }}</strong>
+            </div>
           </b-container>
         </b-col>
       </b-row>
@@ -78,7 +83,7 @@ export default {
         { value: null, text: "請選擇分院" },
         { value: 1, text: "1" },
         { value: 2, text: "2" },
-        { value: 3, text: "3" }
+        { value: 3, text: "3" },
       ],
       show: true,
     };
@@ -92,6 +97,7 @@ export default {
     ...mapState({
       movieList: (state) => state.movie.movieList,
       theaterList: (state) => state.theater.theaterList,
+      showingId: (state) => state.showing.showingId,
     }),
   },
   methods: {
@@ -141,8 +147,10 @@ export default {
       this.$store
         .dispatch("showing/addShowing", {
           token: localStorage.getItem("token"),
-          showingDatetime: this.form.showingDate + ' ' +  this.form.showingTime,
+          showingDatetime: this.form.showingDate + " " + this.form.showingTime,
           showingAudio: this.form.selectedAudio,
+          playInMovieId: this.form.selectedMovie,
+          playInTheaterId: this.form.selectedTheater,
         })
         .then(() => {})
         .catch(() => {});

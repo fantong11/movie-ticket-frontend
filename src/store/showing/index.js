@@ -8,6 +8,7 @@ const data = {
   movieDateTimes: [], // 裡面存日期裡的場次
   movieName: "",
   theaterName: "",
+  showingId: "",
 }
 
 const mutations = {
@@ -45,6 +46,10 @@ const mutations = {
         });
       }
     });
+  },
+  setShowingId(state, payload) {
+    state.showingId = payload.showingId;
+    console.log("ha ha 是我啦" + state.showingId);
   }
 }
 
@@ -72,9 +77,12 @@ const actions = {
         token: payload.token,
         showingDatetime: payload.showingDatetime,
         showingAudio: payload.showingAudio,
+        playInMovieId: payload.playInMovieId,
+        playInTheaterId: payload.playInTheaterId,
       }).then(res => {
         console.log(res.data);
         commit("setWait", { flag: false });
+        commit("setShowingId", { showingId: res.data.id });
         resolve();
       }).catch(error => {
         console.log(error);
