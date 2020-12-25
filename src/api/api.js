@@ -48,3 +48,4 @@ export const apiFetchTheaterByMovieId = data => theaterRequest.get(`/theater?mov
 export const apiFetchShowing = data => showingRequest.get(`/movietime?movieid=${data.movieId}&theaterid=${data.theaterId}`);
 export const apiAddShowing = data => showingRequest.post("/addShowing", data);
 export const apiGetShowingDetail = data => showingRequest.get("/deleteShowing", data);
+export const apiDeleteShowing = data => showingRequest.post("/deleteShowing" ,data);

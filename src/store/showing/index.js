@@ -1,7 +1,8 @@
 import {
   apiAddShowing,
   apiFetchShowing,
-  apiGetShowingDetail
+  apiGetShowingDetail,
+  apiDeleteShowing,
 } from '../../api/api';
 
 const data = {
@@ -23,13 +24,13 @@ const mutations = {
   setTheaterName(state, payload) {
     state.theaterName = payload.theaterName;
   },
-  setShowing(state, payload){
+  setShowing(state, payload) {
     state.showingList = payload.showingList;
     state.showingList.forEach(data => {
       let date = new Date(data.show_time);
-      date = date.getFullYear() + "/" + (date.getMonth()+1) + "/" + 
-      date.getDate() +" "+ date.getHours() + " : " + date.getMinutes();
-      data.show_time=date;
+      date = date.getFullYear() + "/" + (date.getMonth() + 1) + "/" +
+        date.getDate() + " " + date.getHours() + " : " + date.getMinutes();
+      data.show_time = date;
     })
     console.log(state.showingList);
   },
@@ -95,14 +96,30 @@ const actions = {
       })
     })
   },
-  GetShowingDetail({ commit }){
+  GetShowingDetail({ commit }) {
     return new Promise((resolve, reject) => {
       apiGetShowingDetail().then(res => {
         console.log(res.data);
-        commit("setShowing",{ showingList: res.data });
+        commit("setShowing", { showingList: res.data });
         resolve();
       }).catch(error => {
         console.log(error);
+        reject();
+      })
+    })
+  },
+  deleteShowings({ commit }, payload){
+    return new Promise((resolve, reject) => {
+      apiDeleteShowing({
+        token: payload.token,
+        deleteId: payload.deleteId,
+      }).then(res => {
+        console.log(res.data+"test OK");
+        commit("setWait", { flag: false });
+        resolve();
+      }).catch(error => {
+        console.log(error+"fail");
+        commit("setWait", { flag: false });
         reject();
       })
     })
