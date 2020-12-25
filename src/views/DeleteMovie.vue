@@ -29,7 +29,12 @@
             </b-table>
           </div>
           <div class="text-center">
-            <b-button @click="onDelete" class="mt-4 mb-3 btn btn-default" variant="primary" to="">
+            <b-button
+              @click="onDelete"
+              class="mt-4 mb-3 btn btn-default"
+              variant="primary"
+              to=""
+            >
               Delete
             </b-button>
           </div>
@@ -75,10 +80,14 @@ export default {
   },
   mounted() {
     this.adminCheck();
-    // 每次進頁面時都要向後端請求電影資料
-    this.$store.dispatch("movie/fetchMovieByRelease", { release: "all" });
+    this.initMovie();
   },
+
   methods: {
+    initMovie() {
+      // 每次進頁面時都要向後端請求電影資料
+      this.$store.dispatch("movie/fetchMovieByRelease", { release: "all" });
+    },
     adminCheck() {
       this.$store.dispatch("user/adminBoard", {
         token: localStorage.getItem("token"),
@@ -88,16 +97,26 @@ export default {
       this.selectMovies = movies;
     },
     onDelete() {
+      this.$store
+        .dispatch("movie/deleteMovie", {
+          deleteId: this.convertSelectedMovies(),
+        })
+        .then(() => {
+          this.initMovie();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
       console.log(this.selectMovies);
       console.log(this.convertSelectedMovies());
     },
     convertSelectedMovies() {
       let selectedMovieId = [];
-      this.selectMovies.forEach(movie => {
-        selectedMovieId.push({id: movie.id});
+      this.selectMovies.forEach((movie) => {
+        selectedMovieId.push({ id: movie.id });
       });
       return selectedMovieId;
-    }
+    },
   },
 };
 </script>
