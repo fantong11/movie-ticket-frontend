@@ -83,11 +83,11 @@ export default {
   },
   mounted() {
     this.adminCheck();
-    this.initMovie();
+    this.initShowing();
   },
 
   methods: {
-    initMovie() {
+    initShowing() {
       // 每次進頁面時都要向後端請求電影資料
       this.$store.dispatch("showing/GetShowingDetail");
     },
@@ -101,22 +101,23 @@ export default {
     },
     onDelete() {
       this.$store
-        .dispatch("movie/deleteMovie", {
-          deleteId: this.convertSelectedMovies(),
+        .dispatch("showing/deleteShowings", {
+          token: localStorage.getItem("token"),
+          deleteId: this.convertSelectedShowings(),
         })
         .then(() => {
-          this.initMovie();
+          this.initShowing();
         })
         .catch((err) => {
           console.log(err);
         });
       console.log(this.selectShowings);
-      console.log(this.convertSelectedMovies());
+      console.log(this.convertSelectedShowings(),"fuck");
     },
-    convertSelectedMovies() {
+    convertSelectedShowings() {
       let selectedShowingId = [];
       this.selectShowings.forEach((showing) => {
-        selectedShowingId.push({ id: showing.id });
+        selectedShowingId.push({ id: showing.showing_id });
       });
       return selectedShowingId;
     },

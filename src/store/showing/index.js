@@ -3,6 +3,7 @@ import {
   apiFetchShowing,
   apiGetShowingDetail,
   apiDeleteShowing,
+  apiFetchDetailByShowingId,
 } from '../../api/api';
 
 const data = {
@@ -11,12 +12,23 @@ const data = {
   movieName: "",
   theaterName: "",
   showingList: [],
+  showingId: "",
+  movieNameEn: null,
+  showTime: null,
+  theaterAudio: null,
 }
 
 const mutations = {
   // 重置
   resetMovieDateTimes(state) {
     state.movieDateTimes = [];
+  },
+  setData(state, payload) {
+    state.movieName = payload.movieName;
+    state.movieNameEn = payload.movieNameEn;
+    state.theaterName = payload.theaterName;
+    state.showTime = payload.showTime;
+    state.theaterAudio = payload.theaterAudio;
   },
   setMovieName(state, payload) {
     state.movieName = payload.movieName;
@@ -58,6 +70,10 @@ const mutations = {
         });
       }
     });
+  },
+  setShowingId(state, payload) {
+    state.showingId = payload.showingId;
+    console.log("ha ha 是我啦" + state.showingId);
   }
 }
 
@@ -79,15 +95,32 @@ const actions = {
       });
     });
   },
+  fetchDetailByShowingId({ commit }, payload) {
+    apiFetchDetailByShowingId(payload.showingId).then(res => {
+      console.log(res);
+      commit("setData", {
+        movieName: res.data[0].movieName,
+        movieNameEn: res.data[0].movieNameEn,
+        theaterName: res.data[0].theaterName,
+        showTime: res.data[0].showTime,
+        theaterAudio: res.data[0].theaterAudio,
+      });
+    }).catch(err => {
+      console.log(err);
+    });
+  },
   addShowing({ commit }, payload) {
     return new Promise((resolve, reject) => {
       apiAddShowing({
         token: payload.token,
         showingDatetime: payload.showingDatetime,
         showingAudio: payload.showingAudio,
+        playInMovieId: payload.playInMovieId,
+        playInTheaterId: payload.playInTheaterId,
       }).then(res => {
         console.log(res.data);
         commit("setWait", { flag: false });
+        commit("setShowingId", { showingId: res.data.id });
         resolve();
       }).catch(error => {
         console.log(error);
