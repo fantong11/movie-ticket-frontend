@@ -1,6 +1,7 @@
 import {
   apiAddShowing,
-  apiFetchShowing
+  apiFetchShowing,
+  apiGetShowingDetail
 } from '../../api/api';
 
 const data = {
@@ -8,11 +9,12 @@ const data = {
   movieDateTimes: [], // 裡面存日期裡的場次
   movieName: "",
   theaterName: "",
+  showingList: [],
 }
 
 const mutations = {
   // 重置
-  resetShowing(state) {
+  resetMovieDateTimes(state) {
     state.movieDateTimes = [];
   },
   setMovieName(state, payload) {
@@ -21,8 +23,18 @@ const mutations = {
   setTheaterName(state, payload) {
     state.theaterName = payload.theaterName;
   },
+  setShowing(state, payload){
+    state.showingList = payload.showingList;
+    state.showingList.forEach(data => {
+      let date = new Date(data.show_time);
+      date = date.getFullYear() + "/" + (date.getMonth()+1) + "/" + 
+      date.getDate() +" "+ date.getHours() + " : " + date.getMinutes();
+      data.show_time=date;
+    })
+    console.log(state.showingList);
+  },
   // 拿到的陣列轉成需要的格式
-  setShowing(state, payload) {
+  setMovieDateTimes(state, payload) {
     payload.showings.forEach(showing => {
       let dateExist = false;
       const date = new Date(showing.show_time);
@@ -50,13 +62,13 @@ const mutations = {
 
 const actions = {
   fetchShowing({ commit }, payload) {
-    commit("resetShowing");
+    commit("resetMovieDateTimes");
     return new Promise((resolve, reject) => {
       apiFetchShowing({
         movieId: payload.movieId,
         theaterId: payload.theaterId,
       }).then(res => {
-        commit("setShowing", { showings: res.data });
+        commit("setMovieDateTimes", { showings: res.data });
         commit("setTheaterName", { theaterName: res.data[0].theaterName });
         commit("setMovieName", { movieName: res.data[0].movieName });
         resolve();
@@ -70,10 +82,8 @@ const actions = {
     return new Promise((resolve, reject) => {
       apiAddShowing({
         token: payload.token,
-        movie: payload.movie,
-        theater: payload.theater,
-        showing_date: payload.showing_date,
-        showing_time: payload.showing_time,
+        showingDatetime: payload.showingDatetime,
+        showingAudio: payload.showingAudio,
       }).then(res => {
         console.log(res.data);
         commit("setWait", { flag: false });
@@ -84,7 +94,19 @@ const actions = {
         reject(new Error("error"));
       })
     })
-  }
+  },
+  GetShowingDetail({ commit }){
+    return new Promise((resolve, reject) => {
+      apiGetShowingDetail().then(res => {
+        console.log(res.data);
+        commit("setShowing",{ showingList: res.data });
+        resolve();
+      }).catch(error => {
+        console.log(error);
+        reject();
+      })
+    })
+  },
 }
 
 export default {
