@@ -3,18 +3,55 @@
     <ResponsiveNavigation />
     <b-container class="mt-5">
       <b-row>
+        <h3>選擇座位</h3>
+      </b-row>
+      <b-row>
         <b-col md="12">
           <v-stage :config="configKonva">
             <v-layer>
               <v-rect
-                v-for="(seat, idx) in seatList"
-                :key="idx"
                 :config="{
+                  x: 10,
+                  y: 10,
+                  width: 800,
+                  height: 40,
+                  stroke: 'black',
+                  cornerRadius: 15,
+                }"
+              ></v-rect>
+              <v-text
+                :config="{
+                  x: 350,
+                  y: 20,
+                  text: '螢幕 Screen',
+                  fontSize: 25,
+                  fontFamily: 'Calibri',
+                }"
+              ></v-text>
+              <v-text
+                v-for="(seat, idx) in seatList"
+                :key="'B' + idx"
+                :config="{
+                  x: seat.x + 3,
+                  y: seat.y + 3,
+                  text: convertToSeatNumber(idx),
+                  fontSize: 25,
+                  fontFamily: 'Calibri',
+                }"
+              ></v-text>
+              <v-rect
+                v-for="(seat, idx) in seatList"
+                :key="'A' + idx"
+                @mousedown="selectSeat"
+                :config="{
+                  name: seat.name,
                   x: seat.x,
                   y: seat.y,
                   width: seat.width,
                   height: seat.height,
                   fill: seat.fill,
+                  stroke: 'black',
+                  cornerRadius: 7,
                 }"
               ></v-rect>
             </v-layer>
@@ -41,46 +78,58 @@ export default {
         height: 800,
       },
       seatList: [],
-      row: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"],
+      rowField: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"], // 欄位名稱
+      row: 10,
+      col: 20,
     };
   },
   mounted() {
-    for (let i = 0; i < 10; i++) {
-      for (let j = 0; j < 20; j++) {
+    for (let i = 0; i < this.row; i++) {
+      for (let j = 0; j < this.col; j++) {
         if (j > 15) {
           this.seatList.push({
-            row: this.row[i],
-            col: j + 1,
-            x: 37 * j + 50,
-            y: 50 * i,
+            name: this.rowField[i] + (j + 1),
+            x: 37 * j + 70,
+            y: 50 * i + 70,
             width: 30,
             height: 30,
-            fill: "red",
+            fill: '',
           });
         } else if (j > 3) {
           this.seatList.push({
-            row: this.row[i],
-            col: j + 1,
-            x: 37 * j + 20,
-            y: 50 * i,
+            name: this.rowField[i] + (j + 1),
+            x: 37 * j + 40,
+            y: 50 * i + 70,
             width: 30,
             height: 30,
-            fill: "red",
+            fill: '',
           });
         } else {
           this.seatList.push({
-            row: this.row[i],
-            col: j + 1,
-            x: 37 * j,
-            y: 50 * i,
+            name: this.rowField[i] + (j + 1),
+            x: 37 * j + 20,
+            y: 50 * i + 70,
             width: 30,
             height: 30,
-            fill: "red",
+            fill: '',
           });
         }
       }
     }
     console.log(this.seatList);
+  },
+  methods: {
+    convertToSeatNumber(idx) {
+      return (idx % this.col) + 1;
+    },
+    // 座位選擇事件
+    selectSeat(e) {
+      console.log(e);
+      const name = e.target.name();
+      const rect = this.seatList.find((r) => r.name === name);
+      rect.fill = "red";
+      console.log(rect);
+    }
   },
 };
 </script>
