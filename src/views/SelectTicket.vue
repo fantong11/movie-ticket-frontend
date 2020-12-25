@@ -13,19 +13,8 @@
           <p>影廳：{{ theaterAudio }}廳</p>
         </b-col>
       </b-row>
-      <b-row>
-        <h2>選擇電影票</h2>
-      </b-row>
-      <b-row>
-        <b-col>
-          <Ticket @change.native="buttonEnable" ref="ticket" />
-        </b-col>
-      </b-row>
-      <b-row class="mt-5">
-        <b-col>
-          <Drink ref="drink" />
-        </b-col>
-      </b-row>
+      <Ticket @change.native="buttonEnable" ref="ticket" />
+      <Drink ref="drink" />
       <b-row class="mt-5">
         <b-col md="11"></b-col>
         <b-col md="1">
@@ -99,7 +88,11 @@ export default {
         showingId: this.$route.query.showingid,
       });
     },
+    // 按下一部按鈕的時候，顯示購買資訊
     showInfo() {
+      this.adultTicket = this.$refs["ticket"].items[0].qty.selected;
+      this.concesstionTicket = this.$refs["ticket"].items[1].qty.selected;
+
       let largeColaCost = this.$refs["drink"].drink.largeCola.cost;
       let mediumColaCost = this.$refs["drink"].drink.mediumCola.cost;
       let smallColaCost = this.$refs["drink"].drink.smallCola.cost;
@@ -117,13 +110,9 @@ export default {
 
       console.log(this.totalCost);
     },
+    // 當有選擇的時候按鈕打開
     buttonEnable() {
-      this.adultTicket = this.$refs["ticket"].items[0].qty.selected;
-      this.concesstionTicket = this.$refs["ticket"].items[1].qty.selected;
-      console.log(this.adultTicket);
-      console.log(this.concesstionTicket);
-      if (this.adultTicket !== 0 || this.concesstionTicket !== 0)
-        this.buttonDisable = false;
+      this.buttonDisable = false;
     },
     getDatetime(datetime) {
       let date = new Date(datetime);
