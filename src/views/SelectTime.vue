@@ -61,6 +61,11 @@ export default {
       });
     },
     timeSelected(showingId) {
+      if (localStorage.getItem("token") === null) {
+        console.log("not login");
+        this.$router.push("/login");
+        return;
+      }
       this.$router.push({
         name: "SelectTicket",
         query: {

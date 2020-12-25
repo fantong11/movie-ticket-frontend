@@ -1,22 +1,29 @@
 <template>
   <div class="ticket">
-    <b-card header="一般票種" header-tag="header">
-      <b-table striped hover :items="items" :fields="fields">
-        <template v-slot:cell(qty)="row">
-          <b-form-group>
-            <b-form-select
-              class="w-50"
-              v-model="row.item.qty.selected"
-              :options="row.item.qty.options"
-            >
-            </b-form-select>
-          </b-form-group>
-        </template>
-        <template v-slot:cell(subtotal)="row">
-          {{ calTotal(row.item.cost, row.item.qty.selected) }}
-        </template>
-      </b-table>
-    </b-card>
+    <b-row class="mt-5">
+      <h2>選擇電影票</h2>
+    </b-row>
+    <b-row>
+      <b-col>
+        <b-card header="一般票種" header-tag="header">
+          <b-table striped hover :items="items" :fields="fields">
+            <template v-slot:cell(qty)="row">
+              <b-form-group>
+                <b-form-select
+                  class="w-50"
+                  v-model="row.item.qty.selected"
+                  :options="row.item.qty.options"
+                >
+                </b-form-select>
+              </b-form-group>
+            </template>
+            <template v-slot:cell(subtotal)="row">
+              {{ calTotal(row.item) }}
+            </template>
+          </b-table>
+        </b-card>
+      </b-col>
+    </b-row>
   </div>
 </template>
 
@@ -63,9 +70,10 @@ export default {
         ],
       };
     },
-    calTotal(cost, qty) {
-      return cost * qty;
+    calTotal(item) {
+      item.subtotal = item.cost * item.qty.selected;
+      return item.subtotal;
     },
   },
-}
+};
 </script>
