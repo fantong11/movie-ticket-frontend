@@ -115,9 +115,9 @@ const routes = [
     component: () => import('@/views/DeleteMovie'),
   },
   {
-    path: '/member',
-    name: 'member',
-    component: () => import('@/views/member'),
+    path: '/nowplayingmovie/selectseat',
+    name: 'SelectSeat',
+    component: () => import('@/views/SelectSeat'),
   },
 ]
 

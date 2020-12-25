@@ -16,28 +16,43 @@
       <Ticket @change.native="buttonEnable" ref="ticket" />
       <Drink ref="drink" />
       <b-row class="mt-5">
-        <b-col md="11"></b-col>
-        <b-col md="1">
+        <b-col md="10"></b-col>
+        <b-col md="2">
           <b-button
             v-b-modal.modal-center
             @click="showInfo"
             :disabled="buttonDisable"
             size="lg"
           >
-            Next
+            下一步
           </b-button>
         </b-col>
       </b-row>
     </b-container>
     <Footer />
-    <b-modal id="modal-center" centered title="購物清單">
-      <p class="my-4" v-show="adultTicket">全票 X {{ adultTicket }}</p>
-      <p class="my-4" v-show="concesstionTicket">
-        優待票 X {{ concesstionTicket }}
+    <b-modal
+      id="modal-center"
+      centered
+      title="購物清單"
+      ok-title="確認"
+      @ok="saveOrderInSessionStorage"
+      cancel-title="取消"
+    >
+      <p class="my-4" v-show="selected.adultTicket">
+        全票 X {{ selected.adultTicket }}
       </p>
-      <p class="my-4" v-show="largeCola">大可樂 X {{ largeCola }}</p>
-      <p class="my-4" v-show="mediumCola">中可樂 X {{ mediumCola }}</p>
-      <p class="my-4" v-show="smallCola">小可樂 X {{ smallCola }}</p>
+      <p class="my-4" v-show="selected.concesstionTicket">
+        優待票 X {{ selected.concesstionTicket }}
+      </p>
+      <p class="my-4" v-show="selected.largeCola">
+        大可樂 X {{ selected.largeCola }}
+      </p>
+      <p class="my-4" v-show="selected.mediumCola">
+        中可樂 X {{ selected.mediumCola }}
+      </p>
+      <p class="my-4" v-show="selected.smallCola">
+        小可樂 X {{ selected.smallCola }}
+      </p>
       <p class="my-4" v-show="totalCost">合計：{{ totalCost }}</p>
     </b-modal>
   </div>
@@ -62,11 +77,13 @@ export default {
     return {
       buttonDisable: true,
       showModal: false,
-      adultTicket: 0,
-      concesstionTicket: 0,
-      largeCola: 0,
-      mediumCola: 0,
-      smallCola: 0,
+      selected: {
+        adultTicket: 0,
+        concesstionTicket: 0,
+        largeCola: 0,
+        mediumCola: 0,
+        smallCola: 0,
+      },
       totalCost: 0,
     };
   },
@@ -80,6 +97,7 @@ export default {
     }),
   },
   mounted() {
+    // 初始化電影資訊
     this.initDetail();
   },
   methods: {
@@ -90,29 +108,35 @@ export default {
     },
     // 按下一部按鈕的時候，顯示購買資訊
     showInfo() {
-      this.adultTicket = this.$refs["ticket"].items[0].qty.selected;
-      this.concesstionTicket = this.$refs["ticket"].items[1].qty.selected;
+      this.selected.adultTicket = this.$refs["ticket"].items[0].qty.selected;
+      this.selected.concesstionTicket = this.$refs[
+        "ticket"
+      ].items[1].qty.selected;
 
       let largeColaCost = this.$refs["drink"].drink.largeCola.cost;
       let mediumColaCost = this.$refs["drink"].drink.mediumCola.cost;
       let smallColaCost = this.$refs["drink"].drink.smallCola.cost;
 
-      this.largeCola = this.$refs["drink"].selected.large;
-      this.mediumCola = this.$refs["drink"].selected.medium;
-      this.smallCola = this.$refs["drink"].selected.small;
+      this.selected.largeCola = this.$refs["drink"].selected.large;
+      this.selected.mediumCola = this.$refs["drink"].selected.medium;
+      this.selected.smallCola = this.$refs["drink"].selected.small;
 
       this.totalCost =
-        this.largeCola * largeColaCost +
-        this.mediumCola * mediumColaCost +
-        this.smallCola * smallColaCost +
+        this.selected.largeCola * largeColaCost +
+        this.selected.mediumCola * mediumColaCost +
+        this.selected.smallCola * smallColaCost +
         this.$refs["ticket"].items[0].subtotal +
         this.$refs["ticket"].items[1].subtotal;
-
-      console.log(this.totalCost);
     },
     // 當有選擇的時候按鈕打開
     buttonEnable() {
       this.buttonDisable = false;
+    },
+    saveOrderInSessionStorage() {
+      console.log("save");
+      sessionStorage.setItem("order", JSON.stringify(this.selected));
+      console.log(JSON.parse(sessionStorage.getItem("order")));
+      this.$router.push("/nowplayingmovie/selectseat");
     },
     getDatetime(datetime) {
       let date = new Date(datetime);
