@@ -136,7 +136,7 @@ export default {
       console.log("save");
       sessionStorage.setItem("order", JSON.stringify(this.selected));
       console.log(JSON.parse(sessionStorage.getItem("order")));
-      this.$router.push("/nowplayingmovie/selectSeat");
+      this.$router.push("/nowplayingmovie/selectseat");
     },
     getDatetime(datetime) {
       let date = new Date(datetime);
