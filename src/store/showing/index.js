@@ -1,19 +1,30 @@
 import {
   apiAddShowing,
-  apiFetchShowing
+  apiFetchShowing,
+  apiFetchDetailByShowingId,
 } from '../../api/api';
 
 const data = {
   wait: false, // 呼叫api過程是否等待
   movieDateTimes: [], // 裡面存日期裡的場次
-  movieName: "",
-  theaterName: "",
+  movieName: null,
+  movieNameEn: null,
+  theaterName: null,
+  showTime: null,
+  theaterAudio: null,
 }
 
 const mutations = {
   // 重置
   resetShowing(state) {
     state.movieDateTimes = [];
+  },
+  setData(state, payload) {
+    state.movieName = payload.movieName;
+    state.movieNameEn = payload.movieNameEn;
+    state.theaterName = payload.theaterName;
+    state.showTime = payload.showTime;
+    state.theaterAudio = payload.theaterAudio;
   },
   setMovieName(state, payload) {
     state.movieName = payload.movieName;
@@ -64,6 +75,20 @@ const actions = {
         console.log(err);
         reject();
       });
+    });
+  },
+  fetchDetailByShowingId({ commit }, payload) {
+    apiFetchDetailByShowingId(payload.showingId).then(res => {
+      console.log(res);
+      commit("setData", {
+        movieName: res.data[0].movieName,
+        movieNameEn: res.data[0].movieNameEn,
+        theaterName: res.data[0].theaterName,
+        showTime: res.data[0].showTime,
+        theaterAudio: res.data[0].theaterAudio,
+      });
+    }).catch(err => {
+      console.log(err);
     });
   },
   addShowing({ commit }, payload) {

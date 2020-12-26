@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import VueKonva from 'vue-konva'
 import App from './App.vue'
 import store from './store'
 import router from './router'
@@ -13,6 +14,7 @@ Vue.prototype.$http = axios;
 Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
+Vue.use(VueKonva)
 
 new Vue({
   store,

@@ -23,6 +23,13 @@ const showingRequest = axios.create({
     baseURL: '/api/showing'
 });
 
+const seatRequest = axios.create({
+    baseURL: '/api/seat'
+});
+
+const orderRequest = axios.create({
+    baseURL: '/api/order'
+});
 
 // user相關api
 export const apiUserLogin = data => userRequest.post("/signIn", data);
@@ -45,4 +52,12 @@ export const apiFetchTheaterByMovieId = data => theaterRequest.get(`/theater?mov
 
 // 場次相關api
 export const apiFetchShowing = data => showingRequest.get(`/movietime?movieid=${data.movieId}&theaterid=${data.theaterId}`);
+export const apiFetchDetailByShowingId = data => showingRequest.get(`/showingDetail?showingid=${data}`);
 export const apiAddShowing = data => showingRequest.post("/addShowing", data);
+
+// 座位相關api
+export const apiFetchSeatByShowingId = data => seatRequest.post("/fetchSeatByShowingId", data);
+export const apiAddSeat = data => seatRequest.post("/addSeat", data);
+
+// 訂單相關api
+export const apiAddOrdeer = data => orderRequest.post("/addOrder", data);
