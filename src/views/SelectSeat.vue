@@ -124,7 +124,7 @@ export default {
       rowField: [], // 欄位名稱
       row: 10,
       col: 20,
-      soldSeat: ["A7", "G4", "D4", "E8", "B19"], // 賣出的座位
+      // soldSeat: ["A7", "G4", "D4", "E8", "B19"], // 賣出的座位
       buttonDisable: true,
     };
   },
@@ -189,7 +189,7 @@ export default {
     // 畫出已經賣出的座位
     initSoldSeatMap() {
       this.$store.dispatch("seat/fetchSeatByShowingId").then(() => {
-        this.soldSeat.forEach((seatName) => {
+        this.soldSeatList.forEach((seatName) => {
           const seat = this.seatList.find((s) => s.name === seatName);
           console.log(seat.name);
           seat.fill = "rgb(247, 89, 123)";
@@ -235,7 +235,7 @@ export default {
     },
     // 座位是否已經賣出
     seatIsSold(name) {
-      return this.soldSeat.includes(name);
+      return this.soldSeatList.includes(name);
     },
     // 座位是否已經選擇
     seatIsSelected(name) {
