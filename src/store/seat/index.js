@@ -9,7 +9,10 @@ const data = {
 
 const mutations = {
   setSoldSeatList(state, payload) {
-    state.soldSeatList = payload.soldSeatList;
+    payload.soldSeatList.forEach(soldSeat => {
+      state.soldSeatList.push(soldSeat.seat_row_column);
+    });
+    // state.soldSeatList = payload.soldSeatList;
   },
 }
 
@@ -19,7 +22,6 @@ const actions = {
       apiFetchSeatByShowingId({
         showingId: sessionStorage.getItem("showingId"),
       }).then(res => {
-        console.log(res.data);
         commit("setSoldSeatList", { soldSeatList: res.data });
         resolve();
       }).catch((err) => {
