@@ -15,6 +15,24 @@ export default {
       orderList: (state) => state.order.orderList,
     }),
   },
+  data() {
+    return {
+      fields: [
+        {
+          key: "id",
+          label: "訂單編號",
+        },
+        {
+          key: "order_time",
+          label: "下訂時間",
+        },
+        {
+          key: "price",
+          label: "金額",
+        },
+      ],
+    };
+  },
   mounted() {
     this.initOrder();
   },
