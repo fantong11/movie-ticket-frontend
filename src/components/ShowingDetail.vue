@@ -20,7 +20,7 @@ import { mapState } from "vuex";
 export default {
   name: "ShowingDetail",
   props: {
-    showingid: Number,
+    showingid: String,
   },
   computed: {
     ...mapState({

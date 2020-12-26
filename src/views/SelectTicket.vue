@@ -2,7 +2,7 @@
   <div class="select-ticket">
     <ResponsiveNavigation />
     <b-container class="text-left mt-5">
-      <ShowingDetail :showingid="this.$route.query.showingid" />
+      <ShowingDetail :showingid="this.$route.query.showingid.toString()" />
       <Ticket @change.native="buttonEnable" ref="ticket" />
       <Drink ref="drink" />
       <b-row class="mt-5">

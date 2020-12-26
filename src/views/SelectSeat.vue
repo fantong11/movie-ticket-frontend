@@ -102,6 +102,7 @@
 import ResponsiveNavigation from "@/components/ResponsiveNavigation.vue";
 import ShowingDetail from "@/components/ShowingDetail.vue";
 import Footer from "@/components/Footer.vue";
+import { mapState } from "vuex";
 
 export default {
   name: "SelectSeat",
@@ -126,6 +127,11 @@ export default {
       soldSeat: ["A7", "G4", "D4", "E8", "B19"], // 賣出的座位
       buttonDisable: true,
     };
+  },
+  computed: {
+    ...mapState({
+      soldSeatList: (state) => state.seat.soldSeatList,
+    }),
   },
   mounted() {
     this.initSeatMap();
@@ -182,10 +188,12 @@ export default {
     },
     // 畫出已經賣出的座位
     initSoldSeatMap() {
-      this.soldSeat.forEach((seatName) => {
-        const seat = this.seatList.find((s) => s.name === seatName);
-        console.log(seat.name);
-        seat.fill = "rgb(247, 89, 123)";
+      this.$store.dispatch("seat/fetchSeatByShowingId").then(() => {
+        this.soldSeat.forEach((seatName) => {
+          const seat = this.seatList.find((s) => s.name === seatName);
+          console.log(seat.name);
+          seat.fill = "rgb(247, 89, 123)";
+        });
       });
     },
     // 索引轉成座位號碼
@@ -223,7 +231,7 @@ export default {
       return order.adultTicket + order.concesstionTicket;
     },
     getShowingId() {
-      return sessionStorage.getItem("showingId");
+      return sessionStorage.getItem("showingId").toString();
     },
     // 座位是否已經賣出
     seatIsSold(name) {
