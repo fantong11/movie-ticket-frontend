@@ -2,17 +2,7 @@
   <div class="select-ticket">
     <ResponsiveNavigation />
     <b-container class="text-left mt-5">
-      <b-row>
-        <b-col md="6">
-          <h3>{{ movieName }}</h3>
-          <h5>{{ movieNameEn }}</h5>
-        </b-col>
-        <b-col md="6">
-          <p>時間：{{ getDatetime(showTime) }}</p>
-          <p>影城：{{ theaterName }}</p>
-          <p>影廳：{{ theaterAudio }}廳</p>
-        </b-col>
-      </b-row>
+      <ShowingDetail :showingid="this.$route.query.showingid" />
       <Ticket @change.native="buttonEnable" ref="ticket" />
       <Drink ref="drink" />
       <b-row class="mt-5">
@@ -60,15 +50,16 @@
 
 <script>
 import ResponsiveNavigation from "@/components/ResponsiveNavigation.vue";
+import ShowingDetail from "@/components/ShowingDetail.vue";
 import Ticket from "@/components/Ticket.vue";
 import Drink from "@/components/Drink.vue";
 import Footer from "@/components/Footer.vue";
-import { mapState } from "vuex";
 
 export default {
   name: "SelectTicket",
   components: {
     ResponsiveNavigation,
+    ShowingDetail,
     Ticket,
     Drink,
     Footer,
@@ -87,25 +78,7 @@ export default {
       totalCost: 0,
     };
   },
-  computed: {
-    ...mapState({
-      movieName: (state) => state.showing.movieName,
-      movieNameEn: (state) => state.showing.movieNameEn,
-      theaterName: (state) => state.showing.theaterName,
-      showTime: (state) => state.showing.showTime,
-      theaterAudio: (state) => state.showing.theaterAudio,
-    }),
-  },
-  mounted() {
-    // 初始化電影資訊
-    this.initDetail();
-  },
   methods: {
-    initDetail() {
-      this.$store.dispatch("showing/fetchDetailByShowingId", {
-        showingId: this.$route.query.showingid,
-      });
-    },
     // 按下一部按鈕的時候，顯示購買資訊
     showInfo() {
       this.selected.adultTicket = this.$refs["ticket"].items[0].qty.selected;
@@ -135,23 +108,11 @@ export default {
     saveOrderInSessionStorage() {
       console.log("save");
       sessionStorage.setItem("order", JSON.stringify(this.selected));
+      sessionStorage.setItem("showingId", this.$route.query.showingid);
       console.log(JSON.parse(sessionStorage.getItem("order")));
       this.$router.push("/nowplayingmovie/selectseat");
     },
-    getDatetime(datetime) {
-      let date = new Date(datetime);
-      return (
-        date.getFullYear() +
-        "/" +
-        date.getMonth() +
-        "/" +
-        date.getDate() +
-        " " +
-        date.getHours() +
-        ":" +
-        date.getMinutes()
-      );
-    },
+    
   },
 };
 </script>

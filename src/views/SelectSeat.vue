@@ -1,7 +1,8 @@
 <template>
   <div class="select-seat">
     <ResponsiveNavigation />
-    <b-container class="mt-5">
+    <b-container class="text-left mt-5">
+      <ShowingDetail :showingid="getShowingId()" />
       <b-row>
         <h3>選擇座位</h3>
       </b-row>
@@ -99,12 +100,14 @@
 <script>
 // import Konva from 'konva'
 import ResponsiveNavigation from "@/components/ResponsiveNavigation.vue";
+import ShowingDetail from "@/components/ShowingDetail.vue";
 import Footer from "@/components/Footer.vue";
 
 export default {
   name: "SelectSeat",
   components: {
     ResponsiveNavigation,
+    ShowingDetail,
     Footer,
   },
   data() {
@@ -219,6 +222,9 @@ export default {
       console.log(order);
       return order.adultTicket + order.concesstionTicket;
     },
+    getShowingId() {
+      return sessionStorage.getItem("showingId");
+    },
     // 座位是否已經賣出
     seatIsSold(name) {
       return this.soldSeat.includes(name);
@@ -231,6 +237,8 @@ export default {
     saveSeatInSessionStorage() {
       sessionStorage.setItem("seat", JSON.stringify(this.selectedSeat));
       console.log(JSON.parse(sessionStorage.getItem("seat")));
+      // 結帳頁面
+      this.$router.push("/checkout");
     },
     // 顯示選擇的座位在modal
     showSelectedSeat() {
