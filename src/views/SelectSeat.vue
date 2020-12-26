@@ -189,10 +189,11 @@ export default {
     // 畫出已經賣出的座位
     initSoldSeatMap() {
       this.$store.dispatch("seat/fetchSeatByShowingId").then(() => {
-        this.soldSeatList.forEach((seatName) => {
-          const seat = this.seatList.find((s) => s.name === seatName);
-          console.log(seat.name);
-          seat.fill = "rgb(247, 89, 123)";
+        console.log(this.soldSeatList);
+        this.soldSeatList.forEach((seat) => {
+          const soldSeat = this.seatList.find((s) => s.name === seat.seat_row_column);
+          console.log(soldSeat);
+          soldSeat.fill = "rgb(247, 89, 123)";
         });
       });
     },
