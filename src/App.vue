@@ -25,11 +25,8 @@ export default {
     const role = localStorage.getItem("role");
 
     this.$store.state.name = username;
-    console.log(this.$store.state.name);
     this.$store.state.token = token;
-    console.log(this.$store.state.token);
     this.$store.state.role = role;
-    console.log(this.$store.state.role);
 
     // 每次刷新頁面都要向後端請求token是否合法，不合法就登出
     this.$store
