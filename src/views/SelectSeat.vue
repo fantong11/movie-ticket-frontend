@@ -101,18 +101,16 @@
 import ResponsiveNavigation from "@/components/ResponsiveNavigation.vue";
 import Footer from "@/components/Footer.vue";
 
-// 取得上一頁填的清單
-const order = JSON.parse(sessionStorage.getItem("order"));
 export default {
   name: "SelectSeat",
   components: {
     ResponsiveNavigation,
-    Footer
+    Footer,
   },
   data() {
     return {
       currentTicket: 0,
-      maxTicket: order.adultTicket + order.concesstionTicket,
+      maxTicket: this.getMaxSeat(),
       selectedSeat: [],
       configKonva: {
         width: 1000,
@@ -127,7 +125,6 @@ export default {
     };
   },
   mounted() {
-    console.log(order.adultTicket + order.concesstionTicket);
     this.initSeatMap();
     this.initSoldSeatMap();
   },
@@ -215,6 +212,13 @@ export default {
       seat.fill = "rgb(39, 153, 221)";
       this.selectedSeat.push(seat.name);
     },
+    // 拿總購買票數
+    getMaxSeat() {
+      // 取得上一頁填的清單
+      const order = JSON.parse(sessionStorage.getItem("order"));
+      console.log(order);
+      return order.adultTicket + order.concesstionTicket;
+    },
     // 座位是否已經賣出
     seatIsSold(name) {
       return this.soldSeat.includes(name);
@@ -231,11 +235,11 @@ export default {
     // 顯示選擇的座位在modal
     showSelectedSeat() {
       let sortSelectedSeat = "";
-      this.selectedSeat.forEach(seat => {
-        sortSelectedSeat = sortSelectedSeat + seat + ", "
+      this.selectedSeat.forEach((seat) => {
+        sortSelectedSeat = sortSelectedSeat + seat + ", ";
       });
       return sortSelectedSeat;
-    }
+    },
   },
 };
 </script>
