@@ -191,8 +191,7 @@ export default {
       this.$store.dispatch("seat/fetchSeatByShowingId").then(() => {
         console.log(this.soldSeatList);
         this.soldSeatList.forEach((seat) => {
-          const soldSeat = this.seatList.find((s) => s.name === seat.seat_row_column);
-          console.log(soldSeat);
+          const soldSeat = this.seatList.find((s) => s.name === seat);
           soldSeat.fill = "rgb(247, 89, 123)";
         });
       });
