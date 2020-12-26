@@ -116,8 +116,13 @@ const routes = [
   },
   {
     path: '/member',
-    name: 'member',
-    component: () => import('@/views/member'),
+    name: 'Member',
+    component: () => import('@/views/Member'),
+  },
+  {
+    path: '/nowplayingmovie/selectseat',
+    name: 'SelectSeat',
+    component: () => import('@/views/SelectSeat'),
   },
 ]
 

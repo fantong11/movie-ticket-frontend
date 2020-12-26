@@ -1,18 +1,29 @@
 <template>
   <div class="member">
     <h1>I am member</h1>
+    <b-table :items="orderList" :fields="fields" responsive="sm"> </b-table>
   </div>
 </template>
 
 <script>
-
+import { mapState } from "vuex";
 export default {
   name: "member",
-  components: {
-    
-  },  
-  mounted() {
-    
+  components: {},
+  computed: {
+    ...mapState({
+      orderList: (state) => state.order.orderList,
+    }),
   },
-}
+  mounted() {
+    this.initOrder();
+  },
+  methods: {
+    initOrder() {
+      this.$store.dispatch("order/fetchUserOrder").then(() => {
+        console.log(this.orderList);
+      });
+    },
+  },
+};
 </script>
