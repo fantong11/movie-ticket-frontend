@@ -15,11 +15,17 @@ const mutations = {
 
 const actions = {
   fetchSeatByShowingId({ commit }) {
-    apiFetchSeatByShowingId({
-      showingId: sessionStorage.getItem("showingId"),
-    }).then(res => {
-      console.log(res.data);
-      commit("setSoldSeatList", { soldSeatList: res.data });
+    return new Promise((resolve, reject) => {
+      apiFetchSeatByShowingId({
+        showingId: sessionStorage.getItem("showingId"),
+      }).then(res => {
+        console.log(res.data);
+        commit("setSoldSeatList", { soldSeatList: res.data });
+        resolve();
+      }).catch((err) => {
+        console.log(err);
+        reject();
+      });
     });
   }
 }
