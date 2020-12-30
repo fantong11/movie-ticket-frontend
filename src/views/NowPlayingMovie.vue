@@ -41,5 +41,19 @@ export default {
       wait: (state) => state.movie.wait,
     }),
   },
+  beforeRouteEnter(to, from, next) {
+    console.log("32094857093");
+    next();
+    // store
+    //   .dispatch("movie/fetchMovieByRelease", { release: "now" })
+    //   .then(() => {
+    //     console.log(to.meta.release);
+    //     next((vm) => vm.setData());
+    //   })
+    //   .catch((err) => {
+    //     next();
+    //     console.log(err);
+    //   });
+  },
 };
 </script>

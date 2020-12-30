@@ -63,6 +63,7 @@
 
 <script>
 import { mapState } from "vuex";
+// import store from "../store/index";
 
 export default {
   name: "MovieList",
@@ -78,8 +79,22 @@ export default {
       currentPage: 1,
     };
   },
+  beforeRouteEnter(to, from, next) {
+    console.log("32094857093");
+    next();
+    // store
+    //   .dispatch("movie/fetchMovieByRelease", { release: "now" })
+    //   .then(() => {
+    //     console.log(to.meta.release);
+    //     next((vm) => vm.setData());
+    //   })
+    //   .catch((err) => {
+    //     next();
+    //     console.log(err);
+    //   });
+  },
   mounted() {
-    // 每次進頁面時都要向後端請求電影資料
+    //每次進頁面時都要向後端請求電影資料
     this.$store
       .dispatch("movie/fetchMovieByRelease", { release: this.release })
       .then(() => {
@@ -99,6 +114,10 @@ export default {
     },
   },
   methods: {
+    setData() {
+      this.initPaginatedItems();
+      this.paginate(this.perPage, 0);
+    },
     // 初始化變數
     initPaginatedItems() {
       this.items = this.movieList;
@@ -127,7 +146,9 @@ export default {
     // 拿電影日期
     getMovieTime(movie) {
       let date = new Date(movie.release_date);
-      return date.getFullYear() + " - " + date.getMonth() + " - " + date.getDate();
+      return (
+        date.getFullYear() + " - " + date.getMonth() + " - " + date.getDate()
+      );
     },
   },
 };

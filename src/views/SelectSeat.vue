@@ -98,7 +98,6 @@
 </template>
 
 <script>
-// import Konva from 'konva'
 import ResponsiveNavigation from "@/components/ResponsiveNavigation.vue";
 import ShowingDetail from "@/components/ShowingDetail.vue";
 import Footer from "@/components/Footer.vue";
