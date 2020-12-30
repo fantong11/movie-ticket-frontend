@@ -227,7 +227,7 @@ export default {
       // 取得上一頁填的清單
       const order = JSON.parse(sessionStorage.getItem("order"));
       console.log(order);
-      return order.adultTicket + order.concesstionTicket;
+      return order.adultTicket.qty + order.concesstionTicket.qty;
     },
     getShowingId() {
       return sessionStorage.getItem("showingId").toString();

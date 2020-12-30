@@ -28,20 +28,20 @@
       @ok="saveOrderInSessionStorage"
       cancel-title="取消"
     >
-      <p class="my-4" v-show="selected.adultTicket">
-        全票 X {{ selected.adultTicket }}
+      <p class="my-4" v-show="selected.adultTicket.qty">
+        全票 X {{ selected.adultTicket.qty }}
       </p>
-      <p class="my-4" v-show="selected.concesstionTicket">
-        優待票 X {{ selected.concesstionTicket }}
+      <p class="my-4" v-show="selected.concesstionTicket.qty">
+        優待票 X {{ selected.concesstionTicket.qty }}
       </p>
-      <p class="my-4" v-show="selected.largeCola">
-        大可樂 X {{ selected.largeCola }}
+      <p class="my-4" v-show="selected.largeCola.qty">
+        大可樂 X {{ selected.largeCola.qty }}
       </p>
-      <p class="my-4" v-show="selected.mediumCola">
-        中可樂 X {{ selected.mediumCola }}
+      <p class="my-4" v-show="selected.mediumCola.qty">
+        中可樂 X {{ selected.mediumCola.qty }}
       </p>
-      <p class="my-4" v-show="selected.smallCola">
-        小可樂 X {{ selected.smallCola }}
+      <p class="my-4" v-show="selected.smallCola.qty">
+        小可樂 X {{ selected.smallCola.qty }}
       </p>
       <p class="my-4" v-show="totalCost">合計：{{ totalCost }}</p>
     </b-modal>
@@ -69,11 +69,31 @@ export default {
       buttonDisable: true,
       showModal: false,
       selected: {
-        adultTicket: 0,
-        concesstionTicket: 0,
-        largeCola: 0,
-        mediumCola: 0,
-        smallCola: 0,
+        adultTicket: {
+          name: "全票",
+          qty: 0,
+          cost: 300,
+        },
+        concesstionTicket: {
+          name: "優待票",
+          qty: 0,
+          cost: 270,
+        },
+        largeCola: {
+          name: "大可樂",
+          qty: 0,
+          cost: 70,
+        },
+        mediumCola: {
+          name: "中可樂",
+          qty: 0,
+          cost: 60,
+        },
+        smallCola: {
+          name: "小可樂",
+          qty: 0,
+          cost: 50,
+        },
       },
       totalCost: 0,
     };
@@ -81,23 +101,21 @@ export default {
   methods: {
     // 按下一部按鈕的時候，顯示購買資訊
     showInfo() {
-      this.selected.adultTicket = this.$refs["ticket"].items[0].qty.selected;
-      this.selected.concesstionTicket = this.$refs[
+      this.selected.adultTicket.qty = this.$refs[
+        "ticket"
+      ].items[0].qty.selected;
+      this.selected.concesstionTicket.qty = this.$refs[
         "ticket"
       ].items[1].qty.selected;
 
-      let largeColaCost = this.$refs["drink"].drink.largeCola.cost;
-      let mediumColaCost = this.$refs["drink"].drink.mediumCola.cost;
-      let smallColaCost = this.$refs["drink"].drink.smallCola.cost;
-
-      this.selected.largeCola = this.$refs["drink"].selected.large;
-      this.selected.mediumCola = this.$refs["drink"].selected.medium;
-      this.selected.smallCola = this.$refs["drink"].selected.small;
+      this.selected.largeCola.qty = this.$refs["drink"].selected.large;
+      this.selected.mediumCola.qty = this.$refs["drink"].selected.medium;
+      this.selected.smallCola.qty = this.$refs["drink"].selected.small;
 
       this.totalCost =
-        this.selected.largeCola * largeColaCost +
-        this.selected.mediumCola * mediumColaCost +
-        this.selected.smallCola * smallColaCost +
+        this.selected.largeCola.qty * this.selected.largeCola.cost +
+        this.selected.mediumCola.qty * this.selected.mediumCola.cost +
+        this.selected.smallCola.qty * this.selected.smallCola.cost +
         this.$refs["ticket"].items[0].subtotal +
         this.$refs["ticket"].items[1].subtotal;
     },
@@ -112,7 +130,6 @@ export default {
       console.log(JSON.parse(sessionStorage.getItem("order")));
       this.$router.push("/nowplayingmovie/selectseat");
     },
-    
   },
 };
 </script>

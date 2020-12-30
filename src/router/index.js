@@ -133,7 +133,7 @@ const routes = [
     component: () => import('@/views/SelectSeat'),
   },
   {
-    path: '/nowplayingmovie/checkout',
+    path: '/checkout',
     name: 'CheckOut',
     meta: { requireAuth: "member" },
     component: () => import('@/views/CheckOut'),
