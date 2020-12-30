@@ -28,20 +28,20 @@
       @ok="saveOrderInSessionStorage"
       cancel-title="取消"
     >
-      <p class="my-4" v-show="selected.adultTicket.qty">
-        全票 X {{ selected.adultTicket.qty }}
+      <p class="my-4" v-show="selected[0].qty">
+        全票 X {{ selected[0].qty }}
       </p>
-      <p class="my-4" v-show="selected.concesstionTicket.qty">
-        優待票 X {{ selected.concesstionTicket.qty }}
+      <p class="my-4" v-show="selected[1].qty">
+        優待票 X {{ selected[1].qty }}
       </p>
-      <p class="my-4" v-show="selected.largeCola.qty">
-        大可樂 X {{ selected.largeCola.qty }}
+      <p class="my-4" v-show="selected[2].qty">
+        大可樂 X {{ selected[2].qty }}
       </p>
-      <p class="my-4" v-show="selected.mediumCola.qty">
-        中可樂 X {{ selected.mediumCola.qty }}
+      <p class="my-4" v-show="selected[3].qty">
+        中可樂 X {{ selected[3].qty }}
       </p>
-      <p class="my-4" v-show="selected.smallCola.qty">
-        小可樂 X {{ selected.smallCola.qty }}
+      <p class="my-4" v-show="selected[4].qty">
+        小可樂 X {{ selected[4].qty }}
       </p>
       <p class="my-4" v-show="totalCost">合計：{{ totalCost }}</p>
     </b-modal>
@@ -68,56 +68,52 @@ export default {
     return {
       buttonDisable: true,
       showModal: false,
-      selected: {
-        adultTicket: {
+      selected: [
+        {
           name: "全票",
           qty: 0,
           cost: 300,
         },
-        concesstionTicket: {
+        {
           name: "優待票",
           qty: 0,
           cost: 270,
         },
-        largeCola: {
+        {
           name: "大可樂",
           qty: 0,
           cost: 70,
         },
-        mediumCola: {
+        {
           name: "中可樂",
           qty: 0,
           cost: 60,
         },
-        smallCola: {
+        {
           name: "小可樂",
           qty: 0,
           cost: 50,
         },
-      },
+      ],
       totalCost: 0,
     };
   },
   methods: {
     // 按下一部按鈕的時候，顯示購買資訊
     showInfo() {
-      this.selected.adultTicket.qty = this.$refs[
-        "ticket"
-      ].items[0].qty.selected;
-      this.selected.concesstionTicket.qty = this.$refs[
-        "ticket"
-      ].items[1].qty.selected;
+      this.selected[0].qty = this.$refs["ticket"].items[0].qty.selected;
+      this.selected[1].qty = this.$refs["ticket"].items[1].qty.selected;
 
-      this.selected.largeCola.qty = this.$refs["drink"].selected.large;
-      this.selected.mediumCola.qty = this.$refs["drink"].selected.medium;
-      this.selected.smallCola.qty = this.$refs["drink"].selected.small;
+      this.selected[2].qty = this.$refs["drink"].selected.large;
+      this.selected[3].qty = this.$refs["drink"].selected.medium;
+      this.selected[4].qty = this.$refs["drink"].selected.small;
 
       this.totalCost =
-        this.selected.largeCola.qty * this.selected.largeCola.cost +
-        this.selected.mediumCola.qty * this.selected.mediumCola.cost +
-        this.selected.smallCola.qty * this.selected.smallCola.cost +
-        this.$refs["ticket"].items[0].subtotal +
-        this.$refs["ticket"].items[1].subtotal;
+        this.selected[0].qty * this.selected[0].cost +
+        this.selected[1].qty * this.selected[1].cost +
+        this.selected[2].qty * this.selected[2].cost +
+        this.selected[3].qty * this.selected[3].cost +
+        this.selected[4].qty * this.selected[4].cost;
     },
     // 當有選擇的時候按鈕打開
     buttonEnable() {

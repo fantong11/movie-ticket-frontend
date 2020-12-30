@@ -3,11 +3,12 @@
     <ResponsiveNavigation />
     <b-container class="text-left mt-5">
       <ShowingDetail :showingid="getShowingId()" />
-      <b-row>
+      <b-row class="mt-5">
         <b-col>
-          <b-table :items="items" :fields="fields"> </b-table>
+          <b-table striped hover :items="items" :fields="fields"> </b-table>
         </b-col>
       </b-row>
+      <b-button type="button" class="btn btn-outline-secondary btn-lg">結帳</b-button>
     </b-container>
   </div>
 </template>
@@ -54,50 +55,27 @@ export default {
     },
     getOrder() {
       let order = JSON.parse(sessionStorage.getItem("order"));
+      let total_many = 0;
       console.log(order);
-      if(order["adultTicket"]["qty"]!==0){
-        this.items.push({
-            product: order["adultTicket"]["name"],
-            cost: order["adultTicket"]["cost"],
-            quantity: order["adultTicket"]["qty"],
-            total: order["adultTicket"]["qty"] * order["adultTicket"]["cost"],
+      order.forEach((thing) => {
+        if (thing.qty !== 0) {
+          this.items.push({
+            product: thing.name,
+            cost: thing.cost,
+            quantity: thing.qty,
+            total: thing.qty * thing.cost,
+          });
+          total_many += thing.qty * thing.cost;
+        }
       });
-      }
-      if(order["concesstionTicket"]["qty"]!==0){
-        this.items.push({
-            product: order["concesstionTicket"]["name"],
-            cost: order["concesstionTicket"]["cost"],
-            quantity: order["concesstionTicket"]["qty"],
-            total: order["concesstionTicket"]["qty"] * order["concesstionTicket"]["cost"],
+      this.items.push({
+        product: "總價",
+        cost: "",
+        quantity: "",
+        total: total_many,
       });
-      }
-      if(order["largeCola"]["qty"]!==0){
-        this.items.push({
-            product: order["largeCola"]["name"],
-            cost: order["largeCola"]["cost"],
-            quantity: order["largeCola"]["qty"],
-            total: order["largeCola"]["qty"] * order["largeCola"]["cost"],
-      });
-      }
-      if(order["mediumCola"]["qty"]!==0){
-        this.items.push({
-            product: order["mediumCola"]["name"],
-            cost: order["mediumCola"]["cost"],
-            quantity: order["mediumCola"]["qty"],
-            total: order["mediumCola"]["qty"] * order["mediumCola"]["cost"],
-      });
-      }
-      if(order["smallCola"]["qty"]!==0){
-        this.items.push({
-            product: order["smallCola"]["name"],
-            cost: order["smallCola"]["cost"],
-            quantity: order["smallCola"]["qty"],
-            total: order["smallCola"]["qty"] * order["smallCola"]["cost"],
-      });
-      }
- 
-      
     },
+    
   },
 };
 </script>
