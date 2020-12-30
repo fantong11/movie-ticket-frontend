@@ -8,7 +8,7 @@
           <b-table striped hover :items="items" :fields="fields"> </b-table>
         </b-col>
       </b-row>
-      <b-button type="button" class="btn btn-outline-secondary btn-lg">結帳</b-button>
+      <b-button type="button" class="btn btn-secondary btn-lg">結帳</b-button>
     </b-container>
   </div>
 </template>
