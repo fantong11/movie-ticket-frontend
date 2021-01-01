@@ -122,13 +122,18 @@ const routes = [
     component: () => import('@/views/DeleteMovie'),
   },
   {
+    path: '/member',
+    name: 'Member',
+    component: () => import('@/views/Member'),
+  },
+  {
     path: '/nowplayingmovie/selectseat',
     name: 'SelectSeat',
     meta: { requireAuth: "member" },
     component: () => import('@/views/SelectSeat'),
   },
   {
-    path: '/nowplayingmovie/checkout',
+    path: '/checkout',
     name: 'CheckOut',
     meta: { requireAuth: "member" },
     component: () => import('@/views/CheckOut'),

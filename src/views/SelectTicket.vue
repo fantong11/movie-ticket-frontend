@@ -68,36 +68,29 @@ export default {
     return {
       buttonDisable: true,
       showModal: false,
-      // selected: {
-      //   adultTicket: 0,
-      //   concesstionTicket: 0,
-      //   largeCola: 0,
-      //   mediumCola: 0,
-      //   smallCola: 0,
-      // },
       selected: [
         {
-          name: "adultTicket",
+          name: "全票",
           qty: 0,
           cost: 300,
         },
         {
-          name: "concesstionTicket",
+          name: "優待票",
           qty: 0,
           cost: 270,
         },
         {
-          name: "largeCola",
+          name: "大可樂",
           qty: 0,
           cost: 70,
         },
         {
-          name: "mediumCola",
+          name: "中可樂",
           qty: 0,
           cost: 60,
         },
         {
-          name: "smallCola",
+          name: "小可樂",
           qty: 0,
           cost: 50,
         },
