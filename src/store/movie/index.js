@@ -1,6 +1,7 @@
 import {
   apiFetchMovieByRelease,
   apiFetchOneMovie,
+  apiDeleteMovie,
   apiAddMovie,
 } from '../../api/api';
 
@@ -49,6 +50,21 @@ const actions = {
       apiFetchOneMovie(payload.movieId).then(response => {
         console.log(response.data);
         commit("setMovie", { movie: response.data });
+        commit("setWait", { flag: false });
+        resolve();
+      }).catch(error => {
+        console.log(error);
+        commit("setWait", { flag: false });
+        reject(new Error("error"));
+      });
+    });
+  },
+  // 用id刪除選取的電影
+  deleteMovie({ commit }, payload) {
+    commit("setWait", { flag: true });
+    return new Promise((resolve, reject) => {
+      apiDeleteMovie({deleteId: payload.deleteId}).then(response => {
+        console.log(response.data);
         commit("setWait", { flag: false });
         resolve();
       }).catch(error => {

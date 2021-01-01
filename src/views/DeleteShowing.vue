@@ -8,7 +8,7 @@
         <b-container class="border border-info text-left">
           <div>
             <b-table
-              :items="movieList"
+              :items="showingList"
               :fields="fields"
               select-mode="multi"
               responsive="sm"
@@ -47,7 +47,7 @@
 import { mapState } from "vuex";
 import AdminSideBar from "@/components/AdminSideBar.vue";
 export default {
-  name: "DeleteMovie",
+  name: "DeleteShowing",
   components: {
     AdminSideBar,
   },
@@ -57,65 +57,69 @@ export default {
       fields: [
         "selected",
         {
-          key: "id",
+          key: "name",
           sortable: true,
         },
         {
-          key: "name",
-          label: "moviename",
+          key: "location",
+          label: "location",
           sortable: false,
         },
         {
-          key: "movie_type",
-          sortable: true,
+          key: "show_time",
+          sortable: false,
+        },
+        {
+          key:"audio"
         },
       ],
-      selectMovies: [],
+      selectShowings: [],
     };
   },
   computed: {
     ...mapState({
-      movieList: (state) => state.movie.movieList,
+      showingList: (state) => state.showing.showingList,
     }),
   },
   mounted() {
     this.adminCheck();
-    this.initMovie();
+    this.initShowing();
   },
 
   methods: {
-    initMovie() {
+    initShowing() {
       // 每次進頁面時都要向後端請求電影資料
-      this.$store.dispatch("movie/fetchMovieByRelease", { release: "all" });
+      this.$store.dispatch("showing/GetShowingDetail");
     },
     adminCheck() {
       this.$store.dispatch("user/adminBoard", {
         token: localStorage.getItem("token"),
       });
     },
-    onRowSelected(movies) {
-      this.selectMovies = movies;
+    onRowSelected(showings) {
+      this.selectShowings = showings;
     },
     onDelete() {
       this.$store
-        .dispatch("movie/deleteMovie", {
-          deleteId: this.convertSelectedMovies(),
+        .dispatch("showing/deleteShowings", {
+          token: localStorage.getItem("token"),
+          deleteId: this.convertSelectedShowings(),
         })
         .then(() => {
-          this.initMovie();
+          this.initShowing();
         })
         .catch((err) => {
           console.log(err);
         });
-      console.log(this.selectMovies);
-      console.log(this.convertSelectedMovies());
+      console.log(this.selectShowings);
+      console.log(this.convertSelectedShowings(),"fuck");
     },
-    convertSelectedMovies() {
-      let selectedMovieId = [];
-      this.selectMovies.forEach((movie) => {
-        selectedMovieId.push({ id: movie.id });
+    convertSelectedShowings() {
+      let selectedShowingId = [];
+      this.selectShowings.forEach((showing) => {
+        selectedShowingId.push({ id: showing.showing_id });
       });
-      return selectedMovieId;
+      return selectedShowingId;
     },
   },
 };

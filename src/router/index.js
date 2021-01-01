@@ -19,6 +19,7 @@ const routes = [
     name: 'NowPlayingMovie',
     component: () => import('@/views/NowPlayingMovie'),
     meta: {
+      // release: "now",
       breadcrumb: [{
         name: "首頁",
         link: "/"
@@ -79,6 +80,7 @@ const routes = [
     name: 'ComingMovie',
     component: () => import('@/views/ComingMovie'),
     meta: {
+      // release: "coming",
       breadcrumb: [{
         name: "首頁",
         link: "/"
@@ -92,37 +94,73 @@ const routes = [
   {
     path: '/admin/addmovie',
     name: 'AddMovie',
+    meta: { requireAuth: "admin" },
     component: () => import('@/views/AddMovie'),
   },
   {
     path: '/admin/addshowing',
     name: 'AddShowing',
+    meta: { requireAuth: "admin" },
     component: () => import('@/views/AddShowing'),
   },
   {
     path: '/selecttime',
     name: 'SelectTime',
+    meta: { requireAuth: "member" },
     component: () => import('@/views/SelectTime') ,
   },
   {
     path: '/nowplayingmovie/selectticket',
     name: 'SelectTicket',
+    meta: { requireAuth: "member" },
     component: () => import('@/views/SelectTicket')
   },
   {
     path: '/admin/DeleteMovie',
     name: 'DeleteMovie',
+    meta: { requireAuth: "admin" },
     component: () => import('@/views/DeleteMovie'),
+  },
+  {
+    path: '/admin/DeleteShowing',
+    name: 'DeleteShowing',
+    component: () => import('@/views/DeleteShowing'),
+  },
+  {
+    path: '/member',
+    name: 'Member',
+    component: () => import('@/views/Member'),
   },
   {
     path: '/nowplayingmovie/selectseat',
     name: 'SelectSeat',
+    meta: { requireAuth: "member" },
     component: () => import('@/views/SelectSeat'),
   },
+  {
+    path: '/checkout',
+    name: 'CheckOut',
+    meta: { requireAuth: "member" },
+    component: () => import('@/views/CheckOut'),
+  }
 ]
 
 const router = new VueRouter({
   routes
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requireAuth) {
+    if (to.meta.requireAuth === localStorage.getItem("role")) {
+      next();
+    }
+    else {
+      next({ name: "Login" });
+    }
+  }
+  else {
+    next();
+  }
 });
 
 export default router
