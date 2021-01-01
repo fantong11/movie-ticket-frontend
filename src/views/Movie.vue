@@ -50,6 +50,7 @@ import ResponsiveNavigation from "@/components/ResponsiveNavigation.vue";
 import Breadcrumb from "@/components/Breadcrumb.vue";
 import TheaterList from "@/components/TheaterList.vue";
 import Footer from "@/components/Footer.vue";
+import store from "../store/index";
 
 export default {
   name: "movie",
@@ -65,8 +66,21 @@ export default {
       wait: (state) => state.movie.wait,
     }),
   },
-  mounted() {
-    this.initMovie();
+  beforeRouteEnter(to, from, next) {
+    store
+      .dispatch("movie/fetchOneMovie", {
+        movieId: to.params.movieId,
+      })
+      .then(() => {
+        next((vm) => vm.setData());
+      })
+      .catch((err) => {
+        console.log(err);
+        next();
+      });
+  },
+  created() {
+    // this.initMovie();
   },
   methods: {
     initMovie() {
@@ -82,9 +96,14 @@ export default {
           console.log(err);
         });
     },
+    setData() {
+      this.$route.meta.breadcrumb[2].name = this.movie.name;
+    },
     getMovieTime(movie) {
       let date = new Date(movie.release_date);
-      return date.getFullYear() + " - " + date.getMonth() + " - " + date.getDate();
+      return (
+        date.getFullYear() + " - " + date.getMonth() + " - " + date.getDate()
+      );
     },
   },
 };

@@ -97,7 +97,6 @@ const actions = {
   },
   fetchDetailByShowingId({ commit }, payload) {
     apiFetchDetailByShowingId(payload.showingId).then(res => {
-      console.log(res);
       commit("setData", {
         movieName: res.data[0].movieName,
         movieNameEn: res.data[0].movieNameEn,

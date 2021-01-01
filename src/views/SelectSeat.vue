@@ -98,7 +98,6 @@
 </template>
 
 <script>
-// import Konva from 'konva'
 import ResponsiveNavigation from "@/components/ResponsiveNavigation.vue";
 import ShowingDetail from "@/components/ShowingDetail.vue";
 import Footer from "@/components/Footer.vue";
@@ -191,8 +190,7 @@ export default {
       this.$store.dispatch("seat/fetchSeatByShowingId").then(() => {
         console.log(this.soldSeatList);
         this.soldSeatList.forEach((seat) => {
-          const soldSeat = this.seatList.find((s) => s.name === seat.seat_row_column);
-          console.log(soldSeat);
+          const soldSeat = this.seatList.find((s) => s.name === seat);
           soldSeat.fill = "rgb(247, 89, 123)";
         });
       });
@@ -229,7 +227,7 @@ export default {
       // 取得上一頁填的清單
       const order = JSON.parse(sessionStorage.getItem("order"));
       console.log(order);
-      return order.adultTicket + order.concesstionTicket;
+      return order[0].qty + order[1].qty;
     },
     getShowingId() {
       return sessionStorage.getItem("showingId").toString();
