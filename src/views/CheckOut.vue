@@ -3,12 +3,15 @@
     <ResponsiveNavigation />
     <b-container class="text-left mt-5">
       <ShowingDetail :showingid="getShowingId()" />
+      <b-row>
+        <p>{{ getSelectedSeat() }}</p>
+      </b-row>
       <b-row class="mt-5">
         <b-col>
           <b-table striped hover :items="items" :fields="fields"> </b-table>
         </b-col>
       </b-row>
-      <b-button type="button" class="btn btn-secondary btn-lg">結帳</b-button>
+      <b-button type="button" @click="sendOrderToBackend" class="btn btn-secondary btn-lg">結帳</b-button>
     </b-container>
   </div>
 </template>
@@ -75,7 +78,23 @@ export default {
         total: total_many,
       });
     },
-    
+    getSelectedSeat() {
+      const seats = JSON.parse(sessionStorage.getItem("seat"));
+      let formattedSeats = "座位：";
+
+      seats.forEach((seat, i, array) => {
+        if (i === array.length - 1) {
+          formattedSeats += seat;
+        }
+        else {
+          formattedSeats += seat + ", ";
+        }
+      });
+      return formattedSeats;
+    },
+    sendOrderToBackend() {
+      this.$store.dispatch("order/sendOrder");
+    }
   },
 };
 </script>
