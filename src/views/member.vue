@@ -1,27 +1,23 @@
 <template>
   <div class="member">
-    <h1>I am a member</h1>
-    <b-table :items="orderList" :fields="fields" responsive="sm"> </b-table>
+    <ResponsiveNavigation msg="Welcome to Your Vue.js App" />
+    <b-container class="border border-info text-left" fluid="lg">
+      <b-table :items="orderList" :fields="fields" responsive> </b-table>
+    </b-container>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
+import ResponsiveNavigation from "@/components/ResponsiveNavigation.vue";
 export default {
   name: "member",
-  components: {},
-  computed: {
-    ...mapState({
-      orderList: (state) => state.order.orderList,
-    }),
+  components: {
+    ResponsiveNavigation,
   },
   data() {
     return {
       fields: [
-        {
-          key: "id",
-          label: "訂單編號",
-        },
         {
           key: "order_time",
           label: "下訂時間",
@@ -32,6 +28,11 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    ...mapState({
+      orderList: (state) => state.order.orderList,
+    }),
   },
   mounted() {
     this.initOrder();
