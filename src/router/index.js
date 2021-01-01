@@ -122,6 +122,11 @@ const routes = [
     component: () => import('@/views/DeleteMovie'),
   },
   {
+    path: '/admin/DeleteShowing',
+    name: 'DeleteShowing',
+    component: () => import('@/views/DeleteShowing'),
+  },
+  {
     path: '/member',
     name: 'Member',
     component: () => import('@/views/Member'),

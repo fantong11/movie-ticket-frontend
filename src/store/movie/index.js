@@ -2,8 +2,7 @@ import {
   apiFetchMovieByRelease,
   apiFetchOneMovie,
   apiDeleteMovie,
-  apiAddMovie
-
+  apiAddMovie,
 } from '../../api/api';
 
 const data = {
@@ -60,7 +59,7 @@ const actions = {
       });
     });
   },
-  // 用id來拿查詢電影
+  // 用id刪除選取的電影
   deleteMovie({ commit }, payload) {
     commit("setWait", { flag: true });
     return new Promise((resolve, reject) => {

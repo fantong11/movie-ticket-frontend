@@ -38,6 +38,8 @@ export const apiFetchTheaterByMovieId = data => theaterRequest.get(`/theater?mov
 
 // 場次相關api
 export const apiFetchShowing = data => showingRequest.get(`/movietime?movieid=${data.movieId}&theaterid=${data.theaterId}`);
+export const apiGetShowingDetail = data => showingRequest.get("/showingDetailDelete", data);
+export const apiDeleteShowing = data => showingRequest.post("/deleteShowing" ,data);
 export const apiFetchDetailByShowingId = data => showingRequest.get(`/showingDetail?showingid=${data}`);
 export const apiAddShowing = data => showingRequest.post("/addShowing", data);
 

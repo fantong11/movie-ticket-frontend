@@ -8,50 +8,49 @@
         <b-col>
           <b-container class="border border-info text-left">
             <b-form-select
-              v-model="form.selected_movie"
+              v-model="form.selectedMovie"
               :options="movieOptions"
               class="mt-4"
             ></b-form-select>
             <b-form-select
-              v-model="form.selected_theater"
+              v-model="form.selectedTheater"
               :options="theaterOptions"
               class="mt-5 mb-5"
             ></b-form-select>
-            <b-form-group
-              id="input-showing-audio"
-              label-for="input-showing-audio"
-            >
-              <h4>Audio</h4>
-              <div class="input-box">
-                <b-form-input
-                  id="showing-audio"
-                  v-model="form.audio"
-                  required
-                  autocomplete="off"
-                ></b-form-input>
-              </div>
-            </b-form-group>
-            <h4>Select Date</h4>
+            <b-form-select
+              v-model="form.selectedAudio"
+              :options="audioOptions"
+              class="mb-4"
+            ></b-form-select>
+            <h4 class="pt-3">Select Date</h4>
             <b-form-datepicker
               id="datepicker"
-              v-model="form.showing_date"
+              v-model="form.showingDate"
             ></b-form-datepicker>
             <br />
-            <h4>Select Time</h4>
+            <h4 class="pt-3">Select Time</h4>
             <b-form-timepicker
-              v-model="form.showing_time"
+              v-model="form.showingTime"
               show-seconds
               :hour12="false"
             ></b-form-timepicker>
             <br />
+            <div class="mt-3">
+              Selected:
+              <strong>{{ form.showingDate + " " + form.showingTime }}</strong>
+            </div>
             <div class="text-center">
               <b-button
+                @click="addShowing"
                 class="mt-4 mb-3 btn btn-default"
                 variant="primary"
                 to=""
               >
                 Add
               </b-button>
+            </div>
+            <div>
+              Selected: <strong>{{ form.selectedAudio }}</strong>
             </div>
           </b-container>
         </b-col>
@@ -72,13 +71,20 @@ export default {
   data() {
     return {
       form: {
-        selected_movie: null,
-        selected_theater: null,
-        showing_date: "",
-        showing_time: "",
+        selectedMovie: null,
+        selectedTheater: null,
+        selectedAudio: null,
+        showingDate: "",
+        showingTime: "",
       },
       theaterOptions: [{ value: null, text: "請選擇影城" }],
       movieOptions: [{ value: null, text: "請選擇電影" }],
+      audioOptions: [
+        { value: null, text: "請選擇分院" },
+        { value: 1, text: "1" },
+        { value: 2, text: "2" },
+        { value: 3, text: "3" },
+      ],
       show: true,
     };
   },
@@ -91,6 +97,7 @@ export default {
     ...mapState({
       movieList: (state) => state.movie.movieList,
       theaterList: (state) => state.theater.theaterList,
+      showingId: (state) => state.showing.showingId,
     }),
   },
   methods: {
@@ -140,10 +147,10 @@ export default {
       this.$store
         .dispatch("showing/addShowing", {
           token: localStorage.getItem("token"),
-          movie: this.form.selected_movie,
-          theater: this.form.selected_theater,
-          showing_date: this.form.showing_date,
-          showing_time: this.form.showing_time,
+          showingDatetime: this.form.showingDate + " " + this.form.showingTime,
+          showingAudio: this.form.selectedAudio,
+          playInMovieId: this.form.selectedMovie,
+          playInTheaterId: this.form.selectedTheater,
         })
         .then(() => {})
         .catch(() => {});
