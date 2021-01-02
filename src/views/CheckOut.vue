@@ -105,7 +105,7 @@ export default {
       return formattedSeats;
     },
     sendOrderToBackend() {
-      this.$store.dispatch("order/sendOrder", this.coupon).then(() => {
+      this.$store.dispatch("order/sendOrder", {coupon: this.coupon}).then(() => {
         this.$router.push("/member");
       });
     }

@@ -9,6 +9,9 @@ const data = {
 }
 
 const mutations = {
+  setWait(state, payload) {
+    state.wait = payload.flag;
+  },
   setOrderList(state, payload) {
     state.orderList = payload.orderList;
   }
@@ -29,15 +32,17 @@ const actions = {
       });
     });
   },
-  sendOrder() {
+  sendOrder({commit}, payload) {
     return new Promise((resolve, reject) => {
       apiSendOrder({
         token: localStorage.getItem("token"),
         showingId: sessionStorage.getItem("showingId"),
         order: sessionStorage.getItem("order"),
         seat: sessionStorage.getItem("seat"),
+        coupon: payload.coupon,
       }).then((res) => {
         console.log(res.data);
+        commit("setWait", { flag: false });
         resolve();
       }).catch((err) => {
         console.log(err);
