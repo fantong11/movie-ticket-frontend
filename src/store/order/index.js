@@ -6,6 +6,7 @@ import {
 const data = {
   wait: false, // 呼叫api過程是否等待
   orderList: [],
+  message: "",
 }
 
 const mutations = {
@@ -14,7 +15,10 @@ const mutations = {
   },
   setOrderList(state, payload) {
     state.orderList = payload.orderList;
-  }
+  },
+  setResponseMessage(state, payload) {
+    state.message = payload.message;
+  },
 }
 
 const actions = {
@@ -41,7 +45,8 @@ const actions = {
         seat: sessionStorage.getItem("seat"),
         coupon: payload.coupon,
       }).then((res) => {
-        console.log(res.data);
+        commit("setResponseMessage", {message: res.data.message});
+        console.log(res.data.message);
         commit("setWait", { flag: false });
         resolve();
       }).catch((err) => {
