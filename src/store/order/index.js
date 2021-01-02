@@ -1,5 +1,6 @@
 import {
   apiFetchUserOrder,
+  apiSendOrder,
 } from '../../api/api';
 
 const data = {
@@ -27,9 +28,23 @@ const actions = {
         reject();
       });
     });
-
   },
-
+  sendOrder() {
+    return new Promise((resolve, reject) => {
+      apiSendOrder({
+        token: localStorage.getItem("token"),
+        showingId: sessionStorage.getItem("showingId"),
+        order: sessionStorage.getItem("order"),
+        seat: sessionStorage.getItem("seat"),
+      }).then((res) => {
+        console.log(res.data);
+        resolve();
+      }).catch((err) => {
+        console.log(err);
+        reject();
+      });
+    });
+  },
 }
 
 export default {

@@ -44,7 +44,7 @@ export const apiFetchDetailByShowingId = data => showingRequest.get(`/showingDet
 export const apiAddShowing = data => showingRequest.post("/addShowing", data);
 
 // 訂單相關api
-export const apiAddOrdeer = data => orderRequest.post("/addOrder", data);
+export const apiSendOrder = data => orderRequest.post("/addOrder", data);
 export const apiFetchUserOrder = data => orderRequest.post("/userOrderList", data);
 
 // 座位相關api
