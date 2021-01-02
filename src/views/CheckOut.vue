@@ -11,6 +11,17 @@
           <b-table striped hover :items="items" :fields="fields"> </b-table>
         </b-col>
       </b-row>
+      <b-form-group id="coupon-input" label-for="coupon-input">
+        <div class="input-box">
+          <b-form-input
+            id="coupon"
+            v-model="form.coupon"
+            required
+            type="coupon"
+            placeholder="請輸入優惠卷編號"
+          ></b-form-input>
+        </div>
+      </b-form-group>
       <b-button type="button" @click="sendOrderToBackend" class="btn btn-secondary btn-lg">結帳</b-button>
     </b-container>
   </div>
@@ -47,6 +58,10 @@ export default {
           label: "合計",
         },
       ],
+      form: {
+        coupon: "",
+      },
+      show: true,
     };
   },
   mounted() {
