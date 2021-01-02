@@ -15,9 +15,8 @@
         <div class="input-box">
           <b-form-input
             id="coupon"
-            v-model="form.coupon"
+            v-model="coupon"
             required
-            type="coupon"
             placeholder="請輸入優惠卷編號"
           ></b-form-input>
         </div>
@@ -58,9 +57,7 @@ export default {
           label: "合計",
         },
       ],
-      form: {
-        coupon: "",
-      },
+      coupon: "",
       show: true,
     };
   },
@@ -108,7 +105,7 @@ export default {
       return formattedSeats;
     },
     sendOrderToBackend() {
-      this.$store.dispatch("order/sendOrder").then(() => {
+      this.$store.dispatch("order/sendOrder", this.coupon).then(() => {
         this.$router.push("/member");
       });
     }
