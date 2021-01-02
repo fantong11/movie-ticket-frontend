@@ -8,6 +8,9 @@ const data = {
 }
 
 const mutations = {
+  resetSoldSeatList(state) {
+    state.soldSeatList = [];
+  },
   setSoldSeatList(state, payload) {
     payload.soldSeatList.forEach(soldSeat => {
       state.soldSeatList.push(soldSeat.seat_row_column);

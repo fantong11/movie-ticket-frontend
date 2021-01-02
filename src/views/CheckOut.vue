@@ -108,7 +108,9 @@ export default {
       return formattedSeats;
     },
     sendOrderToBackend() {
-      this.$store.dispatch("order/sendOrder");
+      this.$store.dispatch("order/sendOrder").then(() => {
+        this.$router.push("/member");
+      });
     }
   },
 };
