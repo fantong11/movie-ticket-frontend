@@ -188,7 +188,7 @@ export default {
     // 畫出已經賣出的座位
     initSoldSeatMap() {
       this.$store.dispatch("seat/fetchSeatByShowingId").then(() => {
-        console.log(this.soldSeatList);
+        console.log("fuckyourasshole" + this.soldSeatList);
         this.soldSeatList.forEach((seat) => {
           const soldSeat = this.seatList.find((s) => s.name === seat);
           soldSeat.fill = "rgb(247, 89, 123)";
@@ -226,7 +226,7 @@ export default {
     getMaxSeat() {
       // 取得上一頁填的清單
       const order = JSON.parse(sessionStorage.getItem("order"));
-      console.log(order);
+      //console.log(order);
       return order[0].qty + order[1].qty;
     },
     getShowingId() {
@@ -243,7 +243,7 @@ export default {
     // 把選擇的座位存在sessionStorage
     saveSeatInSessionStorage() {
       sessionStorage.setItem("seat", JSON.stringify(this.selectedSeat));
-      console.log(JSON.parse(sessionStorage.getItem("seat")));
+      //console.log(JSON.parse(sessionStorage.getItem("seat")));
       // 結帳頁面
       this.$router.push("/checkout");
     },
