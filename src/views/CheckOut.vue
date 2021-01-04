@@ -11,6 +11,26 @@
           <b-table striped hover :items="items" :fields="fields"> </b-table>
         </b-col>
       </b-row>
+      <b-form-checkbox
+        id="checkbox-1"
+        v-model="checked"
+        name="checkbox-1"
+        value="accepted"
+        unchecked-value="not_accepted"
+      >
+        使用優惠碼
+      </b-form-checkbox>
+      <b-form-group id="coupon-input" label-for="coupon-input">
+        <div class="input-box">
+          <b-form-input
+            id="coupon"
+            v-model="coupon"
+            required
+            placeholder="請輸入優惠卷編號"
+          ></b-form-input>
+          {{ ErrMessage }}
+        </div>
+      </b-form-group>
       <b-button type="button" @click="sendOrderToBackend" class="btn btn-secondary btn-lg">結帳</b-button>
     </b-container>
   </div>
@@ -19,6 +39,7 @@
 <script>
 import ResponsiveNavigation from "@/components/ResponsiveNavigation.vue";
 import ShowingDetail from "@/components/ShowingDetail.vue";
+import { mapState } from "vuex";
 
 export default {
   name: "CheckOut",
@@ -47,10 +68,19 @@ export default {
           label: "合計",
         },
       ],
+      coupon: "",
+      checked: false,
+      ErrMessage: "",
+      show: true,
     };
   },
   mounted() {
     this.getOrder();
+  },
+  computed: {
+    ...mapState({
+      message: (state) => state.order.message,
+    })
   },
   methods: {
     getShowingId() {
@@ -93,7 +123,13 @@ export default {
       return formattedSeats;
     },
     sendOrderToBackend() {
-      this.$store.dispatch("order/sendOrder").then(() => {
+      if (this.checked === false)
+        this.coupon = null;
+      this.$store.dispatch("order/sendOrder", {coupon: this.coupon}).then(() => {
+        if (this.message === "Wrong coupon code") {
+          this.ErrMessage = "優惠碼不存在";
+          return;
+        }
         this.$router.push("/member");
       });
     }
