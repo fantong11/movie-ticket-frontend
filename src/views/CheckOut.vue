@@ -13,7 +13,7 @@
       </b-row>
       <b-form-checkbox
         id="checkbox-1"
-        v-model="status"
+        v-model="checked"
         name="checkbox-1"
         value="accepted"
         unchecked-value="not_accepted"
@@ -69,7 +69,7 @@ export default {
         },
       ],
       coupon: "",
-      status: 'not_accepted',
+      checked: false,
       ErrMessage: "",
       show: true,
     };
@@ -123,7 +123,7 @@ export default {
       return formattedSeats;
     },
     sendOrderToBackend() {
-      if (status === "not_accepted")
+      if (this.checked === false)
         this.coupon = null;
       this.$store.dispatch("order/sendOrder", {coupon: this.coupon}).then(() => {
         if (this.message === "Wrong coupon code") {

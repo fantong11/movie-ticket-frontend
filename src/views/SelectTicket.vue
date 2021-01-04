@@ -70,26 +70,31 @@ export default {
       showModal: false,
       selected: [
         {
+          productId: 1,
           name: "全票",
           qty: 0,
           cost: 300,
         },
         {
+          productId: 2,
           name: "優待票",
           qty: 0,
           cost: 270,
         },
         {
+          productId: 3,
           name: "大可樂",
           qty: 0,
           cost: 70,
         },
         {
+          productId: 4,
           name: "中可樂",
           qty: 0,
           cost: 60,
         },
         {
+          productId: 5,
           name: "小可樂",
           qty: 0,
           cost: 50,
