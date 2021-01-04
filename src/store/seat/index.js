@@ -22,6 +22,7 @@ const mutations = {
 const actions = {
   fetchSeatByShowingId({ commit }) {
     return new Promise((resolve, reject) => {
+      commit("resetSoldSeatList");
       apiFetchSeatByShowingId({
         showingId: sessionStorage.getItem("showingId"),
       }).then(res => {
