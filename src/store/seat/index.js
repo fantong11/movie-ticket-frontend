@@ -8,6 +8,7 @@ const data = {
 }
 
 const mutations = {
+  // 在每次進選擇座位頁面時先清空座位陣列
   resetSoldSeatList(state) {
     state.soldSeatList = [];
   },
@@ -15,7 +16,6 @@ const mutations = {
     payload.soldSeatList.forEach(soldSeat => {
       state.soldSeatList.push(soldSeat.seat_row_column);
     });
-    // state.soldSeatList = payload.soldSeatList;
   },
 }
 
