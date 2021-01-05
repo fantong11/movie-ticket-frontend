@@ -7,13 +7,13 @@
         <h3 class="mb-3">會員註冊</h3>
         <b-form-group id="email-address" label-for="email-address">
           <div class="input-box">
-            <b-icon class="mr-2" font-scale="2" icon="envelope"></b-icon>
+            <b-icon class="mr-2" font-scale="2" icon="person"></b-icon>
             <b-form-input
               id="email"
               v-model="form.name"
               required
               autocomplete="off"
-              placeholder="請輸入電子郵件"
+              placeholder="請輸入使用者名稱"
             ></b-form-input>
           </div>
           <p>{{ this.form.nameInputDesription }}</p>
