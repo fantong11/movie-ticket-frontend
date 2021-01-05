@@ -102,7 +102,7 @@ export default {
     getMovieTime(movie) {
       let date = new Date(movie.release_date);
       return (
-        date.getFullYear() + " - " + date.getMonth() + " - " + date.getDate()
+        date.getFullYear() + " - " + (date.getMonth() + 1) + " - " + date.getDate()
       );
     },
   },
