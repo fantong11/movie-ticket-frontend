@@ -1,5 +1,6 @@
 import {
-  apiFetchUserOrder,
+  apiFetchUserOrderSeat,
+  apiFetchUserOrderDrink,
   apiSendOrder,
 } from '../../api/api';
 
@@ -10,11 +11,48 @@ const data = {
 }
 
 const mutations = {
+  resetOrderList(state) {
+    state.orderList = [];
+  },
   setWait(state, payload) {
     state.wait = payload.flag;
   },
   setOrderList(state, payload) {
-    state.orderList = payload.orderList;
+    let currentOLID = -1
+    let index = 1;
+    payload.orderSeatList.forEach((orderSeat) => {
+      if (orderSeat.OLID !== currentOLID) {
+        let orderDate = new Date(orderSeat.OTime);
+        let ShowDate = new Date(orderSeat.Stime);
+        let orderDateTime = orderDate.getFullYear() + "/" + (orderDate.getMonth() + 1) + "/" + orderDate.getDate() + " " + orderDate.getHours() + ":" + orderDate.getMinutes();
+        let ShowDateTime = ShowDate.getFullYear() + "/" + (ShowDate.getMonth() + 1) + "/" + ShowDate.getDate() + " " + ShowDate.getHours() + ":" + ShowDate.getMinutes();
+
+        state.orderList.push({
+          orderTime: orderDateTime,
+          orderContent: {
+            uid: orderSeat.uid,
+            theater: orderSeat.Tname,
+            seat: [orderSeat.seat_row_column],
+            drink: [],
+            audio: orderSeat.audio,
+            movie: orderSeat.Mname,
+            showingTime: ShowDateTime,
+            totalCost: orderSeat.OLP,
+          },
+          detailId: String(index),
+        });
+        payload.orderDrinkList.forEach((orderDrink) => {
+          if (orderDrink.OLID === orderSeat.OLID)
+            state.orderList[state.orderList.length - 1].orderContent.drink.push({ drinkName: orderDrink.PName, amount: orderDrink.amount });
+        });
+        currentOLID = orderSeat.OLID;
+        index++;
+      }
+      else {
+        state.orderList[state.orderList.length - 1].orderContent.seat.push(orderSeat.seat_row_column);
+      }
+
+    });
   },
   setResponseMessage(state, payload) {
     state.message = payload.message;
@@ -22,21 +60,41 @@ const mutations = {
 }
 
 const actions = {
-  fetchUserOrder({ commit }) {
+  fetchUserOrderSeat({ commit, dispatch }) {
     return new Promise((resolve, reject) => {
-      apiFetchUserOrder({
+      commit("resetOrderList");
+      apiFetchUserOrderSeat({
         token: localStorage.getItem("token"),
       }).then(res => {
         console.log(res.data);
-        commit("setOrderList", { orderList: res.data });
-        resolve();
+        dispatch("fetchUserOrderDrink").then((orderDrinkList) => {
+          console.log(orderDrinkList);
+          commit("setOrderList", {
+            orderSeatList: res.data,
+            orderDrinkList: orderDrinkList,
+          });
+          resolve();
+        });
       }).catch((err) => {
         console.log(err);
         reject();
       });
     });
   },
-  sendOrder({commit}, payload) {
+  fetchUserOrderDrink({ commit }) {
+    return new Promise((resolve, reject) => {
+      apiFetchUserOrderDrink({
+        token: localStorage.getItem("token"),
+      }).then(res => {
+        commit("setWait", { flag: false });
+        resolve(res.data);
+      }).catch((err) => {
+        console.log(err);
+        reject();
+      });
+    });
+  },
+  sendOrder({ commit }, payload) {
     return new Promise((resolve, reject) => {
       apiSendOrder({
         token: localStorage.getItem("token"),
@@ -45,7 +103,7 @@ const actions = {
         seat: sessionStorage.getItem("seat"),
         coupon: payload.coupon,
       }).then((res) => {
-        commit("setResponseMessage", {message: res.data.message});
+        commit("setResponseMessage", { message: res.data.message });
         console.log(res.data.message);
         commit("setWait", { flag: false });
         resolve();

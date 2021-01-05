@@ -13,7 +13,7 @@
       </b-row>
       <b-form-checkbox
         id="checkbox-1"
-        v-model="status"
+        v-model="checked"
         name="checkbox-1"
         value="accepted"
         unchecked-value="not_accepted"
@@ -31,7 +31,20 @@
           {{ ErrMessage }}
         </div>
       </b-form-group>
-      <b-button type="button" @click="sendOrderToBackend" class="btn btn-secondary btn-lg">結帳</b-button>
+      <b-button
+        type="button"
+        @click="sendOrderToBackend"
+        class="btn btn-secondary btn-lg"
+        :disabled="buttonDisable"
+      >
+        <div v-show="buttonDisable">
+          <b-spinner small></b-spinner>
+          <span class="sr-only">Loading...</span>
+        </div>
+        <div v-show="!buttonDisable">
+          結帳
+        </div>
+      </b-button>
     </b-container>
   </div>
 </template>
@@ -69,9 +82,10 @@ export default {
         },
       ],
       coupon: "",
-      status: 'not_accepted',
+      checked: false,
       ErrMessage: "",
       show: true,
+      buttonDisable: false,
     };
   },
   mounted() {
@@ -80,7 +94,7 @@ export default {
   computed: {
     ...mapState({
       message: (state) => state.order.message,
-    })
+    }),
   },
   methods: {
     getShowingId() {
@@ -115,24 +129,25 @@ export default {
       seats.forEach((seat, i, array) => {
         if (i === array.length - 1) {
           formattedSeats += seat;
-        }
-        else {
+        } else {
           formattedSeats += seat + ", ";
         }
       });
       return formattedSeats;
     },
     sendOrderToBackend() {
-      if (status === "not_accepted")
-        this.coupon = null;
-      this.$store.dispatch("order/sendOrder", {coupon: this.coupon}).then(() => {
-        if (this.message === "Wrong coupon code") {
-          this.ErrMessage = "優惠碼不存在";
-          return;
-        }
-        this.$router.push("/member");
-      });
-    }
+      this.buttonDisable = true;
+      if (this.checked === false) this.coupon = null;
+      this.$store
+        .dispatch("order/sendOrder", { coupon: this.coupon })
+        .then(() => {
+          if (this.message === "Wrong coupon code") {
+            this.ErrMessage = "優惠碼不存在";
+            return;
+          }
+          this.$router.push("/member");
+        });
+    },
   },
 };
 </script>

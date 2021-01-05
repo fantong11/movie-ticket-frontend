@@ -45,7 +45,8 @@ export const apiAddShowing = data => showingRequest.post("/addShowing", data);
 
 // 訂單相關api
 export const apiSendOrder = data => orderRequest.post("/addOrder", data);
-export const apiFetchUserOrder = data => orderRequest.post("/userOrderList", data);
+export const apiFetchUserOrderSeat = data => orderRequest.post("/userOrderSeat", data);
+export const apiFetchUserOrderDrink = data => orderRequest.post("/userOrderDrink", data);
 
 // 座位相關api
 export const apiFetchSeatByShowingId = data => seatRequest.post("/fetchSeatByShowingId", data);

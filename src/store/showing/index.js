@@ -51,7 +51,7 @@ const mutations = {
     payload.showings.forEach(showing => {
       let dateExist = false;
       const date = new Date(showing.show_time);
-      let dateStr = date.getFullYear() + " 年 " + date.getMonth() + " 月 " + date.getDate() + " 日";
+      let dateStr = date.getFullYear() + " 年 " + (date.getMonth() + 1) + " 月 " + date.getDate() + " 日";
       // 日期存在的話裡面坐迴圈去判斷日期一不一樣，加入對應的時間
       state.movieDateTimes.forEach(movieDate => {
         if (movieDate.date === dateStr) {
