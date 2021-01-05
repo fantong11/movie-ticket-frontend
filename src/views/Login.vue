@@ -11,13 +11,13 @@
           description="We'll never share your email with anyone else."
         >
           <div class="input-box">
-            <b-icon class="mr-2" font-scale="2" icon="envelope"></b-icon>
+            <b-icon class="mr-2" font-scale="2" icon="person"></b-icon>
             <b-form-input
               id="email"
               v-model="form.name"
               required
               autocomplete="off"
-              placeholder="請輸入電子郵件"
+              placeholder="請輸入使用者名稱"
             ></b-form-input>
           </div>
         </b-form-group>
