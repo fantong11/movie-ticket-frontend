@@ -132,7 +132,7 @@ export default {
             this.form.msg = "名稱已存在";
             return;
           }
-          this.$router.push("/");
+          this.$router.push("/login");
         });
     },
     // lodash裡的套件, debounce可以delay在watcher裡的function, 打完字後500ms才請求後端
