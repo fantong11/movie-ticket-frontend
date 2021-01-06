@@ -35,15 +35,8 @@
         type="button"
         @click="sendOrderToBackend"
         class="btn btn-secondary btn-lg"
-        :disabled="buttonDisable"
       >
-        <div v-show="buttonDisable">
-          <b-spinner small></b-spinner>
-          <span class="sr-only">Loading...</span>
-        </div>
-        <div v-show="!buttonDisable">
-          結帳
-        </div>
+        結帳
       </b-button>
     </b-container>
   </div>
@@ -85,7 +78,6 @@ export default {
       checked: false,
       ErrMessage: "",
       show: true,
-      buttonDisable: false,
     };
   },
   mounted() {
@@ -136,7 +128,6 @@ export default {
       return formattedSeats;
     },
     sendOrderToBackend() {
-      this.buttonDisable = true;
       if (this.checked === false) this.coupon = null;
       this.$store
         .dispatch("order/sendOrder", { coupon: this.coupon })
