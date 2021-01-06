@@ -57,7 +57,7 @@
     ```sh
     git clone https://github.com/fantong11/movie-ticket-frontend.git
     ```
-3. 下載前端[Back-end](https://github.com/fantong11/movie-ticket-frontend)的部分
+3. 下載前端[Back-end](https://github.com/fantong11/movie-ticket-backend)的部分
     ```sh
     git clone https://github.com/fantong11/movie-ticket-backend.git
     ```
