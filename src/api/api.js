@@ -1,23 +1,36 @@
 import axios from 'axios';
 
 // user相關api
-const userRequest = axios.create({ baseURL: '/api/user' });
+const userRequest = axios.create({
+    baseURL: 'https://movie-ticket-web-backend.herokuapp.com/api/user',
+});
 
 // 電影相關api
-const movieRequest = axios.create({ baseURL: '/api/movie' });
+const movieRequest = axios.create({
+    baseURL: 'https://movie-ticket-web-backend.herokuapp.com/api/movie',
+});
 
 // 影城相關api
-const theaterRequest = axios.create({ baseURL: '/api/theater' });
+const theaterRequest = axios.create({
+    baseURL: 'https://movie-ticket-web-backend.herokuapp.com/api/theater',
+});
 
 // 場次相關api
-const showingRequest = axios.create({ baseURL: '/api/showing' });
+const showingRequest = axios.create({
+    baseURL: 'https://movie-ticket-web-backend.herokuapp.com/api/showing',
+});
 
 // 座位相關api
-const seatRequest = axios.create({ baseURL: '/api/seat' });
+const seatRequest = axios.create({
+    baseURL: 'https://movie-ticket-web-backend.herokuapp.com/api/seat',
+});
 
 // 訂單相關api
-const orderRequest = axios.create({ baseURL: '/api/order' });
+const orderRequest = axios.create({
+    baseURL: 'https://movie-ticket-web-backend.herokuapp.com/api/order',
+});
 
+console.log(movieRequest);
 // user相關api
 export const apiUserLogin = data => userRequest.post("/signIn", data);
 export const apiUserSignUp = data => userRequest.post("/signUp", data);
@@ -29,7 +42,7 @@ export const apiAdminBoard = data => userRequest.post("/adminBoard", data);
 export const apiFetchMovieByRelease = data => movieRequest.get(`/movieList?release=${data}`);
 export const apiFetchOneMovie = data => movieRequest.get(`/movie?movieid=${data}`);
 export const apiAddMovie = data => movieRequest.post("/addMovie", data);
-export const apiDeleteMovie = data => movieRequest.post(`/deleteMovie`,data);
+export const apiDeleteMovie = data => movieRequest.post(`/deleteMovie`, data);
 
 // 影城相關api
 export const apiFetchAllTheater = () => theaterRequest.get('/theaterList');
@@ -38,7 +51,7 @@ export const apiFetchTheaterByMovieId = data => theaterRequest.get(`/theater?mov
 // 場次相關api
 export const apiFetchShowing = data => showingRequest.get(`/movietime?movieid=${data.movieId}&theaterid=${data.theaterId}`);
 export const apiGetShowingDetail = data => showingRequest.get("/showingDetailDelete", data);
-export const apiDeleteShowing = data => showingRequest.post("/deleteShowing" ,data);
+export const apiDeleteShowing = data => showingRequest.post("/deleteShowing", data);
 export const apiFetchDetailByShowingId = data => showingRequest.get(`/showingDetail?showingid=${data}`);
 export const apiAddShowing = data => showingRequest.post("/addShowing", data);
 
