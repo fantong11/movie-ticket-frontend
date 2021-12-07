@@ -3,11 +3,23 @@ import axios from 'axios';
 // user相關api
 const userRequest = axios.create({
     baseURL: 'https://movie-ticket-web-backend.herokuapp.com/api/user',
+    mode: "no-cors",
+    headers: {
+        "Access-Control-Allow-Origin": '*',
+        "Access-Control-Allow-Methods": 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+        "Content-Type": "application/json",
+    }
 });
 
 // 電影相關api
 const movieRequest = axios.create({
     baseURL: 'https://movie-ticket-web-backend.herokuapp.com/api/movie',
+    mode: "no-cors",
+    headers: {
+        "Access-Control-Allow-Origin": '*',
+        "Access-Control-Allow-Methods": 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+        "Content-Type": "application/json",
+    }
 });
 
 // 影城相關api
