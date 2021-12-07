@@ -21,3 +21,7 @@ new Vue({
   router,
   render: h => h(App)
 }).$mount('#app')
+
+const url = require("../vue.config");
+
+console.log(url.devServer.proxy['/api'].target)

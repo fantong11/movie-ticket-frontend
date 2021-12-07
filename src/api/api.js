@@ -18,7 +18,6 @@ const seatRequest = axios.create({ baseURL: '/api/seat' });
 // 訂單相關api
 const orderRequest = axios.create({ baseURL: '/api/order' });
 
-
 // user相關api
 export const apiUserLogin = data => userRequest.post("/signIn", data);
 export const apiUserSignUp = data => userRequest.post("/signUp", data);
